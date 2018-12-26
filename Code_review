@@ -41,7 +41,23 @@
 Formatting: Where are the spaces and line breaks? Are they using tabs or spaces? How are the curly braces laid out?
 Style: Are the variables/parameters declared as final? Are method variables defined close to the code where they’re used or at the start of the method?
 Naming: Do the field/constant/variable/param/class names conform to standards? Are the names overly short?
-Test coverage: Is there a test for this code?
+Test coverage: Is there a test for this code including Happy flow and exceptional cases?
+
+Location of the new code
+Modularity of the code
+Could the new code have reused something in the existing code? Does the new code provide something we can reuse in the existing code?
+Can I understand what the code does by reading it?
+Can I understand what the tests do?
+documented, commented, or covered by understandable tests (according to team preference)?
+
+Does the code actually do what it was supposed to do?
+Base case verification in the code if covered?
+Are there potential security problems with the code?
+does the new code introduce avoidable performance issues, like unnecessary calls to a database or remote service?
+Does the author need to create public documentation, or change existing help files?
+Is the code going to accidentally point at the test database, or is there a hardcoded stub that should be swapped out for a real service?
+How code is using the application configuration?
+
 
 Design
 How does the new code fit with the overall architecture?
