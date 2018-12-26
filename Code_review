@@ -1,0 +1,39 @@
+1. Why code review?
+
+  .) Ensure code meets standards (Not good ans.)
+	- Formatting
+	- Size of file
+	- Number of methods
+	- 
+
+	.) **Find bugs
+	  - Static analyzer
+	  - Human reviews
+	 
+	.) Sharing Knowledge - is the valuable reason for code reviews
+	
+	.) Code readability or understandability
+	
+	.) Ensure the code does the functionality
+	
+	  - When comapred with the refinement and request
+	  
+	.) Evolve application code
+	  - Technical debt with the code review
+	  
+2) When to perform code reviews?
+
+	.) During implementation?
+	.) When it's ready to merge?
+	.) when code is running?
+	
+3) When is code review complete?
+
+	.) When everyone agrees?
+	.) Defination of done ?
+	
+4) Who reviews the code and signs off the code?
+	.) Code reviewers and watchers (who signs off)?
+
+
+	
