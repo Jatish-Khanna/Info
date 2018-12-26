@@ -87,3 +87,20 @@ Are there obvious errors that will stop this working in production? Is the code 
 
 
 	
+6) How the code should be review be done?
+     Automate as much as possible
+	  Formatting code
+	  Build 
+	  Security
+	  Automated deployment
+	  Testing
+	  Performance
+  
+   Review should be as smal as possible instead of large amount of changes
+   Annotations and Documentation at top of file is important.
+   
+
+
+
+
+
