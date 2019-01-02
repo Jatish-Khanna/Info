@@ -1,0 +1,38 @@
+Sharding data
+Optimistic and pessimistic lock
+Eventual consistency (Reads will get the latest writes eventually but provides high availability)
+SQL provides (ACID) whereas No Sql provides low cost and scalability
+
+No SQl types-
+	. Key/value pair (Redis)
+	. Wide Column (Casandra - timeseries DB)
+	. Graph based (Neo4j)
+	. Document based (Mongo)
+
+HTTP -  Request/Response 
+HTTP2 - multiple request over single connection 
+Web socket - Bi-Directional communcation b/w client and server
+
+TCP/IP layers
+IPv4 -
+IPv6 -
+Bloom filters -
+Count-min sketch (Top K events) -
+Paxos - Consensus over distributed hosts
+Topic multi subscriber
+CAS, Multithreading Concurrency, locks
+
+
+
+Tools:
+Cassandra
+Mongo/Couch base (JSON - ACID properties)
+My SQL - ACID, relationship between tables, master-slave architecture
+Memcached - simple, fast, key/value storage
+Redis - cluster, key/value and other Datastructures
+Zookeeper - centralized configuration management tool, scalable, 
+Kafka - Pub/Sub streaming application (ordered in )
+NGINX LB - 
+Solr, Elastic search - wrapper on lucene
+BLOB storage - S3 AWS
+Docker, Kubernetese -
