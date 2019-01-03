@@ -105,8 +105,38 @@ Disadv:
 	. 
 	
 	
+Event driven architecture:
+
+General Flow (Not event driven)
+	Client -> S0
+		|_________> S1
+		|_________________>S2
+				  |_________________>S3
+				  |_________________>S4
+				  
+Client sends a request to interfacing API
+. Interfacing API request to other services and waits for response
+. Considering the last service fails/unavailable, the data stored/processed by services in ancestral flow is stale
+. Inconsistent data
+
+  Replace with PUB / SUB model:
+  	
+	Client -> S0
+		|=========> S1
+		|=================>S2
+				  |=================>S3
+				  |=================>S4
+. Above publishes the message in message broker
+. Message broker persist the messages
+. Responds the client with success response
+. Any failure in downstream flow can be handled by persisting messages by brokers
 
 
+Advantages:
+	. easily scalable by subscribing to topics already publishing messages
+
+Disadvantages:
+	. Poor consistency for mission critical system
 
 
 
