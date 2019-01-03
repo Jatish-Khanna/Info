@@ -171,6 +171,15 @@ Client 	|		|		 /==================Logstash============Elastic search(ELK)
 				| 			|		|
 			Analytics (Hadoop, hive)	Email service	SMS service
 	
-	
- 
+
+Performance issues with Distributed systems:
+	. Throttling
+	. Timeouts
+	. Dedicated Thread Pools/Bulkheads
+	. Circuit Breakers
+	. Asynchronous Integration
+
+
+
+
  
