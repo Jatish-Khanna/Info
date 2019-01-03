@@ -48,7 +48,13 @@ My SQL - ACID, relationship between tables, master-slave architecture
 Memcached - simple, fast, key/value storage
 Redis - cluster, key/value and other Datastructures
 Zookeeper - centralized configuration management tool, scalable, 
-Kafka - Pub/Sub streaming application (ordered in )
+Kafka - Pub/Sub streaming application (ordered in partition)
+	Assignment of task or message
+	Notification / Acknoledgementn of the message
+	Loadbalancing to multiple subscriber
+	A heartbeat or health check mechanism
+	Persistence of data/message
+
 NGINX LB - 
 Solr, Elastic search - wrapper on lucene
 BLOB storage - S3 AWS
