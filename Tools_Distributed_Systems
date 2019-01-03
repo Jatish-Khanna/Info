@@ -82,3 +82,31 @@ NGINX LB -
 Solr, Elastic search - wrapper on lucene
 BLOB storage - S3 AWS
 Docker, Kubernetese -
+
+Monolith V/s Microservices:
+	. Monolith scales out
+	. Legacy application and new features
+	. N/w contract and system architecture is simpler
+	. No RPC call is invloved, so faster
+	
+Disadvantages Monolith:
+	. Bigger application and takes time to onboard new resources
+	. Deployment and test are cohesive and complex
+	. Too much responsibility on each server
+
+Microservices Advantages:
+	. Easier to design system as easy owns respective resources e.g. Db's
+	. Scaling is easy
+	. New features and resources are easyily onboarded
+	. Parallel deployment is possible
+	. Scale out is easier as per required services
+Disadv:
+	. Not easy to design system architecture
+	. 
+	
+	
+
+
+
+
+
