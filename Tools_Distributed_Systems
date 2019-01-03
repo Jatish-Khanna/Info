@@ -55,6 +55,25 @@ Kafka - Pub/Sub streaming application (ordered in partition)
 	A heartbeat or health check mechanism
 	Persistence of data/message
 
+Proven & reliable clusture & replication mechanism
+Performance
+Reduce operation complexity
+
+AWS SQS - is built on top of Kafka
+	- Two topics: 
+		. Queue: this stores messages to process
+		. markers: this topic stores start/end markers for each message
+	- Queue client/Consumers
+		. Read message from queue topic
+		. Write start marker to markers topic and wait for acknolwedgement
+		. Commit offset to queue
+		. Process the message
+		. Write end offset to markers
+		
+	Note: The approach can be optimized by processing the messages (request/ack) in batches
+	- Redelivry mechanism if message requires resend
+	
+	
 NGINX LB - 
 Solr, Elastic search - wrapper on lucene
 BLOB storage - S3 AWS
