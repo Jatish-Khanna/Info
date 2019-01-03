@@ -155,11 +155,21 @@ Disadvantages:
 	. Comments and ratings
 	.  
 	
-	
-	
-	
-	
-	
+Client 	|		|		 /==================Logstash============Elastic search(ELK)
+	|		|		/
+	|		|		|
+	|	LB 	|	Application Servers 1	---|C	------ RDBMS Master -> Slaves (Relationship and OLTP is easy to maintain)
+	|		|	...			---|A
+	|		|	...			   |C
+	|		|	App server n		---|HE	------- No SQL (Unstructured data like metadata about the client)
+										Rating, actors, sharding
+					|
+					|
+					|  Event Bus/kafka
+			================================		
+			================================
+				| 			|		|
+			Analytics (Hadoop, hive)	Email service	SMS service
 	
 	
  
