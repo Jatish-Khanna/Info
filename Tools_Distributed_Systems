@@ -107,7 +107,7 @@ Disadv:
 	
 Event driven architecture:
 
-General Flow (Not event driven)
+REQUEST / RESPONSE system (Not event driven)
 	Client -> S0
 		|_________> S1
 		|_________________>S2
@@ -134,9 +134,15 @@ Client sends a request to interfacing API
 
 Advantages:
 	. easily scalable by subscribing to topics already publishing messages
+	. Availability
+	. Easy- rollbacks
+	. Replay the events
+	. Replace the nodes
+	. At least or at most once event to be delivered to consumers
 
 Disadvantages:
 	. Poor consistency for mission critical system
-
+	. Control over the message delivery times
+	. 
 
 
