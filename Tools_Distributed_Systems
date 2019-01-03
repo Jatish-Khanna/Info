@@ -220,6 +220,14 @@ Circuit breakers are used to check the availability of external systems/services
 Any standard message broker systems can be used to provide publish-subscribe capabilities.
 
 
+Resilient Systems:
+	. Multiple nodes servicing the client request
+	. Database has Master-Slave replication
+	. Load balancer Active-Passive (Manage it by DNS service to switch CNode)
+	. System available in multiple regions
 
+Rate limiting:
+	This is done to mitigate cascading failure problem
+	
 
  
