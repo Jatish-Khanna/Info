@@ -174,10 +174,25 @@ Client 	|		|		 /==================Logstash============Elastic search(ELK)
 
 Performance issues with Distributed systems:
 	. Throttling
+	 Generally, synchronous requests from external services/systems are throttled at load balancer/HTTP server or another such entry point.
+	 
 	. Timeouts
+	If a microservices being invoked, is responding slow, this can cause our application to take a longer time to complete a request. Application threads now remain busy for a longer duration. This can have a cascading impact on our application, resulting in application/server becoming totally choked/unresponsive.
+	
+	Most of the libraries/APIs/frameworks and servers provide configurable settings for specifying different kinds of timeouts. You may need to set timeouts for read requests/write requests/wait timeouts/connection pool wait for timeouts/keepalive timeouts and so on. Values of these timeouts should be determined only by proper performance testing/SLA validation etc.
+	
 	. Dedicated Thread Pools/Bulkheads
+	design decision is to have separate dedicated thread pools for different tasks or for connecting to different microservices. Consider a scenario where, in your application flow, you need to connect to five different microservices using REST over HTTP. You are also using a library to use the common thread pool for maintaining these connections. If for some reason, one of the five services starts misbehaving by responding slow, then all your pool members will be exhausted, while waiting for the response from this service. To minimize the impact, it is always a good practice to have dedicated pool for individual service. This can minimize the impact caused by a misbehaving service, thus allowing your application to continue with other parts of the execution path.
+	
+	
 	. Circuit Breakers
+	Circuit Breaker is a design pattern, which is used to minimize the impact of any of the downstream being not accessible or down (due to planned or unplanned outages).Circuit breakers are used to check the availability of external systems/services, and in case these are down, an application can be prevented from sending requests to these external systems.
+	Circuit breakers can have built in logic to perform the necessary health check of external systems, and start forwarding the requests, once these systems are up and working fine.
+	
 	. Asynchronous Integration
+	performance issues related to integrations can be avoided by decoupling the communications between microservices. Asynchronous integration approach provides one such mechanism to achieve this decoupling. Take a look at the design of your microservices-based system, and give it a serious thought if you see the point to point integration between two microservices.
+
+Any standard message broker systems can be used to provide publish-subscribe capabilities.
 
 
 
