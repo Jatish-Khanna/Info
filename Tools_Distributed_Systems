@@ -38,7 +38,7 @@ Imagine we mapped the hash output range onto the edge of a circle. That means th
  2) Node know's its immidiate next node like a linked list - Lookup (N) and space (1)
 
 
-Load balancing - Round robin, least connections should provide a load factor 1/n
+Example of consistent hashing: Load balancing (when a new node to be added or removed from LB) - Round robin, least connections should provide a load factor 1/n
 
 
 Tools:
