@@ -28,10 +28,7 @@ Consistent hashing -
 	
 	So, how can this problem be solved? We need a distribution scheme that does not depend directly on the number of servers, so that, when adding or removing servers, the number of keys that need to be relocated is minimized. One such scheme—a clever, yet surprisingly simple one—is called consistent hashing, and was first described by Karger et al. at MIT in an academic paper from 1997 (according to Wikipedia).
 	
-
 Consistent Hashing is a distributed hashing scheme that operates independently of the number of servers or objects in a distributed hash table by assigning them a position on an abstract circle, or hash ring. This allows servers and objects to scale without affecting the overall system.
-
-
 Imagine we mapped the hash output range onto the edge of a circle. That means that the minimum possible hash value, zero, would correspond to an angle of zero, the maximum possible value (some big integer we’ll call INT_MAX) would correspond to an angle of 2𝝅 radians (or 360 degrees), and all other hash values would linearly fit somewhere in between. So, we could take a key, compute its hash, and find out where it lies on the 
 
  1) Each node know address to all other nodes = Lookup(1) and Lookup Space(N)
@@ -48,12 +45,19 @@ My SQL - ACID, relationship between tables, master-slave architecture
 Memcached - simple, fast, key/value storage
 Redis - cluster, key/value and other Datastructures
 Zookeeper - centralized configuration management tool, scalable, 
+	. Monitoring system
+	. Configuration management system
+	. Electing lead broker (node/server which owns the topic from the follower nodes)
+	. Broker messaging states are stored (to get the status/point from where consumer will read)
+	. 
+	
 Kafka - Pub/Sub streaming application (ordered in partition)
 	Assignment of task or message
 	Notification / Acknoledgementn of the message
 	Loadbalancing to multiple subscriber
 	A heartbeat or health check mechanism
 	Persistence of data/message
+	Replicating the data
 
 Proven & reliable clusture & replication mechanism
 Performance
