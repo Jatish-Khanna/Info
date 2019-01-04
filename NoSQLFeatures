@@ -1,0 +1,13 @@
+SQL - 
+  Writes have locking mechanism 
+  Sharding the database has issues
+  OLTP (Transaction and consistency have huge benefit)
+  
+ 
+ NoSQL -
+ Scaling is easier without impacting the servicing system (Elastic scalability)
+ Varied data requirements e.g. New hotel features, new requirements (Schema less)
+ Large volume of data (Clustering, replication, sharding)
+ Two out Three in CAP (Consistency, Availablity, Partition tolerence)
+ 
+ 
