@@ -1,4 +1,4 @@
-SQL - 
+to SQL - 
   Writes have locking mechanism 
   Sharding the database has issues
   OLTP (Transaction and consistency have huge benefit)
@@ -11,3 +11,45 @@ SQL -
  Two out Three in CAP (Consistency, Availablity, Partition tolerence)
  
  
+Design Distributed database:
+
+                    LB
+                    ||
+                    ||
+     ==============Request manager1 ... RM - n     =========== (Consults the metadata manager, who owns the table)
+  
+  Controller (creates sharding)>>>>          |       |       |       |     |     <<< Metadata manager (stores sharding or table info.)
+      Replicaton Group 1 ...  RG - n (One leader per RG and multiple RG ensures high availability and performance)
+      
+ 
+Metadata manager: Example (Zookeeper)
+  . Leader election in replication group
+  . Mapping of table sharding (e.g. a-b to Replication group#1, c-k to RG#2, l-z to RG#3)
+  . Backup of data
+  . Maintains data in memory for the replication group, and request managers
+      
+
+1) Characterstics : (Required high consistency)
+    . Durability
+    . Availability
+    . Performance
+    . Security
+    
+  Consistency model:
+    - No ACID
+
+2) Basic operations (Key/value)
+    . Create/Delete schema or metadata
+    . Put with sequencer (timestamp[8 bytes]+ unique_number_per_node[4 bytes] + node_id [4 bytes]) 
+      -> Sequence number ensures multiple writes by same client (data with latest timestamp)
+    . Get
+    . Delete
+    . List data
+
+3) Operations
+4) Metadata of database
+5) Replication of group
+6) Data plane
+7) Control plane
+8) Edge cases
+9) scale number
