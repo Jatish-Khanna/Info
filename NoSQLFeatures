@@ -22,12 +22,58 @@ Design Distributed database:
       Replicaton Group 1 ...  RG - n (One leader per RG and multiple RG ensures high availability and performance)
       
  
-Metadata manager: Example (Zookeeper)
+Metadata manager is built on Consensus protocol: Example (Zookeeper)
   . Leader election in replication group
   . Mapping of table sharding (e.g. a-b to Replication group#1, c-k to RG#2, l-z to RG#3)
   . Backup of data
   . Maintains data in memory for the replication group, and request managers
       
+Replication group:
+  . Every request is processed by leader of group
+  . Other nodes are followers which sync with leader
+  . if leader is down, a follower would be selected as leader
+  
+The leader responds of successful write when majority of followers has appended the append_only log 
+A basic put operation
+  . Request initiated by client
+  . Request redirected to request manager
+  . Request manager connects with metadata manager about the node where data is stored (in case of multiple replication group)
+  . Request manager gets the leader of particular replication group
+  . Request manager connects with the leader
+  . And a put query is initiated
+  . Leader will put the request in append_only log
+  . Waits for majority of followers to update local append_only log
+  . Leader responds with successful write
+
+Controller:
+  . Leader management
+  . Follower falling behind
+  . Split hot tables (number of I/Ops are high for Read, update, delete)
+  
+
+Errors/ Race conditions:
+  . Split brain (two leaders)
+    - A new leader has been elected in group but old leader has request from request manager which will fail.
+      By consensus only leader can handle request from external system not followers
+  . No leader
+    - A leader is down
+    - Metadata manager will elect a new leader
+    
+  . Network split at metadata manager
+   and .  Outdated table metadata
+   and .  Bad request manager
+  
+    - Zookeeper a metadata manager has clusture, which is eventual consistent
+    - E.g. a new leader is elected or new sharding done which will be propagated to nodes in clusture of metadata manager
+    Resulting - Request will redirected to wrong replication group whereas leader from replication-group will reject the request
+  
+  
+  . Node goes down before update request
+    - append_only logs can be replayed
+    
+  . Bad replication group node
+    Controller will handle the issues
+
 
 1) Characterstics : (Required high consistency)
     . Durability
