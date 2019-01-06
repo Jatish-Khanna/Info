@@ -37,6 +37,72 @@ Alternates (Optimistic concurrency control):
     . change font, font size .... (advanced features)
 
 
+How to do it, event based or Operational transformation?
+    . Insert('c', location) - will insert c chatacter at location 
+    The event will be sent to server by client
+    Then server will send the same event to all the open sockets and send same event
+    
+    Similary, other operation can be syncronized with all the open sockets/users
+    
+ Merge conflicts as issue-
+ 
+  Initial document:
+ 
+                  NK
+              
+      User 1                  User 2
+      ||                      ||
+      insert(J,0)             Delete(K,1)
+        \                      /       
+          JNK                N   
+        
+        We have a merge conflict (similarly for M number of users we have M copies of document which should be converged to One)
+
+
+Formulae of Operational transformation      
+  xform(a, b) = (a', b') where b' o a == a' o b            results to same document state after applying transformation fucntion
+
+This function takes two functions, "local operation (a) and remote operation (b)" which should be applied to all the active users
+
+Note: In reality Operation transformation is done by client whereas server send the operation to all the open sockets
+
+
+2) Differential Synchronizarion:
+    . Keep the two copies with all the clients and server as well
+    . One copy where all the operations has been performed by client/Server
+    . Other copy is used to maintain restoration point
+    
+    Operation
+      . Perform an operation on client copy
+      . Take the difference between copy edited and the original file
+      . Send the difference to server
+      . Update the Original client copy of client with the difference which has sent difference
+      
+      On server side:
+      . Get the difference with the server
+      . Apply the difference to server copy
+      . Send to all open sockets notifying the change
+      
+Note: Atomicity to be maintained when updating original copy i.e. no new updates are applied unit Original is in sync
+
+
+Which one is better Operational transformation or differential sync?
+    1) Operation transformation:
+      . is not stable when we have lot of conflicts
+      . Too many message on sever side (even a small event is a sent to server)
+    
+    2) Differential sync
+      . Difference between two documents is uneccessary and expensive operation
+      . Size of difference may be too large to handle
+      
+Note: All the version or updates should be saved on Timeseries database or cassandra or other NoSQL DB
+
+
+
+
+
+
+
 
 
 
