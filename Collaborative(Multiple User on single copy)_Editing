@@ -1,0 +1,44 @@
+What is Collaborative editing:
+  Multiple users are working on same copy of text or RTF or painting or wireframes or whiteboards
+  
+E.g. Google docs
+
+Problems with collaborative editors:
+  . Same user can be adding/editing/deleting/reformatting a single line which other users are working on
+  . Concurrency
+  . Distributed or Latency issues 
+  
+Can we Use Lock to solve problem?
+  No, it is turn basesd editing which will be endless wait
+  As locks are pesimistic concurrency control
+
+Alternates (Optimistic concurrency control):
+  We think nothing will go wrong, we allow users to edit
+  
+  Example
+    User 1 and 2 are working on One document, how do we sync both the document?
+    
+    Strategies:
+      * Event based sync (create, delete, update, reformatting)  ------------- This is called Operational Transformation
+        . Character by character sync                            ------------- This is called Differential Sync
+        . Line by Line sync
+      * Difference based sync (Get the difference perodically and send it to all the users working on document)
+  
+ Operation Transformation:
+    At its core, is an optimistic concurrency control mechanism.
+    It allows two editors/users to modify the same section of the document at sametime without conflicts
+    or rather it provides a mechanism for sanely resolving those conflicts so that niether user intervention nor locking becomes necessary
+  
+  What are the operation performed in test editing:
+    . Create
+    . Insert
+    . Update
+    . Delete
+    . change font, font size .... (advanced features)
+
+
+
+
+
+
+
