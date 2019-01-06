@@ -97,6 +97,7 @@ Which one is better Operational transformation or differential sync?
       
 Note: All the version or updates should be saved on Timeseries database or cassandra or other NoSQL DB
 
+Always wait for acknoledgement before sending anther update by same client
 
 
 
