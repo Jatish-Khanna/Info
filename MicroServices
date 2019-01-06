@@ -1,0 +1,28 @@
+Why Microservices?
+
+  . Simple
+  . Reliable
+  . Scalable
+  . Resilient
+  . Faster to develop and deliver
+  . Multiple technology stack
+  . Multi interfacing
+  
+  
+Why API gateway?
+
+An API Gateway is the element that coordinates and orchestrates how all the requests are processed in a Microservices architecture, and this also includes to the Serverless model.
+ An API Gateway includes an HTTP server where routes are associated with a Microservice or with a FaaS function.
+ When an API Gateway receives a request, it looks up for the Microservice which can serve the request and delivers it to the relevant part.
+ It maps the request parameters to the input arguments of the service or function if necessary, in order to complete the start of the request.
+ Then, it gets the result that the function got to the request into an HTTP response and returns it to the original caller.
+
+
+  . Simple entry point & 
+  . Security
+  . Dynamic service discovery
+  . Circuit breaking
+  . Abstracting the overall architecture
+  . Traffic control
+
+
