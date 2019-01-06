@@ -8,3 +8,38 @@ Why websockets?
     2) Long polling or short polling - client ask server after specified period of time for any updates (not efficient)
     3) Server sent event - SSE is a mechanism that allows the server to asynchronously push the data to the client once the client-server connection is established. 
           The server can then decide to send data whenever a new “chunk” of data is available. It can be considered as a one-way publish-subscribe model.
+
+
+2) Polling -
+    . Requst and make same request
+    . Lot of useless calls
+    . Long polling - block the connection (issues with dropped connections)
+    
+
+A) Web sockets -
+    . It is bi-directional or full duplex
+    . It only handles text
+    
+    It is a TCP based protocol. The only relationship with HTTP, it is interpretted by servers as end check.
+    It is an upgrade request where server and client switchs to bi-directional binary protocol
+       
+3) Server sent Events -
+    . It is unideirectional (where server can open a socket and send data to client)
+    . hanles text and binary
+    . It only adds header:
+        Accept: text/event-stream
+    
+    e.g. ws://google.com
+    
+    . It accepts events apart from "data event"
+        . id
+        . event
+        . retry
+        
+     e.g. http://google.com   
+        
+        
+        
+        
+
+
