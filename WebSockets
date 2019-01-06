@@ -1,0 +1,10 @@
+Why websockets?
+    . Realtime event/information tranfer
+    . Light weight when compared to other methods
+    . Server/or client can initate a stream on same websocket
+ 
+ Other Option?
+    1) With HTTP + AJAX - it will be polling data with unneccessary overhead of connections if there is any update (not efficient)
+    2) Long polling or short polling - client ask server after specified period of time for any updates (not efficient)
+    3) Server sent event - SSE is a mechanism that allows the server to asynchronously push the data to the client once the client-server connection is established. 
+          The server can then decide to send data whenever a new “chunk” of data is available. It can be considered as a one-way publish-subscribe model.
