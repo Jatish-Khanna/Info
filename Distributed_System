@@ -1,0 +1,14 @@
+Distributed system: 
+  Group of computers to perform actions
+
+Fault tolerent
+Low latency
+Availability
+
+
+1) Data store
+2) Computing
+3) File system
+4) Messaging
+5) Applications
+6) Ledgers
