@@ -1,0 +1,53 @@
+** Drop Box:
+When complete file is uploaded and downloaded by client supposing 2GB. It will waste resources mentioned below
+  1) Upload / Concurrency -  On single file concurrency can not be achived
+  2) Latency - waiting for file to updload and download
+  3) bandwidth - n/w resources to sync with server or download from server
+  4) History - Maintaining versions of files will waste resources on cloud.
+  
+Solution:
+  Client should deal with chunks of files instead of a one resource as a whole
+  . Upload file on cloud server as a chunked files
+  . Update text file (might be a single character)
+  . Identify the chunk by client where changes happended
+  . Upload only small chunk of file on cloud
+  
+    1) Upload/Concurrency - A client can use multiple threads to upload chunks on server
+    2) Latency - Sync only chunk not whole file, imporves latency
+    3) bandwidth - Sync small chunks instead of complete file (only for single chunk)
+    4) History - Only updated chunk would be maintained on history
+    
+    Even we can harness cloud storage performance with chunks
+    
+How to maintain chunks (Indexer)-
+  Create a metadata file with hashes of chunks. Store the same metadata file on server
+  In metadata file we store indexes of chunks to create complete file from parts
+ 
+Components
+  1) Over client:
+    a) Chunker - 
+      . converts file into multiple chunks
+      . Create hash of each chunk
+      . Upload it on cloud server
+      . Get the URL of each chunk stored on cloud server
+      . Pass the information to indexer
+      
+    b) Indexer - 
+      . The URL and hash from chunker will be updated in DB
+      . Notifies the messaging service over server side, with the created metadata file
+      
+    c) Internal DB - store the hash and URL of each chunk
+    
+    d) Watcher - To monitor the folder/file which should be uploaded on server (sends notification to chunker and indexer)
+    
+  2) Over Server:
+    a) Cloud storage - where chunks of file will be stored
+    b) Sync service - Which maintains the metadata
+      . It parses the metadata file received from the indexer
+      . Update the metadata of received from client indexer in DB having ACID properties
+      . Send/Notifies all the other subscribers or clients about the changes in metadata file
+ 
+ Why Queues -  Because client can work in offline mode, or sync can be done at specific point in time.
+    We want the ASync communication b/w client and server
+ 
+ 
