@@ -1,0 +1,65 @@
+Cout min sketch :
+ the frequency count–min sketch is a probabilistic data structure that serves as a frequency table of events in a stream of data.
+ It uses hash functions to map events to frequencies, but unlike a hash table uses only sub-linear space, at the expense of overcounting some events due to collisions.
+ 
+It is somewhat similar to bloom filter.
+ The main difference is that bloom filter represents a set as a bitmap, while Count-Min sketch represents a multi-set which keeps a frequency distribution summary:
+
+Frequency summaries; examples: keeping track of let’s say 95 percentile, in a leaderboard, top customers in ecommerce, fraud classifiers etc.
+ One practical example would be in language detection: comparing frequencies for the most commonly occurring words is a simply way to predict the language in which a document was written.
+ O(k) query time.
+
+
+It uses multiple hash function to count the frequency of events in a stream
+
+Advantages over hash function:
+  . Uses sub-linear space
+
+Issues:
+  . Sometimes it overcounts the value due to hash collision
+  
+  
+ ALternates:
+  1) Hash Table 
+    Space - O (n)
+    Time - O (1)
+    
+  2) Sampling - 
+    on data stream, random sampling after certain time period
+    - The true randomness cannot be predicted
+    
+  What is Sketch in count-min sketch?
+    Sketch is a 2D matrix
+    . Number of rows would be equal to number of Hash function used 
+    . Number of column the maximum number a hashfunction gives output
+    
+    This datastructure size/space does not depend on stream i.e. sub linear space complexity
+    
+ How it works? Process of Count-min sketch algorithm?
+ 
+ Operation Put or Update:
+  1) Pass object to Hashfunction 1 ... Hashfunction N
+  2) update the sketch/matrix with the value in particular column for all the hash functions or rows in matrix
+  
+ Problems while update:
+  . Collision:
+    . in case of collisions update simillarly like normal process
+
+How it works to calculate the frequency in stream?
+Operation Get or Read:  
+  1) Pass object to HashFunction 1 ... HashFunction N
+  2) Get the values in column for each hash function or rows in matrix
+  3) Minimum of all the values calculates in step#2 - is the frequecy
+     Minimum reflects the proper value not including the hashed for collisions
+     
+When it will fail?
+  A case when, we have high chance of collision
+  More hashfunction means lesser collision which provides equal or more count
+  . it doesn't under count
+  
+Use cases?
+  . Networking
+  . NLP and ML algorithms
+  . Streaming algorithms
+
+
