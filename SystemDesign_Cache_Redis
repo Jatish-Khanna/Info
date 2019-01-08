@@ -42,7 +42,18 @@ Cache Access patterns:
     Cache will send the ACK
     An asychronous system will synchornize the cache and write back to the DB
   
-  
+Best datastructures to implement Fast read/writes:
+    . Hash table
+    
+   In case of Hash collisions, 
+    . Build a linked list for each bucket in hash table
+    
+ Evition policy:
+    1) LRU - least recently used
+     . Data structures (Hash table and Doubly Linked list)
+   
+   
+   
   
 
 
