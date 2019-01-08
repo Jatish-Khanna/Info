@@ -1,0 +1,3 @@
+1) Regular snapshot 
+2) Log reconstrunction
+  All operations are logged in a file stored on secondary storage
