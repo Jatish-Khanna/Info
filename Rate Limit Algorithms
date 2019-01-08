@@ -1,0 +1,33 @@
+Limited access for any service
+  Example 
+    1) Free service to user
+    2) Preventing consistent request from Botnets
+    
+Why required?
+  . It impoves the user expereince
+  . It is used to store services from DoS
+  . Operational cost
+  
+Types of rate limiting:
+  . User based rate limiting
+    The services per user
+  . Concurrent rate limiting
+    Number of thread working to complete action
+  . Location or IP based rate limit
+  . Server based rate limit - defining rules to access the service
+  
+  
+  Token bucket algorith:
+    
+
+
+
+
+
+
+
+
+
+
+
+
