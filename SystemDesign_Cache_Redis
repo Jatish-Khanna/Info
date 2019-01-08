@@ -1,0 +1,50 @@
+Caching -
+
+    High speed data storeage system which saves the transient data. The request will not hit the main merory. 
+    All the data will be returned from cache.
+    The data is stored in RAM which provides faster I/O operation
+    
+ Use cases:
+  . OS
+  . CDN
+  . Web
+  . DNS
+  . Games
+  ...
+
+Best practises:
+  . Validity of data to imporve the hitrate
+  . Less miss rate
+  . Proper Time to Live (TTL)
+
+
+Features:
+  . Storate (e.g. 1 TB)
+  . QPS - queries per second (50k to 1M QPS)
+  . Latency (1 ms)
+  . Eviction policy (LRU - least recently used) 
+  . Availability (100%)
+  . Scalable 
+
+Cache Access patterns:
+  1) Write-through system
+    when there is a write request from upstream application
+    The request data will be stored in cache
+    and then sent to DB
+    ACK will be sent once written on both cache and DB
+    
+  2) Write around
+    in this write request will be directly sent to DB
+    After the first cache miss or read request data is retrieved from the DB and stored in cache
+      
+  3) Write back
+    in this case, the request data will be stored in cache
+    Cache will send the ACK
+    An asychronous system will synchornize the cache and write back to the DB
+  
+  
+  
+
+
+
+
