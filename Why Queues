@@ -1,0 +1,4 @@
+This kind of synchronous behavior can severely degrade client’s performance; the client is forced to wait, effectively doing zero work, until its request can be responded.
+ Adding extra servers to address high load does not solve the problem either; even with effective load balancing in place, it is very difficult to ensure the fair and balanced distribution of work required to maximize client performance.
+ Further, if the server processing the requests is unavailable, or fails, then the clients upstream will fail too.
+ Solving this problem effectively requires building an abstraction between the client’s request and the actual work performed to service it.
