@@ -1,0 +1,15 @@
+Requirements:
+  Create a URL shortening service
+  When a user click on short URL, it should be redirected to original URI
+  Links will expire after certain timeperiod
+
+Non-functional:
+  . Availability
+  . URL shortening should not be predictable
+  
+
+
+
+
+
+
