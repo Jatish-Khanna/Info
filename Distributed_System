@@ -12,3 +12,59 @@ Availability
 4) Messaging
 5) Applications
 6) Ledgers
+
+
+Step 1: Requirements clarifications
+find the exact scope of the problem you’re solving
+ Examples
+ 
+ Will users of our service be able to post and connect to other people?
+Should we also design to create and display user’s timeline?
+Contents of service/input from user?
+Are we focusing on backend only?
+Will users be able to search?
+Do we need to display hot trending topics?
+Would there be any push notification?
+
+Step 2: System interface definition
+Define what APIs are expected from the system.
+
+
+Step 3: Back-of-the-envelope estimation
+  estimate the scale of the system you’re going to design
+  What scale is expected from the system?
+  How much storage will we need? 
+  What is the network bandwidth usage we expect?
+  
+Step 4: Defining data model
+ how data will flow among different components of the system. 
+ Which database system should we use? Would NoSQL like Cassandra best fits our needs, or we should use a MySQL-like solution. 
+ 
+ 
+Step 5: High-level design
+identify enough components that are needed to solve the actual problem from end-to-end.
+
+
+Step 6: Detailed design
+ feedback should always guide you towards which parts of the system she wants you to explain further
+ storing a massive amount of data, how should we partition our data to distribute it to multiple databases?
+ Should we try to store all the data of a user on the same database? What issue can it cause?
+ How would we handle hot users, who tweet a lot or follow lots of people?
+How much and at which layer should we introduce cache to speed things up?
+What components need better load balancing?
+
+Step 7: Identifying and resolving bottlenecks
+
+bottlenecks as possible and different approaches to mitigate them.
+Is there any single point of failure in our system? What are we doing to mitigate it?
+Do we’ve enough replicas of the data so that if we lose a few servers, 
+do we’ve enough copies of different services running, such that a few failures will not cause total system shutdown?
+How are we monitoring the performance of our service? Do we get alerts whenever critical components fail or their performance degrade?
+ 
+ 
+ 
+  
+  
+  
+  
+  
