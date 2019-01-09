@@ -1,0 +1,93 @@
+
+Bloom filter:
+  A Bloom filter is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set.
+  
+  The price paid for this efficiency is that a Bloom filter is a probabilistic data structure: 
+     it tells us that the element either definitely is not in the set or may be in the set.
+The base data structure of a Bloom filter is a Bit Vector. 
+
+Example:
+  To check if username is already taken by someone for signup service?
+
+1) Hashtable -
+  - The memory for scalable system required huge
+  - Storing hashtable on disk may add latency
+  
+  - It can be distributed to multiple systems
+  
+
+2) Bloom filter -
+  - It is probabilistic data structure
+  - Returns
+    . It is not present (100% sure)
+    . It may be present (depends on the hash function, the probabilty keys collide for different data)
+    
+  . It is storage efficient
+  . It is fast compared to Hash table
+  
+  Each empty cell in that table represents a bit, and the number below it its index.
+ To add an element to the Bloom filter, we simply hash it a few times and 
+ set the bits in the bit vector at the index of those hashes to true
+ 
+ Note: For each hash function update the respective index to 1
+
+When you add a string, you can see that the bits at the index given by the hashes are set to 1.
+ I've used the color green to show the newly added ones, but any colored cell is simply a 1.
+
+
+To test for membership, you simply hash the string with the same hash functions, then see if those values are set in the bit vector.
+ If they aren't, you know that the element isn't in the set.
+ If they are, you only know that it might be, because another element or some combination of other elements could have set the same bits.
+ 
+ The hash functions used in a Bloom filter should be independent and uniformly distributed.
+ They should also be as fast as possible (cryptographic hashes such as sha1, though widely used therefore are not very good choices).
+
+
+
+Time complexity:
+  - Number of Hash functions O(K) - is constant
+
+Space complexity:
+  - 
+  
+  Must read: https://llimllib.github.io/bloomfilter-tutorial/
+  How big should I make my Bloom filter?
+It's a nice property of Bloom filters that you can modify the false positive rate of your filter.
+ A larger filter will have less false positives, and a smaller one more.
+Your false positive rate will be approximately (1-e-kn/m)k, so you can just plug the number n of elements you expect to insert, and try various values of k and m to configure your filter for your application.
+
+2 This leads to an obvious question:
+
+How many hash functions should I use?
+The more hash functions you have, the slower your bloom filter, and the quicker it fills up.
+ If you have too few, however, you may suffer too many false positives.
+
+Since you have to pick k when you create the filter, you'll have to ballpark what range you expect n to be in.
+ Once you have that, you still have to choose a potential m (the number of bits) and k (the number of hash functions).
+
+It seems a difficult optimization problem, but fortunately, given an m and an n, we have a function to choose the optimal value of k: (m/n)ln(2) 2, 3
+
+So, to choose the size of a bloom filter, we:
+
+Choose a ballpark value for n
+Choose a value for m
+Calculate the optimal value of k
+Calculate the error rate for our chosen values of n, m, and k.
+ If it's unacceptable, return to step 2 and change m; otherwise we're done.
+
+How fast and space efficient is a Bloom filter?
+Given a Bloom filter with m bits and k hashing functions, both insertion and membership testing are O(k).
+ That is, each time you want to add an element to the set or check set membership, you just need to run the element through the k hash functions and add it to the set or check those bits.
+
+
+
+
+
+
+
+
+
+
+
+
+
