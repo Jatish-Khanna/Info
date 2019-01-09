@@ -1,0 +1,29 @@
+requirements
+ Functional requirements
+ Non-Functional requirements
+ 
+Design Considerations
+	Size of request
+	
+Capacity estimations
+	Traffic - Reads/Writes per second
+	Storage
+	Bandwidth
+	Memory estimations for cache
+	
+System API
+	functions and parameters
+	
+Database design
+
+High level design
+	
+Detailed design or component design
+
+Data partioning and replication
+
+Cache and load balancer
+
+Purging or DB clean up
+
+Security and permissions
