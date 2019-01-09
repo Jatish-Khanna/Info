@@ -71,5 +71,23 @@ Non-Functional requirements
   . Request collapse
 
 
+Push model [FAST CAST]-
+  As we have the product API, we need to design a system which updates all the connected client or mobile devices with 
+  the updated records
+
+  How this is achived?
+    - A scheduler will pull the data from the product API at interval per second
+    - It identifies the DELTA (difference between the last information sent and new information from product API)
+    - The delta will be appended to queue (Kafka, Rabbit MQ, redis) 
+    - That data will be pushed to websockets using
+      . Long/Short polling
+      . Server sent events
+
+
+
+
+
+
+
 
 
