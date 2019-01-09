@@ -1,0 +1,61 @@
+A chat or messaging system-
+  . A peer to peer communication as client 1 knows the address of other client. The messages can be exachanged between systems.
+  
+How to scale the system?
+  . A server b/w the clients to coordinate messages b/w all the clients connected on n/w
+
+
+Functional requirement:
+  . A text message to be sent b/w users
+  . Last seen time
+  . Do we need to send attachments
+  . Do we need to encrypt the messages
+  . A VoIP service is important for the user?
+  
+Non-Functional requirement:
+  . Availability
+  . Scale of the system i.e. number of users
+  
+  
+
+Components:
+  . Client API
+  . As scale is important - so multiple servers to handle request
+  . Load balancer to manage request to servers
+  . Database to store intermediate states (e.g. user is not available)
+  . 
+  
+Connections b/w the client:
+  The type of connection between the clients would be duplex
+  . A web socket would be opened b/w client to server
+  
+How system works?
+  . A client would send a message
+  . It would be stored on local database of local system
+  . It connects to the server and tries to send the message to server
+  . The message will be saved into the DB as other client is unavailable
+  . Once receiver is available - server will send the message
+  
+ 
+Message delivery feature and acknoledgment?
+  . once message server has received the message
+  . an ACK will send to the client
+  . Once server delivers the message to receiver, anthoer ACK will be sent to sender
+  . Once receiver receives the message an ACK will be sent to server and cascading to sender
+  
+  
+Activities done by messaging server?
+  . When a connection is established b/w client and server
+  . A queue has been connected to each websocket
+  . All the received messages from the websocket will be pushed to queue of other client
+  . If client is avaiable then queue will be stored in redis
+    else the message has been stored in DB for future reference
+    . CLient/receiver becomes online and unsent messages has been read from the DB and sent to client using the created socket
+    
+  . At last server send an ACK for completion of sending of all the messages that were stored in DB
+
+
+
+
+
+
