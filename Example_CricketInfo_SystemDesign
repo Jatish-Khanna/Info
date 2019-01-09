@@ -1,0 +1,30 @@
+Cricket info system design-
+  It is built on AWS, it has capability of 1M websocket updates
+  Player profile
+  Live score
+   Calendar
+   Teams
+   Headlines
+   Leader boards
+   Photos
+   API's to third party vendors
+   
+   Read heavy system
+   Write include score updates, calendar updates, or comments
+
+Functional Requirements:
+  . Sync realtime traffic for CricInfo site
+    - Stadium will push the score update to all the subscribers one of is our score update service
+    - Manual update of data by looking at TV
+    - OCR on the TV feed to levrage the automatic update of score
+    
+  . 
+
+Non-Functional requirements
+  . Low latency
+  . Availability
+  . 
+
+
+
+
