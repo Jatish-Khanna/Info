@@ -5,7 +5,7 @@ requirements
 Design Considerations
 	Size of request
 	
-Capacity estimations
+Capacity estimations	
 	Traffic - Reads/Writes per second
 	Storage
 	Bandwidth
@@ -27,3 +27,94 @@ Cache and load balancer
 Purging or DB clean up
 
 Security and permissions
+
+
+
+Example of Capacity estimations
+	1 Million request per day
+	Reads/Write ratio - 5:1
+	
+	
+	Traffic - Reads/Writes per second
+	
+	1 Million writes per day
+	5 Million reads per day based on read:write ratio
+	
+	1M / (24 * 60 * 60) =  12 paste per second
+	5M / (24 * 60 * 60) =  57 paste per second
+	
+	Storage estimations:
+	user can upload max 10Mb of content but average 10Kb file is written by all the users
+	
+	1M * 10KB = 10 Gb per day
+	
+	To store this data for 10 years we need-
+	1M per day * 365 days * 10 years= 36 TB
+	
+	If we shorten URL, we need another 6 characters for base64 encoding-
+		64  pow 6 = 68.7 billion unique strings
+	
+	If it take 1 byte to store 1 character
+		then total size required to store  3.6 billion keys (max request in 10 years)
+		3.6B * 6 (characters per hash) = 22 GB
+		
+	To keep the margin 70% of space will be utilized of total
+		36TB * .7 + 36 TB = 51 TB
+
+	
+	Bandwidth
+	Ingress:
+		10 Kb * 12 paste per second = 120 Kbper second
+	
+	Egress:
+		10 Kb * 58 request per second = .6 Mbps
+	
+
+	Memory estimations for cache
+		Following 80-20 rule i.e. 20% of hot paste generates 80% of traffic
+		Caching 20% request
+		
+		5M reads per day * 10 Kb size per read * 0.2 (80-20 rule) = 10 Gb
+	
+
+Example of System API
+	addPaste(api_dev_key, paste_data, custom_url=None user_name=None, paste_name=None, expire_date=None)
+	Parameters:
+api_dev_key (string): The API developer key of a registered account. 
+This will be used to, among other things, throttle users based on their allocated quota.
+paste_data (string): Textual data of the paste.
+custom_url (string): Optional custom URL.
+user_name (string): Optional user name to be used to generate URL.
+paste_name (string): Optional name of the paste expire_date (string): Optional expiration date for the paste.
+
+Returns: (string)
+A successful insertion returns the URL through which the paste can be accessed, otherwise, returns an error code.
+
+Similarly, we can have retrieve and delete Paste APIs:
+
+
+getPaste(api_dev_key, api_paste_key)
+Where “api_paste_key” is a string representing the Paste Key of the paste to be retrieved. This API will return the textual data of the paste.
+
+
+deletePaste(api_dev_key, api_paste_key)
+A successful deletion returns ‘true’, otherwise returns ‘false’.
+
+
+
+
+Example of database design
+	A few observations about the nature of the data we are going to store:
+
+We need to store billions of records.
+Each metadata object we are going to store would be small (less than 100 bytes).
+Each paste object we are storing can be of medium size (it can be a few MB).
+There are no relationships between records, except if we want to store which user created what Paste.
+Our service is read-heavy.
+Database Schema:
+We would need two tables, one for storing information about the Pastes and the other for users’ data.
+
+
+Here, ‘URlHash’ is the URL equivalent of the TinyURL and ‘ContentKey’ is the object key storing the contents of the paste.
+
+
