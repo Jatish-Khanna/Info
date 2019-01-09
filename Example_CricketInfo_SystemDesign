@@ -7,10 +7,53 @@ Cricket info system design-
    Headlines
    Leader boards
    Photos
-   API's to third party vendors
+   API's to third party vendors (Product API's)
    
    Read heavy system
    Write include score updates, calendar updates, or comments
+   
+   Design a core API and product API
+   Binder - parses the query to basic format
+    - what are the core API's need to be called from the components of JSON in request by Product API's
+    
+    Example:
+      A third party service calls product API's
+      Product API will call the Binder component
+      Binder will parse the JSON and convert the complex query into single CORE API calls
+      
+      
+    Note: With this we can achive parallelism
+      If one of the Core API call failed but other core API calls have response for PRODUCT API call, we can generate response
+         without the failed core API response
+         
+     Caching:
+      it is very important where static content is distributed by API
+      Example- we have 5000 request per second, a caching with TTL 1 sec will serve 4999 calls from cache whereas
+        Only one request goes to backend
+        
+      Local cache, and distributed cache both would help in achiving high performance
+      Varnish, cache the front pages, API's. The features of request collapsing
+        
+      Stampade effect: 
+        A request from client to product API
+        Product API to local and distributed cache
+        Product API will send it to core API
+        and the core API will send response to product API
+        A caching would be done by product API
+        the result will be returned
+        
+        Note: In this case, in split microsecond a number of request has been sent from Product API to Core API
+        the reason we have larger cache miss
+        
+        Solution- Use varnish, 
+            It collapse the multiple request at specific time window and only one request will be sent to CORE API
+            this saves low of latency, bandwidth and resource, as the only reason response not available in Product API cache
+
+
+  A circuit breaking pattern:
+    Hystrix- A lot of n/w calls to product API accross different regions and data centers.
+      Suppose a product API calls, multiple core API's whereas 
+        one core API fails, to stop the cascading effect so respone can be returned from other core API calls from single Product API
 
 Functional Requirements:
   . Sync realtime traffic for CricInfo site
@@ -23,7 +66,9 @@ Functional Requirements:
 Non-Functional requirements
   . Low latency
   . Availability
-  . 
+  . Circuit breaking
+  . Response fallback
+  . Request collapse
 
 
 
