@@ -17,15 +17,64 @@ Types of rate limiting:
   . Server based rate limit - defining rules to access the service
   
   
-  Token bucket algorith:
+Algorithm for Single server setup not on distributed systems:
+  Note: distributed system cause inconsistency (sticky sessions is the solution) and 
+  race conditions (locks is the solution) using below algorithms
+  - A rate limiter can be coupled to load balancer
+
+  1) Token bucket algorithm (Redis can be used to implement it efficiently)
+     For every unique user track the last time when request was made
+     Available number of tokens to be used by user
+    . Fetch the token from bucket 
+    . Update the token to latest timestamp and number of tokens available to be utilized by user
+    
+    In distributed environment it may cause consistency issues.
+    
+  2) Leaky bucket algorithm
+    . Request has been posted on FIFO queue
+    . Once request is on queue, processor will process the request
+    . If there is a burst, either store the request on queue or discard as it will process only limited request
+    
+  3) Fixed window counter
+    . Maintain a counter at server end for each time window
+    . increment the counter for each requst received
+    . Reset the counter for next window
+    - This doesnot smoothens the traffic like leaky bucket
+    
+    4) Sliding Logs (Hashtable, userid as key):
+     . Key based on userid
+     . Append the request entry to log from each user
+     . Each entry should contain the timestamp
+     . Filter the request which are older than timewindow and discard them
+     . Check the rate data with the log size if log size is bigger discard last request
+     
+     - Rquires high memory usage
+     
+    5) Sliding window counter (hashtable, userid as key):
+      . Store the requst in the array as Hashtable value
+      . Store the timestamp and counter at time window
+      . It saves memory when compared with sliding logs
+
+
+** Sticky session - 
+ - That request from same user will be forwarded to service using same flow
+  Not a fault tolerent design
+  Not a well balanced design
+
+** Locks:
+  - Put a lock on shared resources
+   Until resource sync and are consistent, data can not be returned
+   
+   It would cause high latency for sync, data between nodes
+
+Solution for Distributed system:
+  . Relaxing rate limit
+    - It is possible to server extra service
     
 
-
-
-
-
-
-
+  . Asychnornous rate limit:
+    - High performance can be achived by storing counter locally at each server
+    - Update the counter asncy with the redis or other data store.
 
 
 
