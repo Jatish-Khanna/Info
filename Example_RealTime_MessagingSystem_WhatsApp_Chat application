@@ -55,6 +55,10 @@ Activities done by messaging server?
   . At last server send an ACK for completion of sending of all the messages that were stored in DB
 
 
+Heartbeat or monitor?
+  A connection initiated the by user, will initiate a heart beat system and maintains the timestamp when the user was last logged in
+
+
 
 
 
