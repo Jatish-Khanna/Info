@@ -35,6 +35,18 @@ How to handle when a person has Millions of followers?
   - Return the response to user
 
 
+Trends-
+  - Consider the volume of tweet
+  - Time taken to generate tweets
+  
+  Example- 
+  1000 tweets in 5 mins on particular hash tag
+  
+As it is stream of data to be processed - Storm or Kafka streams
+  
+
+
+
 
 
 
