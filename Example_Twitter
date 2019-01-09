@@ -1,0 +1,44 @@
+Functional requirements?
+  Post should be sent to all the followers
+  Home time line shows tweets from other users
+  User timeline i.e. all your post
+  Trends - what is new or hash tags
+
+
+Non-functional requirements?
+  . Highly available
+  . Read:write ratio - 1000:1
+  . 600,000 tweets per second
+  . Eventually consistent
+  . Storage - 140 charachters per tweet
+
+
+To get the latest tweet from all the users?
+ Fan out -> but it has issues with person who have high number of followers
+  The approach is called as fanout approach which is asynchronous
+  When we get a tweet
+  Process the message
+  send it to all the users
+  This entry will be stored in redis list of all the followers
+  
+  Follower logins and read all the tweets from redis list
+
+Note: FanOut works for all the persons with small number of followers but
+
+How to handle when a person has Millions of followers?
+  Maintain a list of celebrities user is following in redis
+
+  - Prepare the response for user by readin a list of tweets from redis with FanOut
+  - Iterate over each follower 
+  - Get the latest tweet from user timeline of celebrity
+  - append the new tweet to response
+  - Return the response to user
+
+
+
+
+
+
+
+
+
