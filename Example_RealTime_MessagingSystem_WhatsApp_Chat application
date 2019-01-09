@@ -59,7 +59,27 @@ Heartbeat or monitor?
   A connection initiated the by user, will initiate a heart beat system and maintains the timestamp when the user was last logged in
 
 
-
-
+Media (VoIP or attachment)-
+  . Uploading any document or image to HTTP server
+  . A unique ID will be returned to the client
+  . The client will send the hash and media type to the server which intern will be sent to receiver
+  . The client will download the message from the CDN
+  
+Encryption?
+  Handshake mechanism between client and receiver
+  A server created key, encrypted by master key
+  
+  
+  Technologies what's app
+    . Erlang - high performance, light weigth thread (10 M connections per server)
+    . FreeBSD as OS
+    . Amnisha - due to Erlang
+    . Webserver - YAWS!
+  
+  
+  
+  
+  
+  
 
 
