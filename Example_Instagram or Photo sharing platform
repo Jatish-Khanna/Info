@@ -1,0 +1,64 @@
+Instagram?
+  Instagram is a social networking service which enables its users to upload and share their photos and videos with other users.
+ Instagram users can choose to share either publicly or privately.
+ Anything shared publically can be seen by any other user, whereas privately shared contents can only be accessible by a specified set of people.
+
+
+1) Functional requirements?
+  . Upload/Download/View the photos' or videos
+  . User can perform search based on photos or videos
+  . User can connect with users
+  . A feed from others users to be displayed
+  
+2) Non-functional requirement?
+  . Availability
+  . Low latency for file upload and news feed generation
+  . Eventual consistency
+  . The system should be reliable that any photo's/media upload should never be lost
+  
+ 3) Design considerations - read/write heavy?
+  The systems should be ready heavy as news feed will be shared will connections
+  . User can upload as many as photos
+ 
+4) Estimations:
+  Assuming it has 1M active request per day
+  1M photos have been shared every day i.e. 12 photos per second
+  Average size of photos is 200 Kb
+  
+  
+  A) Traffic estimations?
+    
+  B) Space estimations?
+    1M * 200 Kb = 200 GB per day
+    
+    For 10 years
+      200GB * 365 (days) * 10 = 712 TB 
+    
+  c) Bandwidth estimations?
+  
+  d) Memory estimations?
+  
+
+
+5) API definition?
+
+6) Database design?
+  a) Photo table - stores file path for distributed file store Amazon S3 and Id (Scalable - NoSql)
+  b) User table - Relationship (MySQL or Columar database - casandara)
+  c) Follower table - to store all the connections (MySQL or Columar database - casandara)
+
+7) High level design?
+  a) Upload a photo by user
+  b) View/Search photo 
+  
+  
+
+
+
+
+
+
+
+
+
+
