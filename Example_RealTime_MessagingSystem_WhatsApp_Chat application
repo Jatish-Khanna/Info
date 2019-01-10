@@ -12,11 +12,17 @@ Functional requirement:
   . Do we need to encrypt the messages
   . A VoIP service is important for the user?
   
+  Messenger should support one-on-one conversations between users.
+Messenger should keep track of online/offline statuses of its users.
+Messenger should support persistent storage of chat history.
+  
 Non-Functional requirement:
   . Availability
   . Scale of the system i.e. number of users
   
-  
+Users should have real-time chat experience with minimum latency.
+Our system should be highly consistent; users should be able to see the same chat history on all their devices.
+Messenger’s high availability is desirable; we can tolerate lower availability in the interest of consistency.
 
 Components:
   . Client API
@@ -78,8 +84,104 @@ Encryption?
   
   
   
-  
-  
+3) Capacity Estimation and Constraints
+Let’s assume that we have 500 million daily active users and on average each user sends 40 messages daily; this gives us 20 billion messages per day.
+
+
+Storage Estimation: Let’s assume that on average a message is 100 bytes, 
+so to store all the messages for one day we would need 2TB of storage.
+
+
+20 billion messages * 100 bytes => 2 TB/day
+Although Facebook Messenger stores all previous chat history, 
+but just for estimation to save five years of chat history, we would need 3.6 petabytes of storage.
+
+
+2 TB * 365 days * 5 years ~= 3.6 PB
+Other than the chat messages, we would also need to store users’ information, messages’ metadata (ID, Timestamp, etc.).
+ Also, the above calculations didn’t keep data compression and replication in consideration.
+
+
+Bandwidth Estimation: If our service is getting 2TB of data every day, this will give us 25MB of incoming data for each second.
+
+
+2 TB / 86400 sec ~= 25 MB/s
+Since each incoming message needs to go out to another user, we will need the same amount of bandwidth 25MB/s for both upload and download.
+
+
+High level estimates:
+
+Total messages	20 billion per day
+Storage for each day	2TB
+Storage for 5 years	3.
+6PB
+Incomming data	25MB/s
+Outgoing data	25MB/s
+
+
+4) High level desing:
+
+The detailed workflow would look like this:
+
+User-A sends a message to User-B through the chat server.
+The server receives the message and sends an acknowledgment to User-A.
+The server stores the message in its database and sends the message to User-B.
+User-B receives the message and sends the acknowledgment to the server.
+The server notifies User-A that the message has been delivered successfully to User-B.
   
 
+
+a.
+ Messages Handling
+How would we efficiently send/receive messages? To send messages, a user needs to connect to the server and post messages for the other users.
+ To get a message from the server, the user has two options:
+
+Pull model: Users can periodically ask the server if there are any new messages for them.
+
+Push model: Users can keep a connection open with the server and can depend upon the server to notify them whenever there are new messages.
+
+If we go with our first approach, then the server needs to keep track of messages that are still waiting to be delivered, and as soon as the receiving user connects to the server to ask for any new message, the server can return all the pending messages.
+ To minimize latency for the user, they have to check the server quite frequently, and most of the time they will be getting an empty response if there are no pending message.
+ This will waste a lot of resources and does not look like an efficient solution.
+
+
+If we go with our second approach, where all the active users keep a connection open with the server, then as soon as the server receives a message it can immediately pass the message to the intended user.
+ This way, the server does not need to keep track of the pending messages, and we will have minimum latency, as the messages are delivered instantly on the opened connection.
+
+
+A) How will clients maintain an open connection with the server? We can use HTTP Long Polling or WebSockets.
+ In long polling, clients can request information from the server with the expectation that the server may not respond immediately.
+ If the server has no new data for the client when the poll is received, instead of sending an empty response, the server holds the request open and waits for response information to become available.
+ Once it does have new information, the server immediately sends the response to the client, completing the open request.
+ Upon receipt of the server response, the client can immediately issue another server request for future updates.
+ This gives a lot of improvements in latencies, throughputs, and performance.
+ The long polling request can timeout or can receive a disconnect from the server, in that case, the client has to open a new request.
+
+
+B) How can the server keep track of all the opened connection to redirect messages to the users efficiently? The server can maintain a hash table, where “key” would be the UserID and “value” would be the connection object.
+ So whenever the server receives a message for a user, it looks up that user in the hash table to find the connection object and sends the message on the open request. 
+ 
+ The data can be maintained in main memory like redis cache where it would be quick to retrieve connections.
+ For scaling we can use the clusture of Redis cache
+
+C) What will happen when the server receives a message for a user who has gone offline?
+  If the receiver of the message has been disconnected or there is no open socket b/w server and receiver
+  The server will store the message in the receiver queue or DB table.
+  Once the receiver opens a socket with the server
+  A synchronous service will send data to client
+  Push back all the notifications to sender of messages
+  
+  D) How to know which server holds the connection to which user? We can introduce a software load balancer in front of our chat servers; that can map each UserID to a server to redirect the request.
+  
+
+E) How does the messenger maintain the sequencing of the messages? We can store a timestamp with each message, which would be the time when the message is received at the server. But this will still not ensure correct ordering of messages for clients. The scenario where the server timestamp cannot determine the exact order of messages would look like this:
+
+User-1 sends a message M1 to the server for User-2.
+The server receives M1 at T1.
+Meanwhile, User-2 sends a message M2 to the server for User-1.
+The server receives the message M2 at T2, such that T2 > T1.
+The server sends message M1 to User-2 and M2 to User-1.
+So User-1 will see M1 first and then M2, whereas User-2 will see M2 first and then M1.
+
+To resolve this, we need to keep a sequence number with every message for each client. This sequence number will determine the exact ordering of messages for EACH user. With this solution, both clients will see a different view of the message sequence, but this view will be consistent for them on all devices.
 
