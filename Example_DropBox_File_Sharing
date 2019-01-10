@@ -1,4 +1,40 @@
 ** Drop Box:
+
+Cloud file storage services have become very popular recently as they simplify the storage and exchange of digital resources among multiple devices.
+ The shift from using single personal computers to using multiple devices with different platforms and operating systems such as smartphones and tablets and their portable access from various geographical locations at any time is believed to be accountable for the huge popularity of cloud storage services.
+
+Availability: The motto of cloud storage services is to have data availability anywhere anytime.
+ Users can access their files/photos from any device whenever and wherever they like.
+
+
+Reliability and Durability: Another benefit of cloud storage is that it offers 100% reliability and durability of data.
+ Cloud storage ensures that users will never lose their data, by keeping multiple copies of the data stored on different geographically located servers.
+
+
+Scalability: Users will never have to worry about getting out of storage space.
+ With cloud storage, you have unlimited storage as long as you are ready to pay for it.
+
+Some Design Considerations
+We should expect huge read and write volumes.
+
+Read to write ratio is expected to be nearly the same.
+
+Internally, files can be stored in small parts or chunks (say 4MB), this can provide a lot of benefits e.g.
+ all failed operations shall only be retried for smaller parts of a file.
+ If a user fails to upload a file, then only the failing chunk will be retried.
+
+We can reduce the amount of data exchange by transferring updated chunks only.
+
+By removing duplicate chunks, we can save storage space and bandwidth usage.
+
+Keeping a local copy of the metadata (file name, size, etc.
+) with the client can save us a lot of round trips to the server.
+
+For small changes, clients can intelligently upload the diffs instead of the whole chunk.
+
+
+
+
 When complete file is uploaded and downloaded by client supposing 2GB. It will waste resources mentioned below
   1) Upload / Concurrency -  On single file concurrency can not be achived
   2) Latency - waiting for file to updload and download
