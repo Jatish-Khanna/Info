@@ -53,8 +53,48 @@ Instagram?
   
   
 8) Component design?
-  
-  
+  If we assume that a web server can have a maximum of 500 connections at any time, this would mean it can’t have more than 500 concurrent uploads or reads.
+ To handle this bottleneck we can split reads and writes into separate services.
+ We will have dedicated servers for reads and different servers for writes to ensure that uploads don’t hog the system.
+
+
+Separating photos’ read and write requests will also allow us to scale and optimize each of these operations independently.
+
+9) Redundancy and reliability?
+  Losing files is not an option for our service.
+ Therefore, we will store multiple copies of each file, such that if one storage server dies, we can retrieve the photo from the other copy present on a different storage server.
+
+
+Creating redundancy in a system can remove single points of failure and provide a backup or spare functionality if needed in a crisis.
+ For example, if there are two instances of the same service running in production, and one fails or degrades, the system can failover to the healthy copy.
+ Failover can happen automatically or require manual intervention.
+
+
+What are the different issues with this partitioning scheme?
+
+How would we handle hot users? Several people follow such hot users, and a lot of other people sees any photo they upload.
+
+Some users will have a lot of photos compared to others, thus making a non-uniform distribution of storage.
+
+What if we cannot store all pictures of a user on one shard? If we distribute photos of a user onto multiple shards, will it cause higher latencies?
+Storing all photos of a user on one shard can cause issues like unavailability of all of the user’s data if that shard is down or higher latency if it is serving high load etc.
+
+Wouldn’t this key generating DB be a single point of failure? Yes, it will be.
+ A workaround for that could be, we can define two such databases, with one generating even numbered IDs and the other odd numbered.
+ For MySQL following script can define such sequences:
+
+
+KeyGeneratingServer1:
+auto-increment-increment = 2
+auto-increment-offset = 1
+​
+KeyGeneratingServer2:
+auto-increment-increment = 2
+auto-increment-offset = 2
+We can put a load balancer in front of both of these databases to round robin between them and to deal with downtime.
+ Both these servers could be out of sync with one generating more keys than the other, but this will not cause any issue in our system.
+ We can extend this design by defining separate ID tables for Users, Photo-Comments or other objects present in our system.
+
 
 
 
