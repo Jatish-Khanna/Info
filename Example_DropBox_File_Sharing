@@ -68,21 +68,64 @@ Components
       . Get the URL of each chunk stored on cloud server
       . Pass the information to indexer
       
+      evaluating your peek upload concurrency against your system's available memory.
+ How many simultaneous uploads you have in progress at a time would be the key critical variable in any calculation you might do.
+ All you have to do is make sure you have enough memory to handle the upload concurrency, and that's rather trivial to achieve.
+ Memory is cheap and you will likely run out of network bandwidth long before you get to the point where your concurrency would overrun your memory availability.
+
+      We can statically calculate what could be an optimal chunk size based on 
+1) Storage devices we use in the cloud to optimize space utilization and Input/output operations per second (IOPS) 
+2) Network bandwidth 
+3) Average file size in the storage etc.
+ In our metadata, we should also keep a record of each file and the chunks that constitute it.
+
+      
+      
     b) Indexer - 
       . The URL and hash from chunker will be updated in DB
       . Notifies the messaging service over server side, with the created metadata file
       
     c) Internal DB - store the hash and URL of each chunk
     
+    
     d) Watcher - To monitor the folder/file which should be uploaded on server (sends notification to chunker and indexer)
     
   2) Over Server:
     a) Cloud storage - where chunks of file will be stored
+    
+    Clients directly interact with the storage to send and receive objects from it.
+ Separation of the metadata from storage enables us to use any storage either in cloud or in-house.
+
+    
+    
     b) Sync service - Which maintains the metadata
       . It parses the metadata file received from the indexer
       . Update the metadata of received from client indexer in DB having ACID properties
       . Send/Notifies all the other subscribers or clients about the changes in metadata file
+      
+      A scalable Message Queuing Service that supports asynchronous message-based communication 
+  between clients and the Synchronization Service instances best fits the requirements of our application.
  
+ Message Queuing Service will implement two types of queues in our system.
+ The Request Queue is a global queue, and all client will share it.
+ Clients’ requests to update the Metadata Database will be sent to the Request Queue first, from there Synchronization Service will take it to update metadata.
+ The Response Queues that correspond to individual subscribed clients are responsible for delivering the update messages to each client
+   
+   c) Metadata storage:
+    
+        The Metadata Database is responsible for maintaining the versioning and metadata information about files/chunks, users, and workspaces.
+ The Metadata Database can be a relational database such as MySQL, or a NoSQL database service such as DynamoDB.
+ Regardless of the type of the database, the Synchronization Service should be able to provide a consistent view of the files using a database, 
+ especially if more than one user work with the same file simultaneously.
+ 
+ Metadata Database should be storing information about following objects:
+
+Chunks
+Files
+User
+Devices
+Workspace (sync folders)
+
  Why Queues -  Because client can work in offline mode, or sync can be done at specific point in time.
     We want the ASync communication b/w client and server
  
