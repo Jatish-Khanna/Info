@@ -111,9 +111,30 @@ Returns: (STREAM)
 A media stream (a video chunk) from the given offset.
 
 
-5) High Level design
+5) Database design
+ 
 
 
+6) High Level design
+
+ A) Processing queue:
+  Each uploaded video will be pushed to a processing queue, 
+  - it will be de-queue for encoding, storage and generating thumbnails
+  
+  B) Encoder:
+   To encode video into multiple formats
+  C) Thumbnail generator:
+   To create thumbnails for each video
+  
+  D) Video and Thumbnanil storage:
+    these will be stored in some distributed file system
+    
+  E) User database:
+    to store user related information
+  F) Metadata storage:
+    It will store data about each video
+     like title, file path in the system, uploading user, 
+     total views, likes, dislikes, etc. Also, it will be used to store all the video comments.
 
 
   
