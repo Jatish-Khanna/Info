@@ -1,4 +1,10 @@
+Twitter is an online social networking service where users post and read short 140-character messages called "tweets".
+ Registered users can post and read tweets, but those who are not registered can only read them.
+
+
 Functional requirements?
+  User should be able to post a new tweet
+  User should be able to follow other users
   Post should be sent to all the followers
   Home time line shows tweets from other users
   User timeline i.e. all your post
@@ -45,8 +51,60 @@ Trends-
 As it is stream of data to be processed - Storm or Kafka streams
   
 
+3) Capacity Estimations?
+  A) Assuming we have 1 billion users with 200 million daily active users
+  - We have 100 Million tweets each day
+  - We have average 200 users following each user
+  
+B)  Total tweets view?
+    Let’s assume on average a user visits their timeline two times a day.
+ and visits five other people’s pages. if a user sees 20 tweets, total tweet-views our system will generate:
+
+200M Daily active users * ((2 (there timeline) + 5 (friends)) * 20 tweets) => 28 B/day.
+
+C) Storage Estimates?
+  Each tweet has 140 characters and systems uses 2 bytes unicode charset to store character
+  + 30 byte to store per tweet metadata information (user, time...)
+  
+  (140 * 2 + 30 ) * 100 M number of tweets per day = 30 GB per day
+  
+  If we support photos and videos?
+    - A photo takes 200 Kb   (5:1 i.e. five tweets per single tweet)
+    - A Video id of size 2 MB (10:1 i.e. ten tweets per single tweet)
+    
+     (200 Kb * 100 M /5 ) + (2MB * 100 M / 10) = 24 TB per day
+     
+ D) Bandwidth estimates?
+    Ingress - 
+      Total storage is - 24 TB per day
+      290 MB per second
+      
+    Egress - 
+  Let’s assume on average a user visits their timeline two times a day and visits five other people’s pages.
+ One each page if a user sees 20 tweets, total tweet-views our system will generate:28B tweet views per day.
+ We must show the photo of every tweet (if it has a photo), but let’s assume that the users watch every 3rd video they see in their timeline.
+ So, total egress will be:
+
+(28B * 280 bytes) / 86400s of text => 93MB/s 
++ (28B/5 * 200KB ) / 86400s of photos => 13GB/S 
++ (28B/10/3 * 2MB ) / 86400s of Videos => 22GB/s
+Total ~= 35GB/s
 
 
+4) API design?
+  tweet(api_dev_key, tweet_data, tweet_location, user_location, media_ids, maximum_results_to_return)
+  
+  parameters:
+api_dev_key (string): The API developer key of a registered account. This will be used to, among other things, throttle users based on their allocated quota.
+tweet_data (string): The text of the tweet, typically up to 140 characters.
+tweet_location (string): Optional location (longitude, latitude) this Tweet refers to. user_location (string): Optional location (longitude, latitude) of the user adding the tweet.
+media_ids (number[]): Optional list of media_ids to be associated with the Tweet. (All the media photo, video, etc.) need to be uploaded separately.
+
+Returns: (string)
+A successful post will return the URL to access that tweet. Otherwise, an appropriate HTTP error is returned.
+
+
+5) High Level system design
 
 
 
