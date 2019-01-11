@@ -43,7 +43,80 @@ Non-functional requirements:
       Note: these numbers doesn't include replication and without video compression
       
       
-  B) 
+  B) Bandwidth estimates?
+   500 hours of videos uploaded each minute takes 10M/sec bandwidth
+   
+   (500 * 60) * 10 = 300 GB/min = 5 Gb/sec
+   
+4) System API?
+ A) uploadVideo(apiDevKey, videoTitle, videoDescription, []tags, categoryId, defaultLanguage, recordedLocation,videoContents)
+  api_dev_key (string): The API developer key of a registered account.
+ This will be used to, among other things, throttle users based on their allocated quota.
+
+video_title (string): Title of the video.
+
+vide_description (string): Optional description of the video.
+
+tags (string[]): Optional tags for the video.
+
+category_id (string): Category of the video, e.g. , Film, Song, People, etc.
+
+default_language (string): For example English, Mandarin, Hindi, etc.
+
+recording_details (string): Location where the video was recorded.
+
+video_contents (stream): Video to be uploaded.
+
+
+Returns: (string)
+A successful upload will return HTTP 202 (request accepted), and o
+nce the video encoding is completed, the user is notified through email with a link to access the video.
+ We can also expose a queryable API to let users know the current status of their uploaded video.
+
+
+B) searchVideo(apiDevKey, searchQuery, userLocation, pageSize, pageToken)
+api_dev_key (string): The API developer key of a registered account of our service.
+
+search_query (string): A string containing the search terms.
+
+user_location (string): Optional location of the user performing the search.
+
+maximum_videos_to_return (number): Maximum number of results returned in one request.
+
+page_token (string): This token will specify a page in the result set that should be returned.
+
+
+Returns: (JSON)
+A JSON containing information about the list of video resources matching the search query.
+ Each video resource will have a video title, a thumbnail, a video creation date and how many views it has.
+
+
+C) streamVideo(apiDevKey, videoId, offset, codec, resolution)
+
+Parameters:
+api_dev_key (string): The API developer key of a registered account of our service.
+
+video_id (string): A string to identify the video.
+
+offset (number): We should be able to stream video from any offset, this offset would be a time in seconds from the beginning of the video.
+ If we support to play/pause a video from multiple devices, we will need to store the offset on the server.
+ This will enable the users to start watching a video on any device from the same point where the left.
+
+codec (string) & resolution(string): We should send the codec and resolution info in the API from the client to support play/pause from multiple devices.
+ Imagine if you are watching a video on your TV’s Netflix app, paused it there and start watching it on your phone’s Netflix app.
+ In this case, you would need codec and resolution, as both these devices have a different resolution and using a different codec.
+
+
+Returns: (STREAM)
+A media stream (a video chunk) from the given offset.
+
+
+5) High Level design
+
+
+
+
+  
 
 
 
