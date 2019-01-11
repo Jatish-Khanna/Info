@@ -1,0 +1,57 @@
+Let's design a video sharing service like Youtube, where users will be able to upload/view/search videos.
+
+1) Why Youtube?
+Youtube is one of the most popular video sharing websites in the world.
+ Users of the service can upload, view, share, rate, and report videos as well as add comments on videos.
+
+2) Requirements and Goals of the System
+
+Functional requirements:
+  . Users should be able to upload the videos on the server
+  . Users should be able to view the videos uploaded
+  . Users should be ablt to search the videos
+  . Service should be able to track the status of Like/comments/Views
+  . Add the comments or view a comments for videos
+  
+Non-functional requirements:
+  . The system should be highly reliable that the uploaded video should not be lost
+  . The service should be highly available 
+  . The consistency can be eventual, it may take some time to view the uploaded video
+  . The buffering of video should be modular and proper without any pauses
+  
+3) Capacity estimations and constaraints?
+  Total number of system users?   2 billion
+  Total number of daily active users? 800 Million
+  Number of reads per day?  5 per day by single user
+  Read:write average? 200 : 1 i.e. per 200 reads, one video is uploaded
+  Number of writes per day? 
+  
+  Average size per file? 1 minute video of size 50 MB
+  
+  What is total views per second?
+  800 M (daily active users) * 5 / 86400 = 46,000 views per second
+  
+  What is the total number of uploads per day?
+    800 M (DAU) * 5 (number of views per user per day) / 200 (read :write ratio) =  230 videos per second
+    
+  A) Storage estimates?
+      Assume every every minute 500 hours of worth video has been uploaded by users
+      If average video of 1 minutes takes 50 MB, then total storage of videos per minute is as-
+  
+      50 MB * (500 * 60 ) minutes = 1500 Gb/minutes = 25Gb/sec
+      
+      Note: these numbers doesn't include replication and without video compression
+      
+      
+  B) 
+
+
+
+
+
+
+
+
+
+
+
