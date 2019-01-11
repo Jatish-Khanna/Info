@@ -105,10 +105,54 @@ A successful post will return the URL to access that tweet. Otherwise, an approp
 
 
 5) High Level system design
+ We need a system that can store 100M tweets per day
+ and support 20 Billion reads per day
 
 
+We need an application server to serve all the request with load balancer in front of it.
+A scalable database to store and retrieve tweets for the users
+A CDN to store the multimedia type data
 
 
+7) Data sharding?
+  We need to ditribute data into multiple servers/clusture to efficiently read/write.
+  
+  Sharding based on userID?
+   Store the tweets based on user ID into sharded database
+   
+   . What if user becomes hot?
+     An unbalanced read request on server where tweets pushed by hot users are stored
+     
+  Sharding with TweetId?
+   . Store the tweets in shareded database with tweetID
+   
+   How to generate a Hometimeline?
+    . The aggregator must collate tweets from different system based on tweet ID, increases the latecy
+   
+   We can further improve our performance by introducing cache to store hot tweets in front of the database servers.
+   
 
+Shrading with Tweet creation time?
+  storing tweets based on creation time, gives advantage of read with high performance
+  but the problem here is that,
+   While writing all the tweets will go to one server
+   and while reading server holding the latest data will be having heavy load when compared to other servers
+   
+   
+Sharding with TweetId and Tweet creation ID?
+ A tweet ID is reflecting the tweet creation time
+   . benefits the efficiency in finding the latest tweet
+   
+   The tweetID must uniquly represent globally and should contain timestamp.
+   This unique tweetID represent the shard number where tweet resides
+   
+   Example-
+    Append Epoch time with the sequencer results a tweet ID with time stamp and unique ID per second.
+    Whereas sequencer can be restart each interval or second
+    
+    Epoch time ( 31 bits) + 17 bits sequencer () = total 2 ^ 48 bit = 
+    
+    17bits per second for sequencer which can be restarted each interval or second
+    2 ^ 17 -> 130 K unique tweets can be repsented each second
 
-
+As our tweets will be sorted with the tweetID, read/writes are much quicker than other methods
