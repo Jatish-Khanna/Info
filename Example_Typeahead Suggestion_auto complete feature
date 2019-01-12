@@ -1,0 +1,119 @@
+A real time suggestion service for the user, this will recommend the suggestion once user start typing
+
+1) Typeahead suggestion or auto complete?
+  Typeahead suggestions enable users to search for known and frequently searched terms.
+ As the user types into the search box, it tries to predict the query based on the characters the user has entered and gives a list of suggestions to complete the query.
+ Typeahead suggestions help the user to articulate their search queries better.
+ It’s not about speeding up the search process but rather about guiding the users and lending them a helping hand in constructing their search query.
+
+2) Requirements?
+  A) Functional requirements?
+    . As the users types, systems should recommend top 10 terms based on initial input
+    
+  B) Non-functional requirements?
+    This is realtime, user should be able to see in real-time
+    
+ 3) Design consideration?
+  The problem we are solving is based on searching the string or based on the prefix input
+  . Service will respond user based on the search prefix
+  - Example:
+    The following terms:
+      cap, cat, captain, capital uses the search prefix ca and cap
+      
+  Since, we have to search efficiently based on the string prefix. The best data structure would be "Trie"
+  
+  A Trie, is a tree like datastructure used to store phrases in a sequentional manner.
+  
+  
+  Do we require case-insensitive Trie?
+    For simplicity, assuming the data is case-insensitive
+  
+  How to find top suggestions?
+    A) We can store the count of searches that terminated at each intermediate node
+      Example: user has typed CAP and we have captain (100 searches) and caption (500 searches)
+    
+    B) Given a prefix, how much time it will take to traverse its subtree?
+      A subtree to search query = "System design interview question" may take certainly long. So an efficient way to be find.
+      
+    C) Can we store top suggestions  with each node?
+      . It will improve lot of performance, when compared to normal trie
+      . A high storage is requirement when storing at each intermediate node
+      Note: 
+        The storage requirements can be optimized by storing only references to terminal nodes, rather than entire phrase
+        A frequency to be strored with each reference to keep track of search count and better recommendation
+        
+      
+    D) How would we build this trie? We can efficiently build our trie bottom up.
+ Each parent node will recursively call all the child nodes to calculate their top suggestions and their counts.
+ Parent nodes will combine top suggestions from all of their children to determine their top suggestions.
+ 
+
+    E) How to update a trie?
+      Assuming 5 billion searches every day, i.e. 60 K queries per sec
+      . Updating trie realtime, would hamper read request too
+      . Best approach it to update the trie offline and after certain interval
+      
+      
+   Note:
+    Tracking new request?
+      . Generate a query log for all the queries or sampling (to remove the suggestions which are least searched)
+      
+      . To process such a huge log of queries, MapReduce (spark/storm) in batches of interval
+      . Update the trie with new data report generated from MapReduce.
+      . Before updating the take trie offline to impact the performance of read request
+      . It is wise to take a snapshot of trie
+      
+    Options updating tries?
+      a) Make a replica of trie on each server and update it offline, start the new server and discard old server
+      b) Have a Master-Slave configuration for each trie server. 
+         Update slaves when master is serving the request
+         Once an update is complete, Make the slave a new master
+         We can  later update our old master and which can then start serving the request
+   
+    F) How can we update the frequency of typeahead suggestions?
+      Since, we are storing frequencies with each node which should be updated
+      Update only difference in the frequencies rather than recounting all the search terms from the scratch
+      
+      Suppose, if we tracking the search frequencies of last 10 days then,
+        . We need to subtract the count from time period no longer included
+        . Add the counts for new time period included.
+        
+        We can add/subtract time period and frequencies based on EMA (Exponential moving average). 
+        In EMA, more weight is given to latest data. It is also known as Exponential weighted moving average
+        
+     . Insert the new node in the trie
+     . Update the frequency of node at the terminal node
+     . Since storing the top 10 search suggestions at each node, it is possible that new node has been introduced
+      or terminal node has been promoted or demoted to certain position
+     . Cascade this factor to parent nodes, as we have built it bottom up
+     
+     
+     G) How to remove a node from Trie?
+      It is possible to remove a node from trie, suppose - legal issues or parental control or privacy
+      . We can add a filtering layer on each server which will remove any such terms to suggest
+      
+      
+     H) What could be different ranking criteria for suggestions?
+      Time interval, location, history, language, demographics
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
