@@ -1,0 +1,103 @@
+Twitter is one of the largest social networking service where users can 
+  share photos, news, and text-based messages. In this chapter, we will design a service that can store and search user tweets.
+
+1) What is twitter search ?
+    . User can update there status or post a tweet
+    . The post contains only text
+    
+    Goal is to design a system that search over all the statues of users
+    
+2) Requirements?
+  Functional requirements?
+    Lets assume twitter has 1.5 billion users and 800 Million users
+    . Average 400 Million tweets every day posted by users
+    . Average size of tweet is 300 byte i.e. 150 characters considering each character represent 2 byte
+    . Number of searches per day 500 Million searches per day
+    . Define each search query (keywords and operators)
+    
+Non-Functional requirements?
+  . Availability
+  . performance
+  . pagenated
+  
+3) Estimations?
+  Storage estimates?
+    . since 400Million tweets has been posted everyday
+    400 Million tweets per day * 300 byte (tweet size) = 120 GB/day
+    
+    120 GB / 86400 = 1.38 Mb/sec
+    
+  Network bandwidth?
+    . New post - 1.38 Mb/s 
+    
+4) System API?
+  search(apiDevKey, searchTerms, maximumResultToReturn, sorted, pageToken)
+  
+  Parameters:
+api_dev_key (string): The API developer key of a registered account.
+ This will be used to, among other things, throttle users based on their allocated quota.
+
+search_terms (string): A string containing the search terms.
+
+maximum_results_to_return (number): Number of status messages to return.
+
+sort (number): Optional sort mode: Latest first (0 - default), Best matched (1), Most liked (2).
+
+page_token (string): This token will specify a page in the result set that should be returned.
+
+
+Returns: (JSON)
+A JSON containing information about a list of status messages matching the search query.
+ Each result entry can have the user ID & name, status text, status ID, creation time, number of likes, etc.
+
+
+5) High Level design?
+  . We need to store all the statuses in the database, 
+  and indexing to be done to define which word appears in which status
+  
+  . Indexing with the words in the tweet will help us in quickly returning all the statuses stored in the database
+  
+  
+6) Detailed level design?
+  A) Storage?
+    As calculated above, to store 120Gb per day. this data storage should be efficiently distrubuted among multiple servers
+    
+    120GB * 5 years * 365 days in a year = 200 TB
+    
+    If we never want to be more than 80% storage - 
+    250 TB per five years
+    
+    
+    Note: The above storage is just to store tweets posted by user
+    Extra storage is required -
+      . To build indexes of keywords in tweets
+      . To Store user related information
+      . Caching the tweets
+      . Replication of the server (to have fault tolerant system)
+      
+  Assuming modern server can store upto 4Tb of data, we need 125+ such servers to store complete information
+  
+  How can we create system wide status ID's?
+    If we have 400 Million tweets per day, then how many would be there in  5 years
+    
+    400 Million * 5 years * 365 days = 730 billion
+    
+    
+    This means we need at least five byte number to store ID information for five years.
+    An additional service that can help us in generating the unique status ID, whenever we need to store object
+    
+    We feed the status ID to the servie which will be hashed to find our storage server location
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
