@@ -1,0 +1,78 @@
+1) Web crawler?
+  The software that systematically downloads the world wide web.
+  Web crawlers are known as spiders, bots, worms, walkers, robots
+  
+  It collects document by fetching links from the source or start page
+  Use cases: search engines use web crawlers to download and index web pages to perform search queries faster
+  
+  . To test web pages and links for valid syntax or structure
+  . To monitor sites if there are any changes in structure
+  . Maintain mirror sites for popular web pages
+  . Copyright infringments
+  . To build a special purpose index
+  
+2) Requirements?
+  Functional requirements?
+    Crawl and index the web pages from source or world wide web
+    
+  Non-Functional requirements?
+    Scalability: It should be able to fetch millions of webpages
+    Extensibility: to crawl and index new webpages
+        To index darknet or darkweb
+        
+3) Design considerations?
+  What type of webpages to be crawled over WWW? The design depends on the media type of crawling.
+    If it is expected to explore only HTML content or multi-media type content
+    The parsing of content depends on the multimedia type
+    
+  What protocols have been supported by crawler?
+    . HTTP, FTP or ...
+    
+  What will be the upper bound on the database - The crawler has an upper bound of 15 billion web pages
+  
+  What is "RobotExclusion"? Webcrawler implement Robot exclusion protocol restricts webpages or its parts from crawling
+  It  depends on a special document called robot.txt containing these declarations before downloading any real content
+  
+4) Capacity estimations?
+  A) An upper bound of 15 billion web pages to be indexed in 1 Months 
+  15 Billion / (4 weeks * 7 days * 86400) =  6200 pages per second
+  
+  B) Storage estimations?
+      . Assuming an average page holds the content of 100KB and 500 bytes of metadata information
+        15 billion * (100 KB + 500 byte) = 1.5 PB
+        
+        . 70% capacity model i.e. at given point the storage should have 30% available space
+            1.5 + (.3 * 1.5) =  2.14 PB
+
+
+5) High level design?
+  The basic functionality of crawler it to work on source or seed URL and perform all the mentioned steps
+  
+  . Pick a URL from the unvisited list
+  . Establish a connection with the domain
+  . Download the corresponding document
+  . Parse the document and look for source URI's i.e. connections to other webpages within domain or outside
+  . Add all the unvisited URL's to the list
+  . Process the document and create index on words
+  
+ Crawling Algorithms?
+  A) Breadth first search?
+    A hybrid method to perform the crawling operation is used.
+    Where BFS is used to crawl all the external links
+    DFS is used to crawl all the webpages within the same website
+    
+    
+  B) Path-ascending crawling?
+    
+        
+
+
+
+
+
+
+
+
+
+
+
