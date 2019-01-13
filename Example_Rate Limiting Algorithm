@@ -128,7 +128,7 @@ Issue with Fixed window algorithm, as the counter has been reset every minute at
     20 byte per sorted set overhead
     20 byte overhead for hashmap
     
-    8 + (4 * 20 (sorted set overhead to store timestamps)) + 20 byte for hashtable = 12 Kb
+    8 + (4 + 20 (sorted set overhead to store timestamps)) + 20 byte for hashtable = 12 Kb
     
     Here are reserving 20 bytes overhead per element.
  In a sorted set, we can assume that we need at least two pointers to maintain order among elements — one pointer to the previous element and one to the next element.
@@ -158,10 +158,65 @@ For 1 Million users:
       
       
 
+  How it works?
+    a) user send a request and ID is not present in the Redis or HashTable, a new ID will be inserted in the hashtable
+      
+    b) If user ID is present in the hashtable
+      . A request counter has been incremented
+      . A request serve time window will be incremented to allowed time limit
+      
+      
+      How much memory do we need to store?
+        . 8 byte for each user ID
+        . 4 byte for the Epoch time
+        . The count will take 2 bytes
+        . 20 Byte overhead for Hashtable
+        . 20 byte overhead for redis Hash
+        
+        Since we keep count for each minute i.e. 60 entries per hour
+        
+        For 500 request per hour rate limiting algorithm will take?
+          8 (user ID) + (2 (counter) + 4 (epoch time) + 20 (redis hash overhead)) * 60 entries + 20 (HashTable over head) = 1.6 Kb
 
-
-
-
+  Tracking for 1 million users, total memory need is
+    1 Million * 1.6 Kb = 1.6 Gb
+    
+    Note: it take 86% less memory than the sliding window algorithm
+    
+    
+7) Sharding and caching?
+  Shard the request per user Id, for fault tolerant and replication we use consistent hashing
+  
+  Example- We want to rate limit URL shortner API to create no more than 100 URL per hour
+  Assuming we are using hashbased partitioning, we can rate limit each partition to allow user to create no more than three URLs per sec
+  
+  Note:
+    Our system can get huge benefit from caching the active users
+    Before sending the request to backend server, if we check in memory cache server will imporve the performance
+    A write-back cache would suit the - where we update and read from the cache not from backend system
+    
+    The reads can always hit the cache first, which will have huge performance improvements when user hits its limit
+    
+    
+8) Should we rate limit by IP or by user?
+  A) IP -
+      The biggest challenge is when multiple users share the sinlge IP to direct traffic to Internet
+      With this, one bad user may throttle down for all the other users
+    
+    As with IPv6 available to  a hacker  from even one computer, it make make server run out of memory (in tern a DDoS)
+    
+  B) Rate limiting by user-
+    Once the user has been authenticated, the user will be provided with apiDevKey or token,
+    this token will be passed with each request
+    - This token will be key against which we rate limit
+    
+    What if we need to rate limit on anonymous user?
+      An attacker can perform DoS again the login servive or the API by sending the reqeuest.
+      
+      
+  C) Hybrid?
+    A right approach would be to do it by IP based and user based rate limiting
+      This will require more cache entries and with more details , hence requiring more memory usage
 
 
 
