@@ -131,9 +131,40 @@ A JSON containing information about a list of status messages matching the searc
         Use consistent hashing
         
   B) Sharding based on Indexed object?
-  
+    Sharding of data will be done based on status ID
+    . Pass status Id to our hash function to find the server
+    . index all the words of tweet on the server
+    
+    Query or search?
+      . Query each server for the word
+      . Each server will return the set of status Id's
+      . An aggregator service can combine results from the user
       
-       
+      
+ 8) Fault Tolerant?
+  What will happen when the indexed server dies?
+    . We can have a secondary replica of each server which is synchronizing with the primary
+    . If primary server has been crashed, elect the secondary server as primary 
+    
+    . What if both the servers goes down?
+      . We need to rebuild index on the new server
+      . Iterate over each Status ID from the database and apply hash function
+      . If the status ID hashes to particular server we use it
+      
+      This is inefficient way to restore the complete index in case of outage
+      
+      
+      Instead of building using brute force techinque, use reverse index strategy?
+        . A reverse index that will map all the status ID to index server.
+        This information can stored on index builder server
+        
+        A Hashtable represents Key as index server number and values as HashSet of status ID's
+        In case of a rebuilt indexing is required, it can simply rebuilt new server   using this metadata
+        
+        
+        
+9)  Cache?
+      
 
 
 
