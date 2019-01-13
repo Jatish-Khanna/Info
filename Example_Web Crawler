@@ -172,7 +172,60 @@ G) URl De-Dup?
   A checksum can be performed over the URL and compare with the visited set if not found, we continue with indexing the new URL
         
 
+How much storage we need to store the URL?
+  The purpose of URL de-dup is to store the information defines
+  . Check sum of the file
+  Considering 15 B unique URls and 4 byte to store the URL information.
+    15 billion * 4 byte - 60 GB
+    
+ Can we use bloom filter to store if URL has been visited?
+  Example:
+    Bloom filters are probalistic data structure that may yeild false positives.
+    A set of multiple sketches can be created to mstore the information.
+    
+    
+7) Fault tolerant?
+  Use consistent hashing to distribute the request to the API server
+  Extended hashing technique can help us in replacing and adding new node from and to the the distributed design
+  
+  
+8) Sharding?
+  A) Data can deal with URL's to visit store by URL frontier
+  B) URL checksum for de-dup
+  c) Document checksum for de-dup
+  
+  A sharing of data is based on hostname by passing it to hash function and finding the associated server to process the request
+  A snapshot and replica of server can be created to make it fault tolerant and resillient system
+  
+  
 
+9) Crwaler traps?
+  . Spam sites
+  . Cloadked content
+  
+  These are the traps that restricts from crawling the complete or subdomain where website is hosted
+  A pitfall which traps and indefiitly recurse over single domain
+  
+  
+  A symbolic link can create a cycle to the website
+  Solution?
+    AOPIC (Adaptive Online page Importance computation algorithm)-  this algorithm helps mitigate common types of problems with bot
+    
+    . Start with N seed pages
+    . before crawling a webpage associate a weight to each page with the help of frontier
+    . Select a page P with the top credits. This will be selected by one of the HTTP fetcher
+    . Crawl or download the page and pass the content to stream 
+    . Update the credits of page to zero
+    . Take 10% tax and allocate it to lambda page
+    . Allocate the calulated weight to all the outbound URL's found and extracted from the streamed content
+    
+    
+    Since Lamda page would be the page with highest credits by taking tax.
+    Distrbute the credits to all the webpages store by URL frontier
+    
+    The bot trap page will lose more and more credits and most likely it would never be called again using the webpage
+    with the good pages, we get credits from backlinks found on other pages
+  
 
 
 
