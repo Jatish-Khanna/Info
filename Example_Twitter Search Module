@@ -89,6 +89,52 @@ A JSON containing information about a list of status messages matching the searc
     We feed the status ID to the servie which will be hashed to find our storage server location
     
 
+  B) Index?
+    How should are indexes look like to efficiently return the results to query posted by user?
+      . These indexes defines which word comes in which object
+      . If we want to build an index for all the words in english- 
+        300K words in english dictionary?
+          and 200 K nouns, a total of 500 K words to be indexed by the database
+          
+       . Assuming average word size in english or indexes would be 5 characters
+       
+       500 K * 5 = 2.5 Mb
+      These indexes can be easily store in memory
+      
+   C) Status ID?
+    We have 400 Million tweets per day
+    400 million * 2years * 365 days * 5 byte to store status ID = 1460 Gb
+    
+    
+    How the indexes looks like?
+      A hashtable with Keys as word indexes and values as list of status ID's
+      
+      . Assuming we have 15 words to be indexed per tweet
+      (1460 space required to store status ID for two years * 15 each tweets object been refered by keys) + 2.5 Mb = 21 TB
+      
+    Assuming a high end server has 144 Gb of memory and 21 TB can be shareded among 152 such servers
+    
+    
+ 7) Sharding of database?
+  A) Sharding based on word?
+    We build index based on words i.e. 500 K words from english dictionary including nouns
+    
+    . We iterate through each word of tweet and hash that word to find the server where index has been stored
+    . Append the Index ID to list
+    . While searching each word, we query particular server by hashing the search query
+    
+    Issues?
+      . What if a word becomes hot? then we have unbalanced shard where multiple request to be served by single server
+      . Maintaining a non-uniform distribution of servers is also an issue
+      
+      Solution?
+        Use consistent hashing
+        
+  B) Sharding based on Indexed object?
+  
+      
+       
+
 
 
 
