@@ -63,7 +63,113 @@
     
     
   B) Path-ascending crawling?
+    This allows to discover lot of isolated resources or resource with no inbound links found in regural practise
+    In this crawler will ascend to every path  in each URL
     
+  
+  Issues implementing a regular crawler?
+    Two most important things to take care of while implementing a web crawler
+    A) Large volume of webpages?
+      A large volume of webpages implies that a webcrawler can download a fraction of webpage 
+      . Web crawler should know how to priortize the downloads
+      
+    B) Rate of change on web pages?
+      Another problem with the webpages is they are dynamic, i.e. changes are frequent
+      
+   Basic features a web crawler should have?
+    A) URL Frontier?
+      The crawler should know priortizing the downloading of webpages
+    B) HTTP Fetccher?
+      To retrieve webpage
+    C) Extractor? Parse HTML webpage to extract indexes, content and outbound URL's
+    D) Duplicate Eliminator? Should take care of duplicate content
+    E) DataStore? To store data retrieved and build index to be served to its clients
+    
+   
+   
+6) Low level design?
+  A crawler is running on multiple server and the steps performed to build indexes are-
+    . Get the URL from the frontier for which crawling will be initiated
+    . The Fetcher or particularly HTTP fetcher has been called to download the webpage
+    . Downloaded document is placed on the stream to parse and extract the content
+    . The Extractor check if the document has already been parsed running de-dup test
+    . New URL has been extracted from the content
+    . A de-dup test to find if similar URL has been download or in the processing queue
+    . In case of valid URL, a URL has been appended to URL frontier with the assigned priority
+    
+    Components?
+     A) URL Frontier?
+      This contains all the URL's that are queued to be downloaded by the HTML or other category of fetcher
+      . We use DFS or BFS technique to visit the webpage
+      Multiple URL frontier can be started to cater huge list of URL's to visit
+      
+      Requirements to implement web crawler?
+        A crawler should rate limit the number of request to server
+        Multiple API crawler should not connect to same target web server
+        
+      Solution?
+        A crawler can have collection of distinct FIFO sub-queues  on each server
+        Each worker thread has it's sub-queue
+        When a URL need to be added to one of the sub-queue is determined by canonical hostname
+        A hashmap can map each hostname to thread number and it's corresponding sub-queue
+        
+        Note:
+          Using FIFO queue will not issue multiple request to webserver
+          and a sub-queue owned by single thread will issue request to target server
+          
+       What is the size of frontier?
+        We have thousands of URL to be crawled, so a secondary storage is important suggests the list to parse 
+        . Enqueue buffer? It calculates URL's in batches and store in buffer
+        Once the buffer is full, the content is flushed to disk
+        
+        . Dequeue buffer? It cache or buffers a list of URL to be traversed, it reads a batch of URL's from secondary storage
+        
+        
+        
+   B) Fetcher Module?
+    This module helps download the content from the webpage, an extention of fetcher is its protocol specific implementation
+    Example -
+      . We have HTML fetcher
+      . Photo fetcher...
+      
+    A robot.txt file created by webmaster to help certain parts of webpage restricts to be crawled
+    
+  C) Document Input Stream?
+    The streams enables the downloaded document to be processed by multiple units.
+    To avoid duplicate downloading or processing of content, it caches and runs a De-Dup service on the content
+    
+    it can cache small webpages of upto 64Kb in cache whereas others can be written to the disk
+    
+    Each worker thread has an associated DIS which it uses for streaming of documents
+    
+    
+  D) Document De-Dup test?
+    Many document are available under different URL's, example multiple host or canonical name has been used
+    or mirrored on various servers.
+    
+    Both allows to download document miltiple times. this can be presented with de-dup test
+    To perform this test, a checksum can be performed over the streamed content.
+    This checksum or shas will be stored in the database
+    If the checksum already exits in the databsae
+    
+    
+      How big the checksum should be ?
+        The main purpose of checksum is to store and verify the content to implement de-dup test
+        The checksum has been compared in the cache or in the database
+        and the document is ignored or forwarded 
+        
+        
+        
+  E) URL filters?
+    It provides a customizable way to control the URL that have been extracted from the content
+    
+ F) DNS server?
+  Before connecting the hostname from the frontier, a host to IP mapping has been done by DNS server
+  We can cache the DNS mapping on  DNS server for multiple request for single host, which can imporve the performance
+  
+G) URl De-Dup?
+  To avoid adding the duplicate URL's or already visited URl's to the fronteir queue. these provide list of URL's
+  A checksum can be performed over the URL and compare with the visited set if not found, we continue with indexing the new URL
         
 
 
