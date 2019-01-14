@@ -167,33 +167,76 @@ Each result entry will have the business name, address, category, rating, and th
       
       
 
-7) Data sharding?
+7) Data sharding or Partitioning?
+  What if a huge number of places that are impossbile to store on sigle machine.
+  . a 20% growth each year   
+  . A server cannot server entire traffic
   
+  Solutions:
+    a) Sharding based on location:
+      we divide the places into regions based on zipcode such that all places belong to one region are store on single node
+      . While storing data, find a node from the region and store the place
+      
+   Issues?
+    . What if region becomes hot?
+      There could be lot of queries on server holding that region, making it to perform low
+    . Uneven distribution of places among the regions (due to static distribution)
+    
+    
+  b) Sharding based on location ID?
+    Each location is hashed and sharded to store data on server
+    . While building quad tree, calculate the hash of each locationId to find server based on where it will be stored
+    
+    . Whereas to find nearby places, we need to query all the servers and aggregate the results
+    
+    
+    *) Will we have different quad tree structure on different nodes?
+      Yes, as it is not guranteed that how the grid will be divided
+      but it ensures that each server can have equal number of places
       
       
+8) replication and fault tolerant?
+  having replicas of services and quad tree will help in fault tolerant system
+  . master slave configuration where replicas will only serve the read request
+  . All the write traffic will be served by Master node
+  
+  If a quad tree dies, we have a secondary replica which will be choosen as Master node
+  
+ ** If both primary  and seconday nodes dies at sametime?
+  . Allocate a new server and build the quad tree
+   - A normal approach is to brute force all the location ID and hash them
+   if it matches the server, use it to build a quad tree
+   
+   How to efficiently retrieve mapping between QuadTree and location ID?
+    Build a reverse index from quad tree to all its lOcation ID.
+    In case of both - Quad server (master and slave are down) - we can efficiently retrieve the list of location ID
+ 
+  
       
-      
-      
-      
-      
-      
-      
-      
+9) Cache?
+  To deal with the hot places 80-20% rule, where 80% of traffic is served by 20% of request
+  The best cache eviction policy is LRU
+  
+10) load balancing?
+  A layer of load balancer can be added
+  . Client and application server
+  . Application server and backend server
+  - A simple Round robin approach can be used to distribute traffic b/w the nodes
+  
+  This is not intelligent load balancing mechanism, in case of server is slow - it will keep on sending request which may fail
+  
+11) Ranking?
+  How to rank the search and aggregated result based on reviews and ratings
+  
+  Note: The system is designed to support read heavy request and instead of frequently updating the QuadTree, 
+  it can be done when system has low load 
+  or we can build a offline replica, push updates and replce with the exisitng node
   
   
   
   
   
   
-  
-  
-  
-  
-  
-
-
-
-
 
 
 
