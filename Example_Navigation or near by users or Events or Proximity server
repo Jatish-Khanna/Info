@@ -89,13 +89,13 @@ Each result entry will have the business name, address, category, rating, and th
         Grids would be statically defined so, the location of grid can be easily found and in the nearby grid
         
         
-      C) Should be indexed stored in the main memory?
+      *) Should be indexed stored in the main memory?
         Maintaing the indexes in memory will imporve the overall performance of the system
         Key: GridID
         Value: List<Places> -> list of nearby places 
         
         
-      D) How much memory we need to store particular location?
+      *) How much memory we need to store particular location?
         . 4 byte number to store the grid ID
         . 8 byte number to store location ID
         . Total number of grids
@@ -107,7 +107,68 @@ Each result entry will have the business name, address, category, rating, and th
           (20 Million grids * 4 byte grid ID) + (8 byte location ID * 500 Million active users) = 4 GB
           
         
+      c) Dynamic Grid Size?
+        As the palces are unevenly distributed among the grids, few grids might have larger number of locations
+        whereas other may have none.
+        Solution:
+          To use grid with dynamic size based on the number of locations
+          
+          
+       What does it mean?
+        A grid with a upper bound - 500 places if the number of places exceeds then a grid is divided into four equal parts
         
+       What data structure can hold this information?
+        A tree in which each node has four children called quad trees can suffice the requirement to store data in the grid
+        
+        If a node reaches our limit, break down the node into four children, and distribute the places among children
+        
+    *) How to build quad trees?
+      Start with a node represent whole world, 
+      It has more than upper bound i.e. 500 locations
+      Divide the node into four children and ditribute the places among these children
+      
+      
+      Note: The recurssive process continues until there are no grids/nodes covering more than upper bound of places
+      
+     *) How to find the node from the grid?
+      Start with the root node,
+      and find the node / grid required.
+      - If node doesn't have any more children, that is our desired node
+     
+     *) How to find the neighbouring nodes?
+      Since all the leaf nodes has the locations,
+       Connect all the leaf nodes with a doubly linked list, we can iterate neighbouring nodes forward and backward to find the location
+       
+       Or
+       
+       keep a pointer to the parent node, will help us in traversing all the children which are neighbouring nodes
+       
+       
+    *) Search workflow?
+      . Find the node that contains user location
+      . If node has enough desired places, return these places to user
+      . If require more places to be returned, find the places in neighbouring node
+      . Aggregate and rank and send the response to user
+      
+    *) Storage estimations for quad tree?
+      24 (location ID, latitude and longitude all 8 byte) * 500 M (locations to be stored) = 12 Gb
+      
+     500 M (locations) / 500 (places per grid) = 1 Million grids
+       
+    i.e. 1 million leaf nodes to store total of 12 Gb of data.
+    
+    A quad tree with 1 M leaf nodes have 1/3 internal nodes and each node has 8 byte pointer to children
+    
+    1 million * (1/3) internal nodes * 4 * 8 byte (internal pointers) = 10 MB
+    
+    
+    *) Adding a new node:
+      it will be inserted into the database and quad tree, 
+      
+      
+
+7) Data sharding?
+  
       
       
       
