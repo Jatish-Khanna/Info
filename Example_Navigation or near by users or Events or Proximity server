@@ -84,7 +84,30 @@ Each result entry will have the business name, address, category, rating, and th
       This enables us to query only few grids to find the nearby places on the map
       Query the nearby or neighbouring grids to find the location/places
       
-      
+      What would be a reasonable grid size?
+        Grid size would be equal to the radius we want to search in.
+        Grids would be statically defined so, the location of grid can be easily found and in the nearby grid
+        
+        
+      C) Should be indexed stored in the main memory?
+        Maintaing the indexes in memory will imporve the overall performance of the system
+        Key: GridID
+        Value: List<Places> -> list of nearby places 
+        
+        
+      D) How much memory we need to store particular location?
+        . 4 byte number to store the grid ID
+        . 8 byte number to store location ID
+        . Total number of grids
+          - 200 Million square miles area
+          - 10 miles radius 
+          Gives us-
+            20 Million grids
+            
+          (20 Million grids * 4 byte grid ID) + (8 byte location ID * 500 Million active users) = 4 GB
+          
+        
+        
       
       
       
