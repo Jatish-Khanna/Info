@@ -1,0 +1,83 @@
+A ride sharing application that connects passengers with the riders who own a car
+
+1) What is Uber?
+  It provides its customer business to book a cab.
+  Uber drivers owns personal cars to drive customers around.
+  
+2) Requirements?
+  Functional requirements?
+    The types of user - Drivers, Customers
+    . Drivers need to notify the location and availability to pick a passenger
+    . Passenger get to see all nearby drivers
+    . Customers can request a ride; nearby drivers are notified that a customer is ready to be picked up
+    . Once driver and customer accept the ride;; each knows the others location constantly
+    . Upon reaching the detination, drivers marks the journey as complete
+    
+ 3) Estimations?
+  . 300 Millions customers and 1 Million drivers whereas 1M daily active users and 500K daily active drivers
+  . 1 Million rides booked
+  . All drivers notify the current location every three seconds
+  . Once customer puts a request for ride; system connects to driver in realtime
+  
+  
+ 4) High level system design?
+  We can use QuadTree as advanced datastructure to handle request from the drivers to customers.
+  The challenge this solution implementing with QuadTree is - number of updates are lower
+  
+  . Since all the drivers are actively reporting the location to the system every three seconds
+  . Updating QuadTree for every change has performance critical impact; as it takes lot of time
+    - If Grid has been changed while driving the drivers should be removed and reinserted in different grid
+    - If new grid reaches the upperbound; then QuadTree will have split based on repartition
+    
+    
+   . We need to have a quick mechanism to propagate current location of all nearby drivers to each customer
+   . System should support writes about the current location of driver
+   
+   
+Note: A fast read is guranteed using quad Tree but fast write
+
+Q. Do we need to update our quad tree if driver updates the location?
+  Not updating the quad tree will store the old data and will not reflect the current location of drivers
+  - Building quadtrees is to find nearby  locations efficiently
+  
+  If we keep the latest position reported by all drivers in a hash table and update our QuadTree less frequently
+  Example-
+    We update quadtree after some interval whereas HashTable store the current location of driver
+    
+    
+Q. Memory needed to store Hashtable?
+  . 3 byte driver ID - 1 Million drivers
+  . Old latitude and lonogitude 16 bytes
+  . New latitude and longitude 16 bytes
+  Total - 35 bytes and overhead metadata of HashTable
+  
+  Having said that, 1 million total drivers - 
+  1 million * 35 byte per driver = 35 MB of data
+    
+
+Q. How much bandwidth is consumed by system?
+  We send the driver ID and new location driver is at present
+  8 + 8 + 3 (driver ID) = 19 byte i.e. 1 million cutomers need 19 Mb per three seconds
+  
+  
+Q. How to distribute driver location to multiple servers?
+  . Memory and bandwidth requirement can fit on one server but for scalibility, performance, and fault tolerant
+  Hash table should be distributed efficiently among multiple servers to handle the request
+  
+  . As soon as the servers receives the driver update, it will be broadcasted to all the servers needed
+  . Quad server need to notify another Quad server to refresh the driver locatiion
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
