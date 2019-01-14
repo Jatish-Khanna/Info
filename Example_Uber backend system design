@@ -68,11 +68,75 @@ Q. How to distribute driver location to multiple servers?
   . Quad server need to notify another Quad server to refresh the driver locatiion
   
   
+ Q. how efficiently we need to broadcast the driver location?
+  A push model or fan-out-on-load; where server will push position of driver to relevant or nearby users
+  . A dedicated notification service to broadcast the current location of driver
+  . The service support events and built oon top of 250 to 
+  
+  . When uber client has been started it processes the nearby location of dirver
+  . Maintain a list of drivers and customer s to store the updaed Driver Cur
 
 
-
-
-
+Q> How much memory is required to suppport by system?
+  1 Million day active users and 500 K daily active drivers
+  Say five customers are aligned to One driver
+  
+  500 K * 3 bytes for driver ID and 500 K * five * eight?
+    21 Mb is the result
+    
+ Q. hwo much bandwidth is required to store driver location?
+  5 * 500 K = 2.5Mb
+  
+  Q. To all the customers?
+    3 byte drivers ID
+    8 byte customer ID
+    16 byte location
+    
+    2.5 MB * 19 byte = 47.4 mbps
+    
+    
+   Q. How to implement notification service?
+    . A long polling method for each websocket
+    . A server sent event, doesn't waste resources
+    
+    
+    . Pull request from the server
+    
+  Q. Pull request from the server?
+    If clients request a pull request from the server to identify the nearby location of each driver
+    Upon receiving information; client update the UI and requery the server for new location after five seconds
+    
+    
+Q. Do we need to repartition the grid; as soon it reaches the maxium request?
+  
+  
+  
+  A normal workflow?
+    . Customer will put a request for a ride
+    . One of the aggeregator server identifies the nearby driver querying all the quad Trees
+    . Aggregator server collects all the results and sort them by rating
+    . Aggregator will send a notification to top three drivers
+     - The driver which accepts the first will have the ride
+     - Other driver will recieve cancellation request
+     - The aggregator will request a ride from teh next three drivers
+     . Once driver accepted the request; a customer has been notified
+     
+     
+     
+ 5) Fault tolerant and Replication?
+  Master slave replication of each server; if master dies then slave has been elected as new Master 
+  
+6) Ranking?
+  Rank the drivers by popularity or relevance
+  
+  Return top rated drivers within the range?
+    We ask each partition of quad tree to provide top 10 drivers with maximum rating
+    The aggregator service will metge the results of two services and rank them according to rank number
+    
+    
+    
+  
+  
 
 
 
