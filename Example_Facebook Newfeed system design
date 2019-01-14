@@ -124,11 +124,64 @@ System design Components?
       . When pushing live updates with lot of connetions, it consumes un-necessary resources
       
   B) Offline Feed generation?
-    a) dedicated servers that can continuosly generates feed for the user
+    a) FEED Generation: dedicated servers that can continuosly generates feed for the user
+    . So a request to generate a Feed or timeline for user, just statically loads all the post generated offline
+    . This approach compiles feed async and provide the response once a pull request has been received
+    
+    A Hashtable can serve-
+      Key: User Id
+      Value: 
+        {
+          LinkedHashMap<FeedItems>
+          DateTime lastTimeStamp
+        }
 
-
-
-
+  
+  How many Feed items can be stored in memory?
+    Assume, One page has 10 feeds and user doesnot browse more than 10 pages
+    In total a count of 100 feeds or in worst 200 feeds to be stored in memory maintained by HashMap
+    
+  Should we generate News feed for all the users?
+    . Lot of users that doesn't login frequently
+    . A basic approach would be to have eviction policy on the number of users, i.e. it will remove a list of users that didn't login
+    . A smarter solution would be to find a login pattern for the user and generate the news feed accordingly
+    
+    
+  b) Feed Publishing:
+    The process of pushing new feeds to users async is called Fan-Out
+    *) Fan-out Write: A push analogy
+       Once a user or entity has published a post, server push it to all of its followers
+       . The advantage is -
+        System need not to iterate over each user list
+        A long polling method to wait for new feed
+        A special case to be handled with the popular connections
+      
+    
+    *) Fan-out-On-Load: A pull analogy
+      This modus keeps all the recents feed data in memory
+      . A user issues a pull request to server to get latest feeds to be published on hometimeline
+      . A pull request can be On demand when user has been notified for available feed 
+      
+     Note: a times pull request responds users with empty response and waste resource of server 
+     
+      
+    *) Hybrid?
+      it is combination of - Fan-Out write and Fan-Out-On-Load 
+      . We push data from only the connections with small number of followers may be few hundred
+      . Stop pushing post from Hot users with high number of followers
+      . For Celebrity or Hot user we can usr Fan-out -On-load 
+      . This saves huge number of resources, by not pushing to Millions of followers
+      
+      
+  How many feed items per request from each user?
+    Say 20 default or customized number of request for each user
+    
+  Should be always notify users if new feeds are available?
+    We can notify user to pull the latest feed from the service that publish the timeline
+    . It can be done in batches or at specific intervals
+    
+    
+    
 
 
 
