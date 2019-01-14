@@ -69,8 +69,62 @@ Relationship tables:
 
 
 6) High level system design?
-  
+  We have two subproblems within this complex requirement?
+    A) Feed generation?
+      . news feed is generated from the post done by User or Entity (page, group...)
+      . So when a system receives request to generate feed for the user, below steps are followed-
+      
+        . Retrieve all Id's of Users and Entities that particular user follows
+        . Retrieve latest and most relevant post from the connecting users
+        . Feed these post to the ranking system w.r.t. User
+        . return the top 10-20 posts from the ranking system
+        . Cache these post from the ranking system
+        . Once user request earlier feed from the system, get next paginated post from ranking system for user
+        
+        Note: In this, a feed is generated once and processed by ranking system. Later on cached to provide it to user
+        
+    
+    B) Feed Publishing?
+    Once a user has the timeline generated but a stream of events or new posts to be reflected at users timeline
+    . For newer items, server can push the feed to user, 
+    . or user can send a pull request once server has notified for new post
+    . or A long polling mechanism can help to implement the feature
 
+System design Components?
+  A) Web server?
+    To maintain connection with the user, to transfer request and services between user and server
+  B) Application server?
+    . For feed generation
+    . Post/or status updates from user
+    . For feed publishing
+    
+  C) Metadata database and cache?
+    To store metadata about the user and entity. LRU evition policy to store the websocket information between user and server
+  D) Posts database and cahce?
+    To store metadata about the post and its content
+    
+  E) CDN or storage for multimedia type?
+    To store all the media type over distributed file system
+    
+  F) News feed generation service?
+    To aggregate, rank and publish news feed for the first time to user
+    
+  G) Feed notification service?
+    To notify once the server has new news feed to fan-out for user
+    
+    
+ 7) Detailed system design?
+  A) Feed generation?
+    The service iterates over all the users and entities connected to users, generates a feed 
+    
+    Issues?
+      . Slow for users with lot of friends, as sorting, merging, ranking post take a long time
+      . We generate a timeline when user loads there page, this takes a long time
+      . For live updates, can cause high backlogs in notification service
+      . When pushing live updates with lot of connetions, it consumes un-necessary resources
+      
+  B) Offline Feed generation?
+    a) dedicated servers that can continuosly generates feed for the user
 
 
 
