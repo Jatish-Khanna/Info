@@ -1,0 +1,122 @@
+This is service which provides results for near by restaurants, theaters, shopping mall, ATM...
+
+1) What is Proximity server?
+  These are the servers used to provide details of near by business, Example.
+    . Nearby shopping mall, ATM, food, friend, metro station...
+    
+   
+2) Requirements?
+  Functional requirements?
+    These are the servers used to provide details on nearby services
+    . User should be able to add/update/delete the places
+    . Given location, users should be able to find nearby business
+    . User should be able to review an d provide feedback on the system e.g. adding photos, comments, likes
+  
+  Non-Functional requirements?
+    . user should be able to search nearby places with minimum latency
+    . More number of search request from user about the updated nearby places
+    
+3) Estimations?
+  We have 500 Million daily active users, and 100 K queries per second. 
+  . We have a growth of 20% request each year
+  
+4) Database schema?
+  Each location denotes as-
+  . Location ID (8 byte) - uniquly identifies the location
+  . Name - 256 byte
+  . Latitude - 8 byte
+  . Longitude - 8 byte
+  . Description - 500 byte
+  . Category - 1 byte
+  
+  Total size - 793 bytes with 500 Million active users
+  
+  Reviews-
+    . Review ID
+    . Location ID
+    . Review text
+    . Rating
+    
+    
+  
+ 5) System API: 
+  search(apiDevKey, userId, userLocation, searchQuery, radiusFilter, maximumResultsToReturn, categoryFilter, sorted, pageToken)
+  
+  Parameters:
+api_dev_key (string): The API developer key of a registered account. 
+This will be used to, among other things, throttle users based on their allocated quota.
+searchQuery (string): A string containing the search terms.
+userId
+user_location (string): Location of the user performing the search.
+radius_filter (number): Optional search radius in meters.
+maximum_results_to_return (number): Number of business results to return.
+category_filter (string): Optional category to filter search results, e.g., Restaurants, Shopping Centers, etc.
+sort (number): Optional sort mode: Best matched (0 - default), Minimum distance (1), Highest rated (2).
+page_token (string): This token will specify a page in the result set that should be returned.
+
+Returns: (JSON)
+A JSON containing information about a list of businesses matching the search query. 
+Each result entry will have the business name, address, category, rating, and thumbnail.
+  
+6) High level system design?
+  At high level, the system should be read efficient and the results returned from the system should be real-time
+  
+  . The system would be static to store nearby object with minor updates on real-time e.g. a food shop would be at same Location
+  
+  a) SQL solution?
+    We store all the business objects as longitude and latitude location
+    where both columns are indexed.
+    . Execute a select query to return the result from the system as 
+      Latitude = location.latidue -+ radiusFilter
+      Longitude = location.longitude -+ radiusFilter
+      
+     The best way to use is Pythagorean theorem to calculate the distance difference
+     
+     Query Efficiency?
+      Each index longitude and latitude return results of places and we need to intersect these results.
+      The query can be efficiently executed by sharding the data based on location and places
+      
+      
+    b) Grids?
+      Divide the Map into smaller grids to group locations into smaller sets, 
+      Each grid will store all the places within a specific range of latitude and longitude
+      
+      This enables us to query only few grids to find the nearby places on the map
+      Query the nearby or neighbouring grids to find the location/places
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
