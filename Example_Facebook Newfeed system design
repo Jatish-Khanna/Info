@@ -1,0 +1,81 @@
+Design a news feed for a social networking website, which shows updates from the users in connections
+
+1) What is news feed?
+  It is a home timeline service which shows all the updates from users includes, there post, status, photos, video or any shared content
+  Any social media system has timeline which shows the updates from it connecting users
+  
+  
+2) Requirements?
+  Functional requirements?
+    . A news feed systems shows the data from users which have been connected
+    . A user is related to multiple other persons, by connecting with them or following them
+    . Feed may contains posts, images, videos,
+    . It should append new feeds or recent feeds using server sent mechanism or long polling or pull method
+    
+  Non-Functional requirements?
+    . System should be able to generate timeline will low latency
+    . A new posts should be broadcasted with low latency to all its connecting users
+    
+ 3) Capacity estimations?
+  Assuming a user has 300 friends average and 200 pages to be followed
+  
+  Traffic estimates?
+    We have 300 M daily active users
+    Each user fetches it's timeline 5 times a day
+    
+    300 Million users * 5 times a day = 1.5 Billion request per day or 17500 request per second
+    
+    
+  Storage estimates?
+    We want to store 500 latest news feed to quick fetch.
+    Each post size is 1Kb. This means we 
+      500 new feed per user * 1KB = 500 KB data per user
+      
+      
+    Total active users - 300 M
+    300 Million * 500 KB = 150 TB of memory 
+    Note: if a server holds 100 Gb then we need 1500 such machines to store the data
+    
+    
+  4) System API?
+    getUserFeed(apiDevKey, userId, lastFeedID, count, maxID, exludeReplies) 
+    
+    Parameters:
+api_dev_key (string): 
+  The API developer key of a registered account. This can be used to, among other things, throttle users based on their allocated quota.
+user_id (number): The ID of the user for whom the system will generate the newsfeed.
+lastFeedID (number): Optional; returns results with an ID higher than (that is, more recent than) the specified ID.
+count (number): Optional; specifies the number of feed items to try and retrieve, up to a maximum of 200 per distinct request.
+max_id (number): Optional; returns results with an ID less than (that is, older than) or equal to the specified ID.
+exclude_replies(boolean): Optional; this parameter will prevent replies from appearing in the returned timeline.
+
+Returns: (JSON) Returns a JSON object containing a list of feed items.
+    
+5) Database design?
+  . User
+  . Entity
+  . FeedItem
+  . Media
+
+Relationship tables:
+  . UserFollow
+  . FeedMedia
+
+  Some observations between these entities
+
+. A user can follow other entities
+. User and entities can post the feed items which contains text and other multimedia type
+. Each feed item has associated userId or Entity ID that owns the posts
+
+
+6) High level system design?
+  
+
+
+
+
+
+
+
+
+
