@@ -1,0 +1,29 @@
+Load balancer-  
+  It operates at L3 (IP), L4 (TCP/UDP), L7 (Application Context)
+
+Supports session affinity
+
+Internet facing Loadbalancer:
+  Maps the public IP of virtual n/w with the Private Ip's of virtual network
+  It is bi-directional
+  Request to and from VM is routed through LB
+  
+Internal LB:
+  Within the internal n/w to balance traffic between two internal services
+  To loadbalance traffic b/w data tier and business tier
+  
+  
+  Benefits of LB:
+    . Any kind of traffic across virtual n/w
+    . Can route UDP/TCP or port forwarding
+    . Direct server return for bandwidth intensive traffic
+    . Allows tiered routing in N-Tier architecture
+    . Helps to scale out the Virtual machine instances
+    . Can be used to pool multiple public IP's
+
+
+
+
+
+
+
