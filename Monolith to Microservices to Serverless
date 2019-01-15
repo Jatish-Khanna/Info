@@ -1,0 +1,23 @@
+Guidances:
+  Lamda's or serverless AWS support limited number of languages
+  Asynchronous reponse - where a waiting period is high - then Lamda are not good thing
+  Hybrid or Multi cloud environment helps Dockers or containers
+  
+  How stateful appliactions is? As Lamda are stateless
+  
+  Common UseCases?
+    1) Webapplication - static website, complex website - Lamda
+    2) Autonomous IT - Lamda
+    3) Backends  - lamda
+    4) Data processing - Lamda
+    5) Chatbots - Lamda
+    6) Amazon Alexa - Lamda
+
+
+
+
+
+
+
+
+
