@@ -20,7 +20,34 @@ Internal LB:
     . Allows tiered routing in N-Tier architecture
     . Helps to scale out the Virtual machine instances
     . Can be used to pool multiple public IP's
-
+    . Monitoring and Health probe
+    
+  Drawbacks:
+    . Implementation cannot be granualar (based on protocol)
+    . Requires HTTP probe running on each VM, i.e. to know if server is alive and can handle request
+    
+    Note:
+      To balance traffic b/w IP or IP range
+      to balance traffic b/w n-tier architecture
+      Coordinate traffic b/w Virtual n/w and On-premise n/w
+      Port forwarding requet
+    
+Application Gatway?    
+ Works at Level-7 - HTTP and HTTPS loadbalancing
+ - It requires websocket support
+ - Web application firewall to secure applications
+ - Context based routing:
+  . round robin
+  . weighted round robin
+  . Least connection
+  . Weighted Least connection
+  . Wighted response time
+  . Session affinity or Sticky session
+  . Chained failover
+  . Source IP hash
+  
+- SSL encryption and End To End ecryption
+  
 
 
 
