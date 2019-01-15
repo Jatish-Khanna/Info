@@ -35,7 +35,7 @@ Internal LB:
 Application Gatway?    
  Works at Level-7 - HTTP and HTTPS loadbalancing
  - It requires websocket support
- - Web application firewall to secure applications
+ - Web application firewall to secure applications (Bots, scanner, SQL injection, filtering, XSS)
  - Context based routing:
   . round robin
   . weighted round robin
@@ -45,8 +45,20 @@ Application Gatway?
   . Session affinity or Sticky session
   . Chained failover
   . Source IP hash
+  . Custom balancing
   
 - SSL encryption and End To End ecryption
+  
+Note:
+  . Easy to configure then loadbalancer
+  . Can protect again security risks or Web attacks
+  . SSL intensive workloads
+  
+  
+ Where to Use both Application Gateway and Loadbalancer?
+  1) Application gateway should be used for presentation tier
+  2) Loadbalancer should be used to balance traffic for data tier i.e. Compute and Data tier
+  
   
 
 
