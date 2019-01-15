@@ -1,0 +1,150 @@
+Design a ticket or similar other reservation system
+
+1) What is online movie ticket booking system?
+  A ticket reservation system allows its customer to reserve tickets online.
+  It allows customers to give privilege of booking anywhere, anytime, book seats
+  
+2) Requirements?
+  Functional requirements?
+    . It should be able to list all the locations where reservation is possible
+    . One the user selects the particular location in the city, a list of movies projected at selected location
+    . Once user selects a particula movie, it is presented with all the shows available at particular date and time
+    . User should be able to choose option and request a ticket reservation
+    
+    . Service should allow multiple seats to be selected out of sitting arrangement
+    . A hold for free service or a lock on the request for sepecific interval until a payment has been finalized
+    . The ticket booking should be serviced in First come first serve manner
+    
+    
+  Non-functional requirements?
+    . System is higly concurrent, there might be multiple client booking same slot or overlapping slot
+    . The reservation involves payment - does mean should be secure and ACID compliant
+    . The system should be Atomic either complete the transaction and reserve seats or nothing
+    . Highly available and scalable
+    
+ 3) Design considerations?
+  . We allow anonymous users to book tickets
+  . First come first service is mandatory for the normal users
+  . To stop system abuse, no more than 10 seats at particular time
+  . There is a posibility of spike in traffic for a hot movie or first show
+  
+  
+4) Storage estimations?
+  Assume we have 10 Million seat reservation per month
+  
+  a) Storage estimates?
+    Assume, 500 cities, 
+      10 ten cinemas in each city
+      2000 seats per cinema
+      and average of two shows each day
+      
+      - API for seat booking needs 50 bytes to 
+        ID, numberOfSeats, showID, movieId, seatNumbers, seatStatus, timestamp - to be stored in database
+        
+        Information to be stored about the 
+          - Movie
+          - Cinemas
+          
+          500 cities * 10 cinemas * 2000 seats * 2 shows * (50 bytes + 50 bytes) = 2.6 Gb/day
+          i.e. 3.6 TB per year
+          
+          
+5) System API?
+  A REST API to expose the functionality of our service.
+  
+  searchMovies(apiDevKey, keyword, city, longitude, latitude, radius, startDate, endDate, postalCode, resultPerPage, sorted)
+  
+  Parameters:
+api_dev_key (string): The API developer key of a registered account. 
+This will be used to, among other things, throttle users based on their allocated quota.
+keyword (string): Keyword to search on.
+city (string): City to filter movies by.
+lat_long (string): Latitude and longitude to filter by. 
+radius (number): Radius of the area in which we want to search for events.
+start_datetime (string): Filter movies with a starting datetime.
+end_datetime (string): Filter movies with an ending datetime.
+postal_code (string): Filter movies by postal code / zipcode.
+includeSpellcheck (Enum: “yes” or " no"): Yes, to include spell check suggestions in the response.
+results_per_page (number): How many results to return per page. Maximum is 30.
+sorting_order (string): Sorting order of the search result.
+Some allowable values : 
+‘name,asc’, ‘name,desc’, 
+‘date,asc’, ‘date,desc’, 
+‘distance,asc’, ‘
+name,date,asc’, 
+‘name,date,desc’, ‘date,name,asc’, ‘date,name,desc’.
+
+Returns: (JSON)
+Here is a sample list of movies and their shows:
+
+
+[
+  {
+    "MovieID": 1,
+    "ShowID": 1,
+    "Title": "Cars 2",
+    "Description": "About cars",
+    "Duration": 120,
+    "Genre": "Animation",
+    "Language": "English",
+    "ReleaseDate": "8th Oct. 2014",
+    "Country": USA,
+    "StartTime": "14:00",
+    "EndTime": "16:00",
+    "Seats": 
+    [
+      {  
+        "Type": "Regular"
+        "Price": 14.99
+        "Status: "Almost Full"
+      },
+      {  
+        "Type": "Premium"
+        "Price": 24.99
+        "Status: "Available"
+      }
+    ]
+  },
+  {
+    "MovieID": 1,
+    "ShowID": 2,
+    "Title": "Cars 2",
+    "Description": "About cars",
+    "Duration": 120,
+    "Genre": "Animation",
+    "Language": "English",
+    "ReleaseDate": "8th Oct. 2014",
+    "Country": USA,
+    "StartTime": "16:30",
+    "EndTime": "18:30",
+    "Seats": 
+    [
+        {  
+          "Type": "Regular"
+          "Price": 14.99
+          "Status: "Full"
+      },
+        {  
+          "Type": "Premium"
+        "Price": 24.99
+        "Status: "Almost Full"
+      }
+    ]
+  },
+ ]
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
