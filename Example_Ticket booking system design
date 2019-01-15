@@ -155,7 +155,125 @@ B) Service to reserve seats
 
 
 6) Database design?
+   Observations about the database design, we need to store-
+   . One to many relationship b/w city and cinema, each city has multiple cinemas
+   . Similarly, each cinema has multiple screens
+   . Each Movie can have multiple bookings
+   . Each movie can have multiple shows
+   
+   - User
+   - Cinema
+   - Movie
+   - Show
+   - City
+   - Booking
+   
+   Relationships-
+    User -> booking
+    Booking -> seat
+    Booking -> payment
+    Movie -> shows
+    City -> Cinemas
+   
+
+7) High level design?
+  Our webservers will manage user sessions, application server will handle ticket management storing data in the database
+  Also cache data to process reservations
   
+  
+  
+ 8) Detailed level design?
+  Workflow?
+    . User searches for a movie
+    . User selects the location and cinema
+    . User selects a screen, show, time
+    . User selects number of seats to be reserved
+    . User selects the location of seats in the theater, if required seats are available
+    . User sends a request to webserver to reserve the number of seats
+    . Seat are reserved successfully, the user have five minutes to complete the reservation
+      - After payment has been completed, booking is marked
+      - If payment is not done, the seats are released for next user
+      
+    . If there are no seats to reserve
+      - but others users have locked seats for payment purpose which may be released by the user
+      - New user will be redirected to waiting page, where they can wait until required seats get freed from reservation pool
+      
+      . If required number of seats become available, the user is taken to main page where it can lock the seats for reservation
+      . User cancels the reservation is redirected to homepage and locked seats are released
+      
+      
+      
+  How to track of active reservations that haven't been booked yet?
+    A) ActiveReservationService: service is required to track all the active reservations and to remove expired reservation from the pool
+      Track all the reserversation is LinkedHashMap in memory
+      The benefit of using LinkedHashMap - if any reservation is complete, it can be removed from the LinkedHashMap list
+      in case of session expiry the head of list always points to least recently used session for payment
+      
+      
+      To track reservation of shows? 
+        . A HashTable  which represents the showID as key
+        . A LinkedHashMap of confirmed bookingId and creation timestamp
+    
+    the data will be store in database 
+      . As soon as, the booking is complete, the system will update the status to Booked
+      . Remove the reservation from the LinkedHashMap of relevant show when session is expired
+      . Also removing it from memory
+      . A waiting service will be notified to serve the waiting customers
+    
+    b) WaitingUserService: Another service is required to track all the waiting usres request
+      This will also be kept in LinkedHashMap and in memory to improve performance
+      - The head of LinkedList will be always be pointing to longest waiting request
+      
+      The key would be ShowId and value would be LinkedHashMap containing UserId and wait-start-time
+      
+      Clients can use LongPolling for keep themself updated with reservation status
+    
+    
+  On the Active Reservation service keeps track of expiry of active reservations, a session timeout will be shown
+  Although, both will be out of sync, we can add extra five seconds on the server to safeguard from a broken experience
+  
+  
+9) Concurrency?
+  Q. No two users are able to book the same seat?
+    ACID properties of DB can help us in achiving concurrency
+    The transaction isolation level should be serializable
+      This gurantees highest isolation level and non-repeatable phantoms.
+      
+     Within a transation even if we read a record, we get a write lock so the data remain highly consistent
+     
+     
+     
+10) Fault tolerant?
+  If activetransactions or WaitingService crashes, we read the data from the Booking table. This can be filtered by Status column
+  Or
+  A master-slave architecute where if Master-crashes a slaves takes over- since we're not storing waiting users in DB
+
+
+11) Data sharding?
+  Sharding by MovieId will distribute the uneven load for the Hot movies, whereas with the showId evenly distributes the load among servers
+  
+  A consistent hashing can be used to implement ActiveReservationService and WaitingUserService based upon the showID
+  This way, all reservations and waiting users of a particular show will be handled by a certain set of servers
+
+Server holding reservations status has to perform-
+. Update databse to remove the Booking and update seats as available
+. remove reservation from the LinkedHashMap - under ActiveTransaction
+. Notify the user that reservation has been expired
+. Broadcast message to WaitingUserService for showID, to notify new seats are available
+. Send a message to longest waiting User to process the request as seats are available
+
+
+Workflow of successful reservation?
+  . The server holding the reservation sends a mesage to all the waiting user for ShowID, that were looking for confirmed seats
+  . upon receiving the message all waiting users will query the database to find how many seats are available
+    - Cahce the results of query to be processed for all the waiting users
+  . Expire all the users with invalid request as number of seats required are less than available
+
+
+
+
+
+
 
 
 
