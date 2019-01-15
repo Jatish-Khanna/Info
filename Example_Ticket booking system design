@@ -134,12 +134,28 @@ Here is a sample list of movies and their shows:
  ]
           
 
+B) Service to reserve seats
+
+  reserceSeats(apiDevKey, sessionId, movieId, showId, []seatsToReserve)
+  
+    Parameters:
+    api_dev_key (string):
+    session_id (string): User’s session ID to track this reservation. 
+    Once the reservation time expires, user’s reservation on the server will be removed using this ID.
+    movie_id (string): Movie to reserve.
+    show_id (string): Show to reserve.
+    seats_to_reserve [] (number): An array containing seat IDs to reserve.
+
+    Returns: (JSON)
+    Returns the status of the reservation, which would be one of the following: 
+    1) “Reservation Successful” 
+    2) “Reservation Failed - Show Full,” 
+    3) “Reservation Failed - Retry, as other users are holding reserved seats”.
 
 
 
-
-
-
+6) Database design?
+  
 
 
 
