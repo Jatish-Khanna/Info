@@ -36,7 +36,15 @@ Application Gatway?
  Works at Level-7 - HTTP and HTTPS loadbalancing
  - It requires websocket support
  - Web application firewall to secure applications (Bots, scanner, SQL injection, filtering, XSS)
- - Context based routing:
+  . Authentication
+  . Security
+  . Traffic control
+  . Ops
+  . Logging
+  . Transformation
+  
+  Load balancing algorithms
+  . Context based routing:
   . round robin
   . weighted round robin
   . Least connection
