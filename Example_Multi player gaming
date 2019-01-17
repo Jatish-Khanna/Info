@@ -59,6 +59,11 @@ Online Gaming system design backend?
       . Aync saving of states (We can use write-back cache or Queue)
 
 
+Logging:
+  ELK stack (log stash, Elastic search, Kibana dashboard)
+Stream Processing:
+  Spark
 
+Dataware house: (Hadoop)
 
 
