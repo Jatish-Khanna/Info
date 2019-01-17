@@ -52,6 +52,22 @@ Elastic Loadbalancer (Two tier load balancing scheme)-
       . Metrics or stream to define how backend services perform
       
    
+ Stateless:
+  To get response from any endpoint
+  
+  Caching:
+    . Throughput
+    . Latency
+    . Cost
+    
+    
+  Elastic Search (Visualizing using Kibana):
+    To search events or logs streamed from multiple API
+    
+    
+  Spark:
+    To support rating and recommendation systems
+    . Order the movies based on user prefrences
     
 
 
