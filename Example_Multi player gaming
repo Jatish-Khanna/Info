@@ -1,0 +1,41 @@
+
+Ways to sync between players
+
+A) Deterministic Lock step
+
+  1) TCP X
+  2) Playout buffer - Save all the packets from multiple online clients in the buffer
+    . This will add gitter/delay once packet received
+    . This is based on TCP - if the packet is dropped or late, client need to resend the packet
+    . Resending will add lot of delay 
+
+
+    Options:
+    a) UCD? unreliable and connectionless protocol
+      .
+      
+  Note: any delay or problems in one sync will impact complete stream
+  
+B) State Synchronization-
+  This is to resolve sync the state of object (Position, linear velocity, angular velocity, orientation...)
+  The bandwidth required is in Kb/s and Mb/s
+  
+  - This solution does have a jitter issues,  and polarization can be used to predict the state of object
+  
+  We have state machines for each object example - A player is jumping and then what are the next possible states
+  
+  
+ C) State Machine pattern: it allows us to implement state machines using OOP
+  . Every state mainitains a class
+  . Deligate a state
+
+
+
+
+
+
+
+
+
+
+/
