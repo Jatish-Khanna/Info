@@ -47,10 +47,14 @@ Online Gaming system design backend?
   Area server: (A data strucute used is Map template, a single pattern is heavily used)
     A game map  is divide across area servers, which stores players information
 
+    Issues?
+      A player is quicly switching regions or area over the map which was divided across multiple servers
+      
+     Solution?
+      
+     
 
 
 
 
 
-
-/
