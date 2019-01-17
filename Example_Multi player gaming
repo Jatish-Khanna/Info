@@ -50,9 +50,13 @@ Online Gaming system design backend?
     Issues?
       A player is quicly switching regions or area over the map which was divided across multiple servers
       
+    Fault tolerant if server failed, what are the requirements
+    
      Solution?
-      
-     
+      . Only serialize important object states
+      . Only if changed
+      . Always serialize cached object
+      . Aync saving of states (We can use write-back cache or Queue)
 
 
 
