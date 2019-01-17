@@ -70,7 +70,24 @@ Elastic Loadbalancer (Two tier load balancing scheme)-
     . Order the movies based on user prefrences
     
 
+Recommendation System:
+  . User events or interation with the service
+  . Similar users
+  . Metadata of movie
+  . Device
+  . Time of the day
+  
+  1) Collaborative filtering?
+    Two users has similar search or event history - it can be recommended to other
+  2) Content based filtering?
+    Based on the metadata of movie (e.g. Action, comedy, actor, director)
 
+OpenConnect Appliance or Netflix CDN:
+  125 million request or 10 Tb traffic per day
+  
+- Small OCA : for hot content
+- Big OCA - to cache most of the content
 
-
-
+What content to be cached?
+  . A world wide popular content to be cached on all the servers
+  . A  Content to be cached based on the historical viewing pattern (e.g. A series episodes to be cached)
