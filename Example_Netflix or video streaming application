@@ -1,0 +1,60 @@
+Netflix?
+  A video serving application for users all around the world
+  
+ OpenConnect - netflix CDN which host video to serve content much faster
+   A best approach is to have a Master server where video will be stored and other cache servers in nearby areas
+   . A user is connected to edge server
+   . Each Edge server buffers its content from Master server in cluster or region which improves delivery and balances load
+
+
+Clients: connect to Elastic load balancer - 
+Elastic Loadbalancer (Two tier load balancing scheme)- 
+  . First load is distributed across the zone 
+  . Then Load is distributed across instances
+
+ A DNS based round robin loadbalancing has been used.
+ 
+ 
+ How A new Video is onboarded?
+  . Transcoding: converts a video into different formats and resolution, to be supported by diverse clients
+  
+  - A new file is chunked into parts
+  - The chunked files are ingressed to Queue
+  - Workers will process these tasks
+  - Workers will transcode
+  - Store the data on Amazon S3 
+  - Create a metadata of all the files
+  
+  A workflow
+    . ZuuL (A gateway server - dynamic routing, monitoring, security, connection management, proxying the request)
+    . Netty Webserver handles the request from client
+    . The request is received from Netty to the inbound filters (Authentication, routing, decorating the request)
+    . The request is received by EndPoint filter - and it passes to backend services
+    . Out bound receives the notification from EndPoint, which will be sent back to client using Netty Websocket
+    
+  EndPointFilter 
+    a) Shard traffic
+    b) Sandbox request to new service
+    c) Filter the bad request
+    d) replicate the request to new service
+    
+    
+  Hystrix?
+    EndPoint filter is delegating request to be served by backend services whereas it may fail
+    To stop cascading the error or failures
+    
+    Benefits:
+      . Wrapping each microservice for fault tolerance
+      . Defines timeout for each service
+      . Default response if any failures
+      . Reject calls or buffer - if microservices are overloaded or unresponsive
+      . Stop sending the request if error rate of microservices is high
+      . Metrics or stream to define how backend services perform
+      
+   
+    
+
+
+
+
+
