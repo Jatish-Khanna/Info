@@ -31,6 +31,21 @@ B) State Synchronization-
 
 
 
+Online Gaming system design backend?
+  1. Connect to Patch server, if any updates in the game are required
+  2. Players Login to the system for authentication
+  3. Players looks up multiple playes from API
+  4. A game session has been established 
+  
+  World Server:
+  A clusture a world severs stores the informationa bout the client and game session currently running
+  It also provide information about the actual game server where game is running
+  
+  Game Servers:
+    The clusture of servers where actual gaming computation is done
+    
+  Area server: (A data strucute used is Map template, a single pattern is heavily used)
+    A game map  is divide across area servers, which stores players information
 
 
 
