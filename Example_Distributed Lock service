@@ -25,7 +25,12 @@ Distribute Locks issues?
       Other server verifies the information of sequencer
 
 
-
+Uses of Chubby?
+  Read-write small files
+  File access are controlled with sessions
+  Files are logically cachable
+  Locks are coarse grained
+  Strict consistency
 
 
 
