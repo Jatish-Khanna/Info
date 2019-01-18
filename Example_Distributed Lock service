@@ -1,1 +1,33 @@
+Chubby is a lock service by google.
+
+It allows clients to synchronize their activities and agree on basic information about there environment
+Help with coarse grained sync in particular leader election
+It's core is Paxos
+
+How does it work?
+It has Master - Replica which handles all the reads and writes not other replicas in clusture
+- It's good to have a odd number of nodes to elect a leader
+
+Distribute Locks issues?
+  1. Potential lock?
+    Server A sends a request to acquire lock REQ1 and dies
+    Server B acquires Lock using REQ1 and start functioning
+    REQ1 arrives out-of-order after Server B's functioning
+    
+ Solution:
+    1. Backward compatible
+      Lock server will restricts clients from acquiring it if a lock become inaccessible or holder has failed
+      Draining queue of unprocessed events before someone else can acquire locks
+      
+    2.Sequencer
+      A lock holder can obtain a sequencer from Chubby
+      It request sequencer to any request that it sends it to other server
+      Other server verifies the information of sequencer
+
+
+
+
+
+
+
 
