@@ -96,6 +96,6 @@ Errors/ Race conditions:
 4) Metadata of database
 5) Replication of group
 6) Data plane
-7) Control plane
+7) Control panel
 8) Edge cases
 9) scale number
