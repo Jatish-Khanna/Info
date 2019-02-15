@@ -13,3 +13,12 @@ Apply Lambda Expressions
 Work with Streams API
 
 Make use of Optional class
+
+
+Type	Functional Interface	Abstract Method	Description
+Function	Function<T, R>	R apply(T t)	
+Function that accepts single argument and produces result  
+
+Predicate	Predicate<T>	boolean test(T t)	Boolean-valued function that takes single argument
+Consumer	Consumer<T>	void accept(T t)	Function that accepts single argument but returns no result
+Supplier	Supplier<T>	T get()	Function that denotes a supplier of results
