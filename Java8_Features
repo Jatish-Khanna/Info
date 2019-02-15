@@ -22,3 +22,29 @@ Function that accepts single argument and produces result
 Predicate	Predicate<T>	boolean test(T t)	Boolean-valued function that takes single argument
 Consumer	Consumer<T>	void accept(T t)	Function that accepts single argument but returns no result
 Supplier	Supplier<T>	T get()	Function that denotes a supplier of results
+
+
+
+
+Summary of maven targets
+Reporting and Tool Plugin
+Description
+checkstype
+
+It creates a checkstyle report for the project
+
+javadoc
+
+It generates Javadoc report for the project
+
+project-info-reports
+
+It generates standard project reports for project
+
+surefire-report
+
+It generates results report for  unit tests in project
+
+help
+
+It retrieves information about the deployable environment of the project
