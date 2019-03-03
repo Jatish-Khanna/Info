@@ -1,5 +1,6 @@
 The Java SE 8 Features 
 
+
 Write interfaces with default and static methods
 
 Apply Repeating Annotations
@@ -14,6 +15,9 @@ Work with Streams API
 
 Make use of Optional class
 
+Nashorn JS API
+
+Spliterator
 
 Type	Functional Interface	Abstract Method	Description
 Function	Function<T, R>	R apply(T t)	
@@ -48,3 +52,36 @@ It generates results report for  unit tests in project
 help
 
 It retrieves information about the deployable environment of the project
+
+
+
+
+----------------------------------------------
+
+What are the benefits of multiple features in Java-8
+ - Support for functional programmaing by Lamda and streams
+ - Ease of high volume data processing by streams
+ - Ease of use by getting parameter names by reflection
+ - Reusable code with enhanced Collections API
+ - Smart Exception handling with Optional
+ - Encryption with Base64
+ - Nashorn engine support for JS
+ 
+Lambda Expression?
+  It is an anonymous function
+  The method that doesn't need accessmodifiers, name or return value
+  This can be passed as paramter in a method
+  Code as data - by passing as function parameter
+  
+  
+Parts of Lambda expression?
+  Paramter list (optional)
+  Lambda arrow operator (separates listed params and expression body)
+  Lambda expression body (the code that will be executed)
+  
+Lamda expression datatype?
+  Lamda expression fullfills the purpose of passing as code
+  The datatype of Lamda expression is a functional interface
+  
+  
+ 
