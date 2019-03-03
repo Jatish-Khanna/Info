@@ -82,6 +82,43 @@ Parts of Lambda expression?
 Lamda expression datatype?
   Lamda expression fullfills the purpose of passing as code
   The datatype of Lamda expression is a functional interface
+  It is functional interface
+  
+- Functional programming
+- Big data [With increase in database size]
+- Optional [borrowed from Google guava lib, edge cases have been handled properly]
+- Cloud computing [Code as data and code can be executed on multiple servers]
   
   
+Why lambda expression?
+ - Functional programming [One function is running the code of other function]
+ - Cloud computing [Method as a param to other method, code as data]
+ - Serverless architecture []
  
+Why Functional Interfaces?
+  - A functional interface that has abstract method
+  Runnable, Callable interface
+  
+SAM - Single Abstract Method
+  It has exactly one abstract method
+  @FunctionalInterface : It is not mandatory to use [but it will ensure that interface has only SAM]
+  
+
+Used in Lamda expressions, method reference or constructor interface
+- Code can be considered as data
+- Functional has one abstract method, that has been passed as an argument method
+
+
+ 
+Collection[Java 1.2] and Stream API[Java 8]:
+ Collection is used to store data in different data structure
+  Stream is used to apply computation or processing of data
+ 
+ Collection is a finite set of data
+ Stream is an infinite number of data
+ 
+ Collection create objects in eager
+ Stream initialize objects in lazy way
+ 
+ Collection support iterate and consume multiple time
+ Stream consumption is donen only once
