@@ -175,3 +175,57 @@ class TProcess implements Runnable {
 		System.out.println("All task completed");
 	 }
 }
+
+
+==================================
+
+What is CountDownLatch and Why?
+ A CountDownLatch ensures that task awaits for other threads before it starts
+ 
+ CountDownLatch latch = new CountDownLatch(numberOfThreadsToWaitFor);
+ 
+ Specify the number of threads to wait for before it starts processing
+
+Example-
+
+class TProcess extends Runnable {
+
+	int processId;
+	CountDownLatch latch;
+
+	TProcess(int processId, CountDownLatch latch) {
+		this.processId = processId;
+		this.latch = latch;
+	}
+
+	@Override
+	public void run() {
+		System.out.println("Processing id: " + processId);
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+		}
+		
+		// Each process down derements the latch to zero
+		latch.countDown();
+	}
+
+	public static void main(String[] args) {
+		ExecutorService executorService = Executors.newFixedThreadPool(2);
+		
+		// Count down latch specifies number of threads to wait for before it starts/resume execution
+		CountDownLatch latch = new CountDownLatch(5);
+
+		for (int taskId = 1; taskId <= 5; taskId++) {
+		// Latch has been injected using constructor to task processor
+			executorService.submit(new TProcess(taskId, latch));
+		}
+		try {
+		// Latch awating for the count == 0 
+			latch.await();
+		} catch (InterruptedException e) {
+		}
+		executorService.shutdown();
+		System.out.println("All task completed");
+	}
+}
