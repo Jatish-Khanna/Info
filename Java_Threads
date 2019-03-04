@@ -31,38 +31,51 @@ Thread join method
   
   Example-
   class TProcess extends Thread {
-    private int count = 0;
-    private synchronized int countSync = 0;
-    
-    @Override
-    public void run {
-    
-      for(int index = 0; index <= 1000; index++) {
-        count++;
-        countSync++;
-      }
-    }
-    
-    public static void main(String []args) {
-      TProcess t1 = new TProcess();
-      TProcess t2 = new TProcess();
-      
-      t1.start();
-      t2.start();
-      
-      // Unpredicted value - as start immidiatly returned after initiating new thread
-      System.out.println("value of count: "+ count);
-      
-      // Pauses the main thread (the thread from where join has been called)
-      // Waits until child completes execution
-      try{
-        t1.join();
-        t2.join();
-      } catch(InterruptedException e) {}
-      // value of count may be = 2000 (because is not synchronized, so there may be posibility of bugs)
-      System.out.println("value of count:" + count);
-      // value of count will be = 2000
-      System.out.println("value of count:" + countSync);
-    }
+private int count = 0;
+	private int countSync = 0;
+
+	private void incrementCount() {
+		count++;
+	}
+
+	private synchronized void incrementCountSync() {
+		countSync++;
+	}
+
+	@Override
+	public void run() {
+
+		for (int index = 0; index < 1000; index++) {
+			incrementCount();
+			incrementCountSync();
+		}
+	}
+
+	public void increment() {
+		TProcess t1 = new TProcess();
+		TProcess t2 = new TProcess();
+
+		t1.start();
+		t2.start();
+
+		// Unpredicted value - as start immidiatly returned after initiating new thread
+		System.out.println("value of count:" + count);
+
+		// Pauses the main thread (the thread from where join has been called)
+		// Waits until child completes execution
+		try {
+			t1.join();
+			Thread.sleep(100);
+			t2.join();
+		} catch (InterruptedException e) {
+		}
+		// value of count may be = 2000 (because is not synchronized, so there may be
+		// Possibility of bugs)
+		System.out.println("value of count:" + count);
+		// value of count will be = 2000
+		System.out.println("value of count:" + countSync);
+	}
   }  
   
+  Every object has intrinsic lock in Java, which is the basis of synchronized keyword
+=============================
