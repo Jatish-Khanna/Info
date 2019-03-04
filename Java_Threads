@@ -119,7 +119,11 @@ private int count = 0;
 	 * So they acquire different lock instead of instrinsic lock
 	 * This improves performance and provide proper results
 	 */
-	
+
+// Marking method as synchronized will create a single intrinsinc lock for "increment and decrement2" method, 
+// These methods does not share any common data so 
+// By implementing synchronized - we are creating lock objects for individual methods that imporves the performance
+
 	private void increment() {
 		synchronized (lock1) {
 			count++;
