@@ -32,12 +32,14 @@ Thread join method
   Example-
   class TProcess extends Thread {
     private int count = 0;
+    private synchronized int countSync = 0;
     
     @Override
     public void run {
     
       for(int index = 0; index <= 1000; index++) {
         count++;
+        countSync++;
       }
     }
     
@@ -53,12 +55,14 @@ Thread join method
       
       // Pauses the main thread (the thread from where join has been called)
       // Waits until child completes execution
-      t1.join();
-      
-      t2.join();
-      
-      // value of count will be = 2000
+      try{
+        t1.join();
+        t2.join();
+      } catch(InterruptedException e) {}
+      // value of count may be = 2000 (because is not synchronized, so there may be posibility of bugs)
       System.out.println("value of count:" + count);
+      // value of count will be = 2000
+      System.out.println("value of count:" + countSync);
     }
   }  
   
