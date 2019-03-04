@@ -1,0 +1,78 @@
+
+DeadLock - 
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+class ConsumerExchange {
+	private Lock lock = new ReentrantLock();
+	private Lock lock2 = new ReentrantLock();
+
+	public void firstThread() throws InterruptedException {
+
+		lock.lock();
+		System.out.println("Lock-1 acquired by thread");
+		Thread.sleep(200);
+		lock2.lock();
+		try {
+			System.out.println("Method for first thread");
+		} finally {
+			lock.unlock();
+			lock2.unlock();
+		}
+	}
+
+	public void secondThread() throws InterruptedException {
+		lock2.lock();
+		System.out.println("Lock-2 acquired by thread");
+		Thread.sleep(200);
+		lock.lock();
+		try {
+			System.out.println("Method for Second thread");
+		} finally {
+			lock2.unlock();
+			lock.unlock();
+		}
+	}
+
+	public void finished() {
+		System.out.println("Finished processing");
+	}
+
+	public static void main(String[] args) {
+		ConsumerExchange consumerExchange = new ConsumerExchange();
+		try {
+			consumerExchange.update();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void update() throws InterruptedException {
+		Thread t1 = new Thread(() -> {
+			try {
+				firstThread();
+				secondThread();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		Thread t2 = new Thread(() -> {
+			try {
+				secondThread();
+				firstThread();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+
+		t1.start();
+		t2.start();
+
+		t1.join();
+		t2.join();
+	}
+}
