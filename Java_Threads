@@ -292,3 +292,84 @@ class ConsumerExchange {
 		t2.join();
 	}
 }
+
+
+
+===================================
+
+wait() -> Causes the current thread to wait untill another thread invokes 
+	notify() or notifyAll() method for this Object.
+	
+	wait() is same as wait(0). 
+	
+	Note: Thread must acquire Object's monitor.  After calling wait() it releases
+	lock on Object's monitor and wait unit notified
+	
+
+import java.util.Random;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+class ConsumerExchange {
+
+	// Size of the queue - that define upper bound to store the count of element of
+	// type T
+	BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
+	Random rndConsumer = new Random();
+	Object lock = new Object();
+
+	private void producer() throws InterruptedException {
+		while (true) {
+			synchronized (this) {
+				System.out.println("Producer Lock acquired");
+				// Indefinite wait until lock has been acquired
+				Thread.sleep(100);
+				wait();
+				System.out.println("Producer Lock acquired after waiting");
+			}
+		}
+	}
+
+	private void consumer() throws InterruptedException {
+		while (true) {
+			synchronized (this) {
+				System.out.println("Consumer acquired the lock");
+				if (rndConsumer.nextInt(10) % 1 == 0) {
+					// It will wait unit the lock has been relinquished
+					notify();
+				}
+				// The synchronized block has not been completed
+				Thread.sleep(200);
+				// Now the waiting threads will be active
+				System.out.println("Consumer relinquished the lock");
+			}
+		}
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+		ConsumerExchange cExchange = new ConsumerExchange();
+		Thread t1 = new Thread(() -> {
+			try {
+				cExchange.producer();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+
+		Thread t2 = new Thread(() -> {
+			try {
+				cExchange.consumer();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+
+		t1.start();
+		t2.start();
+
+		t1.join();
+		t2.join();
+	}
+}
