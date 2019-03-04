@@ -379,3 +379,99 @@ class ConsumerExchange {
 ===========================================
 
 
+Reentrant Lock better than synchronized lock
+await == wait
+signal == notify
+signalAll == notifyAll
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.Random;
+import java.util.concurrent.locks.Condition;
+
+class ConsumerExchange {
+
+	private int count = 0;
+	private Random rnd = new Random();
+
+	// Instead of synchronizing increment method
+	// where two threads are sharing resource
+	// Updating value will result bugs
+	// Advantages over synchronized
+	private Lock lock = new ReentrantLock();
+
+	private Condition condition = lock.newCondition();
+
+	private void increment() {
+		for (int index = 0; index < 1000; index++) {
+			count++;
+		}
+	}
+
+	public void taskFirst() {
+		System.out.println("First Task");
+		lock.lock();
+		try {
+			// condition can be awaited only if lock is acquired
+			condition.await();
+		} catch (InterruptedException e) {
+
+		}
+
+		// Finally is required in case of exception,
+		// any acquired locked should be unlocked
+		try {
+			increment();
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	public void taskTwo() {
+		System.out.println("Task two");
+		lock.lock();
+		// condition will notify or signal awaiting threads
+		// Other threads must acquire Reentrant lock
+		if (rnd.nextInt(10) % 2 == 0) {
+			condition.signal();
+		}
+
+		// Finally is required in case of exception,
+		// any acquired locked should be unlocked
+		try {
+			increment();
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	public void finished() {
+		System.out.println("Finished execution and value of count: " + count);
+	}
+
+	public static void main(String[] args) {
+		ConsumerExchange cExchange = new ConsumerExchange();
+		try {
+			cExchange.update();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void update() throws InterruptedException {
+		Thread t1 = new Thread(() -> taskFirst());
+		Thread t2 = new Thread(() -> taskTwo());
+
+		t1.start();
+		t2.start();
+
+		t1.join();
+		t2.join();
+
+		System.out.println("Threads execution has been finished");
+
+		finished();
+	}
+
+}
