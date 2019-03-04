@@ -202,3 +202,15 @@ What is Type Inference ?
    
    
    
+PermGen of ClassLoader- 
+  It has been removed instead of Metaspace is the new feature
+  Intial and Maximum size of metaspace can be customized
+  -XX:MetaspaceSize
+  -XX:MaxMetaspaceSize
+  
+  
+  Annotations introduces in Java-8?
+    @FunctionalInterface -
+      Used to mark Interface as SAM functional interface
+    @Repeatable
+     It is used for marking another annotation, so that this annotation can be applied multiple times
