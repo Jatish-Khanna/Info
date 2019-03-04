@@ -214,3 +214,18 @@ PermGen of ClassLoader-
       Used to mark Interface as SAM functional interface
     @Repeatable
      It is used for marking another annotation, so that this annotation can be applied multiple times
+
+
+
+StringJoiner?
+  a new class that can construct a String,
+  To contruct a String seperated by Delimiter
+  It can add a Suffix and Prefix to String
+  
+  
+  Example-
+  StringJoiner(Sting delimiter, String prefix, String suffix)
+  
+  StringJoiner stJoiner = new StringJoiner(":","[","]");
+  stJoiner.add("Part-1").add("Part-2").add("Part-3");
+  stJoiner.toString(); // [Part-1:Part-2:Part-3]
