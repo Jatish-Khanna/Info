@@ -229,3 +229,66 @@ class TProcess extends Runnable {
 		System.out.println("All task completed");
 	}
 }
+
+
+
+==========================
+
+Thread synchronization using BlockingQueue-
+import java.util.Random;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+class ConsumerExchange {
+
+	// Size of the queue - that define upper bound to store the count of element of
+	// type T
+	BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
+	Random rndProducer = new Random();
+	Random rndConsumer = new Random();
+
+	// Produces new element and puts to ArrayBlockingQueue only when size is smaller than
+	// defined during initialization
+	private void producer() throws InterruptedException {
+		while (true) {
+			queue.put(rndProducer.nextInt(100));
+		}
+	}
+
+	// Chanses to consume thread are 33.33%
+	private void consumer() throws InterruptedException {
+		while (true) {
+			Thread.sleep(100);
+			if (rndConsumer.nextInt(10) % 3 == 0) {
+				System.out.println("Element: " + queue.take() + " ; Queue size: " + queue.size());
+			}
+		}
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+		ConsumerExchange cExchange = new ConsumerExchange();
+		Thread t1 = new Thread(() -> {
+			try {
+				cExchange.producer();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+
+		Thread t2 = new Thread(() -> {
+			try {
+				cExchange.consumer();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+
+		t1.start();
+		t2.start();
+
+		t1.join();
+		t2.join();
+	}
+}
