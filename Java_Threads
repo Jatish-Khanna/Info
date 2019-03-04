@@ -1,0 +1,64 @@
+Runnable interface
+Thread class
+
+class TProcess extends Thread {
+  @Override
+  public void run() {
+  
+  }
+}
+
+class TProcess implements Runnable {
+
+  @Override
+  public void run() {
+  
+  }
+}
+
+
+------------------
+Keyword volatile-
+
+  It prevents threads from assuming or reusing the cached value by JVM. 
+  In case when threads doesn't modify the value which is externally modified but read by threads.
+    A chance where stale or old value can be read by system
+    
+==================
+
+Thread join method
+  - pauses the execution of threads in which it has been called until it completes its execution
+  
+  Example-
+  class TProcess extends Thread {
+    private int count = 0;
+    
+    @Override
+    public void run {
+    
+      for(int index = 0; index <= 1000; index++) {
+        count++;
+      }
+    }
+    
+    public static void main(String []args) {
+      TProcess t1 = new TProcess();
+      TProcess t2 = new TProcess();
+      
+      t1.start();
+      t2.start();
+      
+      // Unpredicted value - as start immidiatly returned after initiating new thread
+      System.out.println("value of count: "+ count);
+      
+      // Pauses the main thread (the thread from where join has been called)
+      // Waits until child completes execution
+      t1.join();
+      
+      t2.join();
+      
+      // value of count will be = 2000
+      System.out.println("value of count:" + count);
+    }
+  }  
+  
