@@ -122,3 +122,83 @@ Collection[Java 1.2] and Stream API[Java 8]:
  
  Collection support iterate and consume multiple time
  Stream consumption is donen only once
+
+Stream API-
+ Data in a declarative manner
+ Collecting stats on data is easier
+ Good use of multi-core architecture - without dealing with thread API
+ Pipeline of data operation that can be executed sequentional or in parallel
+ Aggregate functions are available on data
+ Writing code in funcational manner
+ Parallel processing has also been supported by stream API
+ 
+
+Stream Intermediate and Terminal Operations
+  Evaluation - Intermediated operations are only evaluated when terminal operation is executed
+  Output - Intermediate operations is another stream wherea Terminal operation provides resultss
+  Lazy evaluation - Intermediate in lazy manner whereas Terminal in eager manner
+  Multiple operations - Multiple operations are possible is stream which are chained
+  Chaining - Chainning of Intermediated is possible
+  
+ 
+Spliterator-
+ To traverse and partition  elements of source[] in java
+ It may traverse elements individually or sequentional in batch
+ 
+Difference b/w Spliterator and Iterator
+ Spliterator with Streams
+ Iterator with Collections
+ 
+ Spliterator uses internal iterations
+ Iterator is external Iterations
+ 
+ Spliterator can be parallel or sequentional
+ Iterator can only be in sequentional
+ 
+ Spliterator can traverse elements in bulk or individually
+ Iterator can traverse elements in individually
+ 
+ 
+What is Type Inference ?
+ The type of method parameters and its return type has been inferred by Java compiler
+ 
+  Java 7 also supports TypeInference whereas Java8 has enhanced the method to-
+    . Lambda expressions
+    . Method references
+    
+ Internal Interation in Java8-
+   . Which algorithm controls the iterations is it, Iteration or Collections
+    - When a collections controls (External iteration)
+    - When an Iterator controls (Internal Iteration)
+    
+    Internal iterator doesn't store the state of intermediate Collections
+    
+    
+  Difference b/w Internal And External iterator?
+   Fucntional programming, Parallel processing, Code readbility, Control is with Iterator, tells what to iterate not how
+   
+   An Internal iterator controls the iterations itself whereas 
+   External iteration has been controlled by collection
+   
+   An Internal iterator can be individual or in bulk
+   External is Individually
+   
+   Internal can be sequenctional and parallel
+   External is sequentional
+   
+   Internal goes well with functional programming
+   External iterator goes well with OOP (imperative style)
+   
+   Internal iterator code says what to do
+   External iterator code says How to iterate
+   
+   
+  Use Cases of Internal Iterator?
+   High performance, parallel processing, bulk operations, fast iterations
+   
+  Disadvantage of Internal Iterator?
+   . Limited control on how to do
+   . 
+   
+   
+   
