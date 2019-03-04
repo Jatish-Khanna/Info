@@ -79,3 +79,56 @@ private int count = 0;
   
   Every object has intrinsic lock in Java, which is the basis of synchronized keyword
 =============================
+
+What is the issue with above code?
+  Example-
+  
+  class TProcess {
+private int count = 0;
+	private int count2 = 1000;
+	private Object lock1 = new Object();
+	private Object lock2 = new Object();
+
+	public static void main(String[] args) {
+		TProcess t = new TProcess();
+		Thread t1 = new Thread(() -> t.update());
+		Thread t2 = new Thread(() -> t.update());
+
+		t1.start();
+		t2.start();
+
+		try {
+			t1.join();
+			t2.join();
+
+		} catch (InterruptedException e) {
+		}
+		System.out.println("values: count " + t.count);
+		System.out.println("values: count2 " + t.count2);
+	}
+
+	private void update() {
+		for (int index = 0; index < 1000; index++) {
+			increment();
+			decrement2();
+		}
+	}
+
+	/**
+	 * Below methods does not share the data
+	 * So they acquire different lock instead of instrinsic lock
+	 * This improves performance and provide proper results
+	 */
+	
+	private void increment() {
+		synchronized (lock1) {
+			count++;
+		}
+	}
+
+	private void decrement2() {
+		synchronized (lock2) {
+			count2--;
+		}
+	}
+  }
