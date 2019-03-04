@@ -229,3 +229,22 @@ StringJoiner?
   StringJoiner stJoiner = new StringJoiner(":","[","]");
   stJoiner.add("Part-1").add("Part-2").add("Part-3");
   stJoiner.toString(); // [Part-1:Part-2:Part-3]
+
+
+
+Difference B/w Interface with Default method and Abstract class?
+  Contructor
+   Interface cannot have constructor
+   Abstract class can have constructor
+  
+  Instance variable 
+    Interface cannot have instance variable
+    Abstract class can have instance variables
+    
+  Concrete method
+   Inteface cannot have concrete methods, (default, static methods)
+   Abstract class can have conrete methods with implementation
+  
+  Lamda Use
+   SAM interface provision to be used as Lamda expression
+   Abstract class cannot be used as Lamda expression
