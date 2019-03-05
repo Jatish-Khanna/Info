@@ -76,3 +76,58 @@ public class ConsumerExchange {
 		new Thread(future.get()).start();
 	}	
 }
+
+
+
+=========================
+Method#2 Solution#2 - Using prototype call method instead of Lambda
+
+import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
+class ConsumerExchange {
+	static Random rndNumber = new Random();
+
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
+
+		// A simple Cached Thread pool where a thread does activity and returns
+
+		ExecutorService eService = Executors.newCachedThreadPool();
+
+		Runnable r1 = () -> {
+			System.out.println("Thread executed");
+		};
+
+		// The actual implementation of Callable and Future
+		
+		
+		Future<Runnable> future = eService.submit(new Callable<Runnable>() {
+
+			// Overriden prototype of call method in Callable Functional Interface
+			// If call throws any Exception of its subclass which is possible due to prototype of method
+			// Future.get() will throw ExecutionException 
+			@Override
+			public Runnable call() throws Exception {
+				try {
+					Thread.sleep(rndNumber.nextInt(3000));
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return r1;
+			}
+		});
+
+		System.out.println();
+		new Thread(future.get()).start();
+
+		eService.shutdown();
+
+		eService.awaitTermination(1, TimeUnit.DAYS);
+	}
+}
