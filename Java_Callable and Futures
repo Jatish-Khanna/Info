@@ -131,3 +131,8 @@ class ConsumerExchange {
 		eService.awaitTermination(1, TimeUnit.DAYS);
 	}
 }
+
+
+==========================
+Future isDone() => To check if the task has been completed 
+Future cancel() => To cancel the associated task with the callable future
