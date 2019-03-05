@@ -138,3 +138,12 @@ public class ConsumerExchange {
 		System.out.println("All task has been completed");
 	}
 }
+
+
+
+========================
+
+Semaphore semaphore = new Semaphore(count, boolean);
+
+where boolean defines -
+  . true - if the order of request to lock object should be maintained while acquiring lock
