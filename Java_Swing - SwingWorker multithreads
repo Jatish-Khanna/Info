@@ -104,4 +104,87 @@ public final T get()
             throws InterruptedException,
                    ExecutionException
                    
-                   
+=====================              
+
+It is good to update the GUI in @Ovveride "done" method but doInBackground should not update GUI
+
+
+SwingWorker<Boolean, Integer> worker = new StringWorker<>() {
+
+  @Override
+  protected
+}
+
+
+
+Example----
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
+
+class ConsumerExchange {
+	public void executeWorker() throws InterruptedException {
+		// Here,
+		// Boolean defines - the result or return value from doInBackground function
+		// Integer defines - intermediate type result returned from doInBackground
+		SwingWorker<Boolean, Integer> worker = new SwingWorker<Boolean, Integer>() {
+
+			@Override
+			protected Boolean doInBackground() throws InterruptedException {
+				System.out.println("Worker-" + Thread.currentThread().getName());
+				for (int index = 0; index < 10; index++) {
+					// Publish the intermediate results from task
+					publish(index);
+					Thread.sleep(1000);
+				}
+				return true;
+			}
+
+			@Override
+			protected void done() {
+				try {
+					// get() method access the returned result from doInBackground
+					System.out.println(get());
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			// List of chunks defined the values published from doInBackground
+			// As this method is not guaranteed to be called or to be called with collected
+			// values
+			// the reason it accepts a List of values
+
+			@Override
+			protected void process(List<Integer> chunks) {
+//				System.out.println("Process method called.");
+				chunks.stream().forEach(System.out::println);
+			}
+		};
+
+		System.out.println("Executing worker");
+		// Starts the worker and call doInBackground for the worker
+		worker.execute();
+
+	}
+
+	public static void main(String[] args) {
+		for (int workers = 0; workers < 10; workers++) {
+			SwingUtilities.invokeLater(() -> {
+				try {
+					new ConsumerExchange().executeWorker();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+		}
+	}
+}
