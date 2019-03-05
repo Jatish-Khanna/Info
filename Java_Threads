@@ -475,3 +475,38 @@ class ConsumerExchange {
 	}
 
 }
+
+
+
+================================
+
+Interrupt Thread Exception-
+
+class ConsumerExchange {
+
+
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
+
+		Thread t1 = new Thread(() -> {
+			for(int index = 1 ; index <= 1E6; index++) {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Interrupted @ index value: "+ index);
+					e.printStackTrace();
+					break;
+				}
+			}
+		});
+		
+		// Start the tasks
+		t1.start();
+		// Sleep the main thread
+		Thread.sleep(500);
+		// Interrupt the t1 thread
+		// Should be caught by InterruptedExecption in thread "run" method
+		t1.interrupt();
+		t1.join();
+	}
+}
