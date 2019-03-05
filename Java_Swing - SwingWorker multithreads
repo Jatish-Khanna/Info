@@ -1,0 +1,107 @@
+
+
+SwingWorker is an "abstarct" class for Swing library of Java programming language
+It is used to performed GUI interactions tasks in background tasks
+
+This is intentionally developed to handle Huge task to be executed on different threads which doesn't impact the UI
+
+Types of Threads-
+  . CurrentThread  - The current running thread or thread where application logic has been executed
+  . Event dispatch thread - All event handling code executed on this thread
+  . Worker Threads - Also known as Background threads where all the time consuming background tasks are executed
+  
+  
+  SwingWorker schedules the background of tasks on worker threads
+  It provides inter-thread communication using Event dispatched threads
+  
+  Important methods-
+  doInBackground() - this is simillar to run in Runnable or Thread and call in Callable interface
+   - It provide the logic that gives details what to be executed by a single thread
+   
+   #1
+   protected abstract T doInBackground()
+                             throws Exception
+      Computes a result, or throws an exception if unable to do so. 
+      This method is executed in a background thread.
+      Returns:
+      the computed result
+      Throws:
+      Exception - if unable to compute a result
+  
+  #2
+  done(): This function is called when the thread finished its execution. 
+  Also, any value returned by the doInBackground() function can be received inside this function using get(). 
+  Further, updates can be made to GUI inside this function. 
+  Thus, function executes on the Event Dispatch Thread after the doInBackground method is finished.
+  
+  protected void done()
+
+
+  #3
+  execute(): Schedules this SwingWorker for execution on a worker thread.
+  
+public final void execute()
+
+  #4
+  publish() : This method is to be used 
+  from inside the doInBackground method to deliver intermediate results for processing 
+  on the Event Dispatch Thread inside the process method.
+  
+  protected final void publish(V... chunks)
+
+
+  #5
+  process(): Receives data chunks from the publish method asynchronously on the Event Dispatch Thread. 
+  Because this method is invoked asynchronously, publish() may have been called multiple times.
+
+  protected void process(List chunks)
+  Parameters:
+  chunks - intermediate results to process
+  
+  #6
+  setProgress: Sets the progress bound property. The value should be from 0 to 100.
+  protected final void setProgress(int progress)
+
+  Example:
+  setProgress(1);
+  setProgress(2);
+  setProgress(3);
+
+  might result in a single PropertyChangeListener 
+  notification with the value 3.
+  Parameters:
+  progress - the progress value to set
+  Throws:
+  IllegalArgumentException - is value not from 0 to 100
+  
+  #7
+  getProgress: Returns the progress bound property.
+  public final int getProgress()
+  Returns:
+  the progress bound property.
+  cancel: Attempts to cancel execution of this task. 
+  This attempt will fail if the task has already completed, 
+  has already been cancelled, or could not be cancelled for some other reason. 
+  If successful, and this task has not started when cancel is called, this task should never run.
+  
+  #8
+  isCancelled: Returns true if this task was cancelled before it completed normally.
+public final boolean isCancelled()
+Returns:
+true if this task was cancelled before it completed
+
+ #9
+isDone: Returns true if this task completed. 
+Completion may be due to normal termination, an exception, or cancellation — 
+in all of these cases, this method will return true.
+public final boolean isDone()
+Returns:
+true if this task completed
+
+#10
+get: Waits if necessary for the computation to complete, and then retrieves its result.
+public final T get()
+            throws InterruptedException,
+                   ExecutionException
+                   
+                   
