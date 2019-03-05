@@ -510,3 +510,8 @@ class ConsumerExchange {
 		t1.join();
 	}
 }
+
+
+Similar to Future => cancel method
+Thread => sleep, wait, isInterrupted checks if thread has been interrupted
+===
