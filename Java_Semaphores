@@ -1,0 +1,140 @@
+======
+
+What are Semaphores?
+
+import java.util.concurrent.Semaphore;
+
+  Objects that maintain a count for the number of permits for a Semaphores i.e. How many parallel threads 
+   can take lock over a semaphores
+   // Here 3 specifies the number of available permits
+   Semaphore semaphore = new Semaphore(3);
+   
+   // releases the semaphore
+   // Simillar to unlock
+   semaphore.release()
+   
+   // Acquire a semaphore
+   // Will wait until a Semaphore is available
+   // Similar to lock
+   semaphore.acquire()
+   
+   // Available permits for a Semaphore
+   semaphore.availablePermits();
+
+
+
+
+==============================
+
+Example ---
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+class Connection {
+	private int connect = 0;
+	private static final Connection connection = new Connection();
+  // Defines the number of permits for the threads
+  private Semaphore semaphore = new Semaphore(10);
+
+	private Lock lock = new ReentrantLock();
+
+	private Connection() {
+
+	}
+
+	public static Connection getInstance() {
+		return connection;
+	}
+
+	public void connect() {
+		try {
+    // Acquire a semaphore
+			semaphore.acquire();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		try {
+    // Perform activity
+			connectUtil();
+		} finally {
+    // Finally release a Semaphore
+			semaphore.release();
+		}
+
+	}
+
+	private void connectUtil() {
+//		synchronized (this) {
+
+// Try a ReentrantLock on object
+		lock.lock();
+		try {
+    // Update active connections
+			connect++;
+			System.out.println("Connection object: " + connect);
+
+		} finally {
+    // Unlock, as no longer shared object has been used
+			lock.unlock();
+		}
+
+		// Perform actions with connections
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+// Try again a Reentrant lock on object
+		lock.lock();
+		try {
+			// Release the connection to pool
+			connect--;
+		} finally {
+    // Unlock the lock in finally block
+			lock.unlock();
+		}
+	}
+
+}
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+
+
+public class ConsumerExchange {
+
+
+	public static void main(String[] args) {
+
+		ConsumerExchange cExchange = new ConsumerExchange();
+		cExchange.update();
+	}
+
+	private void update() {
+		// Cached thread pool for executors
+		ExecutorService excutorService = Executors.newCachedThreadPool();
+		Connection connection = Connection.getInstance();
+		// Try creating 200 connections at same time
+		for (int index = 0; index < 200; index++) {
+			excutorService.submit(() -> connection.connect());
+		}
+
+		// Shutdown programmer when all the task are finished
+		excutorService.shutdown();
+
+		// Await for completion of all the threads
+		try {
+			excutorService.awaitTermination(1, TimeUnit.DAYS);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("All task has been completed");
+	}
+}
