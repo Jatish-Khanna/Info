@@ -1,0 +1,49 @@
+
+
+===================
+How can we get the result from the thread which has completed the execution?
+  the "run" method returns "void"
+
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import java.util.Random;
+
+
+class ConsumerExchange {
+	static Random rndNumber = new Random();
+	
+	public static void main(String []args) throws InterruptedException {
+	
+	// A simple Cached Thread pool where a thread does activity and returns
+	
+		ExecutorService eService = Executors.newCachedThreadPool();
+		eService.submit(() -> {
+			try {
+				Thread.sleep(rndNumber.nextInt(3000));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+		eService.shutdown();
+		
+		eService.awaitTermination(1, TimeUnit.DAYS);
+	}	
+}
+
+
+
+
+Solution#1 -----
+ . Create an instance variable of Result type 
+ . Store the actual result from the thread in the Result instance
+ . Refer the result instance stored 
+ 
+ 
+Solution#2 ------
+  Callable and Futures
+
+
