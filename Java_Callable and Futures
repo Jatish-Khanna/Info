@@ -46,4 +46,33 @@ Solution#1 -----
 Solution#2 ------
   Callable and Futures
 
-
+public class ConsumerExchange {
+	static Random rndNumber = new Random();
+	
+	public static void main(String []args) throws InterruptedException, ExecutionException {
+	
+	// A simple Cached Thread pool where a thread does activity and returns
+	
+		ExecutorService eService = Executors.newCachedThreadPool();
+		
+		Runnable r1 = () -> {System.out.println("Thread executed");};
+		
+		Future<Runnable> future = eService.submit(() -> {
+			try {
+				Thread.sleep(rndNumber.nextInt(3000));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return r1;
+		});
+		
+		eService.shutdown();
+		
+		// If we do not wait for the thread termination to finish
+		// future.get will block until the corresponding thread has been finished
+		eService.awaitTermination(1, TimeUnit.DAYS);
+		
+		new Thread(future.get()).start();
+	}	
+}
