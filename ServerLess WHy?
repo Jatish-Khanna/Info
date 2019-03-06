@@ -1,0 +1,24 @@
+
+Benefits of Serverless-
+
+1. No server or underlined infrastructure management:No need to install, maintain, administer, any software or runtime
+2. Flexible Scaling: Easy application scaling and automatic scaling options
+3. Availability: High availability and fault tolerant capacity
+
+4. Speed up the process of cloud Native applications
+  - Cloud native applications are used to automate and integrate the concepts of -
+  . Microservices - Architectural approaoch for developing an application as collection of small services
+    Each service implements business capabilities,
+    runs in into own infrastructure
+    Communicates it via REST or messaging
+
+  . DevOps - Collabration b/w software developers and IT organization for Continuos delivery
+    It has the potential to create a culture and an environment 
+    where building, testing and releasing software happens rapidly, frequently and more consistently.
+    
+    
+  . Containers - offers efficiency and same capabilities as compared to VM's
+    Each VM can host and execute multiple containers with reserved infrastructure
+    
+  . CI/CD -Small batches of products to production quickly
+    can deliver frequently, at less risk, and get feedback faster from end users.
