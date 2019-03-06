@@ -24,6 +24,9 @@ Setup an Inventory: (logical groups or nodes)
      Even to local host Ansible requires ssh-copy-id, while treating localhost as node
 
 2) Ansible playbooks-
+
+A single Ansible command not yet playbook
+
     Run on logical groups or all (a defined keyword)
     Example
     anisble all -m  ping
@@ -32,3 +35,5 @@ Setup an Inventory: (logical groups or nodes)
     The basic syntax consists of "ansible" then the "host group" from hosts to run against, 
     -m <MODULE_NAME>, and 
     optionally providing arguments via -a "OPT_ARGS"
+
+    -s <specify the module to be executed as sudo on remote systems>
