@@ -74,6 +74,8 @@ How to run above playbook
                 
 Ansible variables: '{{ keyword }}'
 
+#Method-1::
+
     test.yml
         --- # This is test YAML example to install module on server
         - hosts: '{{ hostnames }}'
@@ -99,4 +101,11 @@ Ansible variables: '{{ keyword }}'
                 state: restarted
                 
             
-    How to substitute values in variable-
+    How to substitute values in variable in the "vars" sections
+
+
+#Method-2::
+
+Substitute using ansible command line-
+    ansible-playbook test.yml --extra-vars "hostnames=<hostname> remote_user=jatish"
+    
