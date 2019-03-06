@@ -37,3 +37,38 @@ A single Ansible command not yet playbook
     optionally providing arguments via -a "OPT_ARGS"
 
     -s <specify the module to be executed as sudo on remote systems>
+
+
+  Playbook format-
+  
+  A sample playbook
+  
+    test.yml
+        --- # This is test YAML example to install module on server
+        - hosts: <server/group>
+          remote_user: <ansible>
+          become: yes
+          become_method: sudo
+          connection: ssh
+          gather_facts: yes
+          vars:
+            user_name: jatish
+          tasks:
+          - name: Install module on node
+            yum:
+              name: httpd
+              state: latest
+            notify:
+            - startservice
+            handlers:
+            - name: startservice
+              service:
+                name: httpd
+                state: restarted
+                
+                
+=======================
+How to run above playbook
+  ansible-playbook test.yml
+                
+                
