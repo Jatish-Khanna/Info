@@ -16,10 +16,19 @@ Anisble doesn't need any agents running on nodes/servers. It does complete activ
     Update the ansible.cfg to start with Ansible:
     inventory   = [defines the hosts file to locate hosts over the n/w]
     sudo_user =   [the user with which ansible will do the ssh and run the playbooks]
-    
+
+Setup an Inventory: (logical groups or nodes)
     Ansible hosts which defines the DNS alias called as Ansible hosts. These hosts defines where Ansible can run playbooks
     
      The user should have sudo privilege and should not ask for password at the time of SSH
      Even to local host Ansible requires ssh-copy-id, while treating localhost as node
 
-2)
+2) Ansible playbooks-
+    Run on logical groups or all (a defined keyword)
+    Example
+    anisble all -m  ping
+
+    Structure of ansible
+    The basic syntax consists of "ansible" then the "host group" from hosts to run against, 
+    -m <MODULE_NAME>, and 
+    optionally providing arguments via -a "OPT_ARGS"
