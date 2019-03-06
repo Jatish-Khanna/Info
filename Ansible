@@ -72,3 +72,31 @@ How to run above playbook
   ansible-playbook test.yml
                 
                 
+Ansible variables: '{{ keyword }}'
+
+    test.yml
+        --- # This is test YAML example to install module on server
+        - hosts: '{{ hostnames }}'
+          remote_user: '{{ remote_user }}'
+          become: yes
+          become_method: sudo
+          connection: ssh
+          gather_facts: yes
+          vars:
+            remote_user: jatish
+            hostnames: <hostname>
+          tasks:
+          - name: Install module on node
+            yum:
+              name: httpd
+              state: latest
+            notify:
+            - startservice
+            handlers:
+            - name: startservice
+              service:
+                name: httpd
+                state: restarted
+                
+            
+    How to substitute values in variable-
