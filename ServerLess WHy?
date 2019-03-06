@@ -22,3 +22,21 @@ Benefits of Serverless-
     
   . CI/CD -Small batches of products to production quickly
     can deliver frequently, at less risk, and get feedback faster from end users.
+
+
+
+
+Features of Function as a Service?
+  . You can run discrete functionalities as independent executable functions
+  . Servers are abstracted from developers and it scales instantaneuosly and infinitly
+  . It is triggered based on events, or predefined schedules
+  
+Serverless service by AWS-
+1. Compute - Lamda
+2. Integration - SQS, SNS
+3. Monitoring and Auditing - Cloudwatch and Cloudtrail
+4. Orchestration - Simple Workflow Service, Step function
+5. Proxy - API gateway
+6. Analytics - Kinesis, Athena
+7. Storage - S3
+8. Developer tools - Cloud9, Cloud star, X-Ray, Code commit, Code build, Code deploy, CodePipeline
