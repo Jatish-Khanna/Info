@@ -51,6 +51,9 @@ Features-
     or backend service with zero or low administration
   . Service that scales precisely with the size of work
   . Service for which you pay only for the compute time
+  . Build in monitoring and scaling 
+  . Easy integration with IAM (Identity and access management)
+  
   
   Event examples-
     . Change happened in the database
@@ -59,3 +62,16 @@ Features-
     . Emails to Simple email service
     . Logs in cloudwatch
     . 
+
+
+Difference b/w Lamda and EC2 instances-
+
+  EC2 provides customization of underlined infra, OS, N/w facilities
+  Lamda makes it easy to execute code in response to an event
+  
+  
+  For EC2 customer is responsible for provisioning, monitoring, design, health
+  Lamda provides high availability and easy scaling to your code
+  
+  Provides an easy to use approach to deploying and scaling web applications
+  Triggers lamda functions in response to an event
