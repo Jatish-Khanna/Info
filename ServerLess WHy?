@@ -75,3 +75,23 @@ Difference b/w Lamda and EC2 instances-
   
   Provides an easy to use approach to deploying and scaling web applications
   Triggers lamda functions in response to an event
+
+
+
+Amazon Simple Storage Service?
+  Durable - 99.99999% - data is replicated over multiple facilities and multiple devices in each facility
+  Low cost - Pay for the resource usage
+  Availability - Offers 99.99% availability
+  Secure - Once data is uploaded it is automatically encrypted and data transfer mechanism is secure over SSL
+  High performance - With support of multipart uploads, n/w throughtput and resiliency is maximized
+  Scalable - Highly scalable
+  
+  S3 storage format -
+    the data is stored as objects where 
+      Object has file data and metadata information
+      
+  New buckets must have-
+    . Globally a unique name for the bucket where Objects will be stored
+    . A bucket is associated with each region
+  
+  
