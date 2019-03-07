@@ -40,3 +40,22 @@ Serverless service by AWS-
 6. Analytics - Kinesis, Athena
 7. Storage - S3
 8. Developer tools - Cloud9, Cloud star, X-Ray, Code commit, Code build, Code deploy, CodePipeline
+
+
+
+AWS Lambda- Service that runs your code without managing or provisioning servers
+
+Features-
+  . Service that triggers your code in response to an event
+  . Service using which you can run code for virtually any type of application 
+    or backend service with zero or low administration
+  . Service that scales precisely with the size of work
+  . Service for which you pay only for the compute time
+  
+  Event examples-
+    . Change happened in the database
+    . Modification in S3
+    . Message in Kinesis stream
+    . Emails to Simple email service
+    . Logs in cloudwatch
+    . 
