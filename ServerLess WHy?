@@ -160,5 +160,31 @@ Simple Queue Service:
   
   
   
+======================
+Amazon Dynamo DB-
+  - A fully managed No-SQL database
+  - It automatically provisions storage servers in background
+  - It automates the replication among nodes across centers 
+  - Nodes are Solid State Harddrives and replicates across multiple AZ's
+  - Dynamo DB tables, attibutes and Items
+  
+  High scalable
+  Replication
+  Fully managed
+  Enterprise ready
+  Secure 
+  High performing
+  High available
+  
+=========================
+API Gateway?
+  Is a fully managed service that exposes the application backend services over REST
+  To process huge load or concurrent calls to API
+  
+  
+  - To manage and monitor API's using gateway
+  Though API's internal and external application can access functionalities provided by various AWS components
+  API gateway handles traffic, controlling authorization and access, status monitoring and Version control
+  
   
   
