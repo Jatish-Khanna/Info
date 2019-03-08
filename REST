@@ -1,0 +1,8 @@
+REST is a desing pattern proposed to exchange message over the web
+
+1. Client - server
+2. Stateless
+3. Cachable
+4. Layered System
+5. Code on demand
+6. Uniform interface
