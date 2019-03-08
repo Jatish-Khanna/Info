@@ -64,3 +64,19 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         tx.commit();
         session.close();
     }
+
+
+
+====================
+
+SPing JPA data advantages and summary
+
+  . The amount of coding is quite less when compared to Spring JPA/Hibernate
+  . Common CRUD operations have been provisioned at runtime by Spring
+  . For common requirements, @Query and @NamedQuery and @Param provides privilege
+  . High consistency is achieved at data access level
+  . Single interface to multiple underlinded DB's - NoSQL, SQL
+  . Highly flexible to extend. Allows new methods to be defined and custom repositories
+  . @ready avaiable readOnly transaction scope and can be extended easily to Read/Write transactional
+  . @Modifying(clearAutomatically = true) to support transactional API
+  . Paging and Sorting operations have been provided
