@@ -1,0 +1,66 @@
+JPA -
+  
+  @Repository
+public class EmployeeDAOImpl implements EmployeeDAO {
+    private EntityManagerFactory entityManagerFactory;
+    @Autowired
+    public void setEntityManagerFactory (EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
+    
+    
+    - public void insert(Employee employee){
+        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(employee);
+        entityManager.getTransaction().commit();
+    }
+    public int delete(int empId) {
+        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        int result=0; 
+        try{
+             Employee emp = (Employee) entityManager.find(Employee.class, empId);
+             entityManager.remove(emp);
+             result=1;
+             entityManager.getTransaction().commit();
+        }
+        catch(Exception e){
+             entityManager.getTransaction().rollback();
+        }
+        entityManager.close();
+        return result;
+    }
+}
+
+
+
+====================
+HIbernate
+
+@Repository
+public class EmployeeDAOImpl implements EmployeeDAO {
+    private SessionFactory sessionFactory;
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+    
+    public List<Employee> getAll() {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();  
+        CriteriaQuery<Employee> query = builder.createQuery(Employee.class);   
+        Root<Employee> root = query.from(Employee.class);  
+        query.select(root);       
+        List<Employee> empList=session.createQuery(query).getResultList();
+        return empList;
+    }
+    public void update(int empId, String department) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        Employee emp = (Employee) session.get(Employee.class, empId);
+        emp.setDepartment(department);
+        session.update(emp);
+        tx.commit();
+        session.close();
+    }
