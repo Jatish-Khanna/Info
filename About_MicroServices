@@ -390,9 +390,11 @@ class ZuulFallbackPattern {
 			
 			@Override
 			public String getRoute() {
-				// TODO Auto-generated method stub
+				// return "*" or null for all the URL matchers
 				return null;
 			}
+			
+			// Override the method for fallback option
 			
 			@Override
 			public ClientHttpResponse fallbackResponse() {
