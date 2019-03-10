@@ -233,3 +233,47 @@ Create Eureka clusture:
 
 
 
+=================
+
+Patterns - 
+  1. Service discovery pattern - where all the registered services at the central control defines the instance serving request
+  2. Circuit-breaker pattern - when one of the service fails to stop propagating and impacting other services with
+                               for cascading failures
+  3. Fallback pattern - when the circuit is open due to failure, the request will fallback to Exceptional handler flow
+      . In case of error in service
+      . In case of timeout in service
+      . In case of Open circuit
+  
+====================
+
+Implementing Circuit breaker -
+    1. Hystrix -dependency
+    <dependency>
+              <groupId>org.springframework.cloud</groupId>
+              <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+
+
+
+    2. Annotation to enable the circuit breaker pattern
+      @EnableCircuitBreaker
+      
+    3. Annotate a service method with the fallback command
+      @HystrixCommand(fallbackmethod= "<NAME_OF_FALLBACK_METHOD>")
+      
+      
+    4. Define a fallback method 
+      
+    5. General properties to setip Hystrix
+    
+      hystrix.command.default.circuitBreaker.requestVolumeThreshold=10
+      hystrix.command.default.circuitBreaker.sleepWindowInMilliseconds=10000
+      hystrix.metrics.rollingStats.timeInMilliseconds=10000
+      hystrix.command.default.circuitBreaker.errorThresholdPercentage=50
+    
+
+    
+    
+    
+
+
