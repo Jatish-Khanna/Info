@@ -31,7 +31,44 @@ An API Gateway is the element that coordinates and orchestrates how all the requ
 Cloud native applications-
   . Load balance the instances of single service
   . Are services resillient if application has been failed
-  . Benefit of scalability
+  . Benefit of scalability, and how to share the configuration b/w these common instances?
   . How to know where services are hosted on cloud - the port and host name
   . How to avoid duplication of common configuration?
   . how to trace the flow b/w the microservices?
+
+
+==========================
+
+Solution# to problem - when microservices are scaled, how they should share the common configuration 
+
+
+          VCS(Git) ---------------> ConfigServer
+                                      |||||
+                                ==================
+                                  Microservice-#1
+                                  M-#2
+                                  M-#3
+                                  ...
+                                  M-#n
+                                  
+     Key takeaways-
+      . All the configuration details are stored in git
+      . All the microservice connect to config server and load the common configuration
+      . Git will also manage microservice specific configuration file (dependent configuration)
+        [Create separate properties file for each microservice with name of the 
+        file matching the" spring.application.name" of the service]
+        
+      . SpringCloud dependecy
+       <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-config-server</artifactId>
+       </dependency>
+      
+      . @EnableConfigServer annotation in the application file of config server
+      
+      
+      --
+      Restart all the services and enjoy Solution# - Store and load the configuration from ConfigServer
+      
+      
+  ==============================    
