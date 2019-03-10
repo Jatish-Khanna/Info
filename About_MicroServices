@@ -262,15 +262,22 @@ Implementing Circuit breaker -
       @HystrixCommand(fallbackmethod= "<NAME_OF_FALLBACK_METHOD>")
       
       
-    4. Define a fallback method 
+    4. Define a fallback method WITH THE SAME SIGNATURE
       
     5. General properties to setip Hystrix
     
-      hystrix.command.default.circuitBreaker.requestVolumeThreshold=10
+    // At least five request should be sent
+      hystrix.command.default.circuitBreaker.requestVolumeThreshold=5
+      // After 10 seconds the circuit will again be closed by Hystrix
       hystrix.command.default.circuitBreaker.sleepWindowInMilliseconds=10000
+      // Within 10 seconds minimum of five request to be sent
       hystrix.metrics.rollingStats.timeInMilliseconds=10000
+      // Minimum of 50% request should fail
       hystrix.command.default.circuitBreaker.errorThresholdPercentage=50
     
+    
+    NOte: If the circuit is Open and after sleepWindow it closes and got the first invalid request 
+    then Hystrix will again Open the circuit for rollingStats time span
 
     
     
