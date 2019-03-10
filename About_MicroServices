@@ -209,8 +209,26 @@ Problem#2.B - Service discorvery if in scalable instances we need to add/or remo
 
 
 
+----------------------
+Create Eureka clusture:
+    
+   1. Configure each Eureka server with the default Zone
+    eureka.client.service-url.defaultZone=http://eureka2host:8002/eureka,http://eureka3host:8003/eureka
+  
+    ... for other Eureka servers
+
+   2. Update the properties 
+   
+   eureka:
+  instance:
+    hostname: eureka1host
+  client:
+    registerWithEureka: true
+    fetchRegistry: true 
 
 
+  3. For all the clients
+  eureka.client.service-url.defaultZone=http://eureka1host:8002/eureka,http://eureka2host:8002/eureka,http://eureka3host:8003/eureka
 
 
 
