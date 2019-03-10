@@ -27,3 +27,11 @@ An API Gateway is the element that coordinates and orchestrates how all the requ
 
 
 
+
+Cloud native applications-
+  . Load balance the instances of single service
+  . Are services resillient if application has been failed
+  . Benefit of scalability
+  . How to know where services are hosted on cloud - the port and host name
+  . How to avoid duplication of common configuration?
+  . how to trace the flow b/w the microservices?
