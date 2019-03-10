@@ -343,7 +343,17 @@ Example Zuul an API gateway
 	// This defines the Service ID registered with Eureka or Central service registry
 	zuul.routes.<routeName>.service-id=<ServiceName> . 
 	
-	Note:  strip-prefix=false - to avoid repetition in the path
+	Example-
+	Call a microservice using Zuul, It will strip all the context which add repetition
+	
+	http://Zuulhost:8080/service/service/id
+	
+	The Zuul will strip the first "service" context which add confusion. by disabling with the below strip-prefix option
+	New URI would be like
+	
+	http://Zuulhost:8080/service/id
+	
+	Note:  zuul.routes.<routeName>.strip-prefix=false - to avoid repetition in the path
 	
 	- Wild card can be used as request matchers
 	- /uri/** - anything after the /uri
