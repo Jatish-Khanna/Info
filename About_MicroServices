@@ -339,7 +339,10 @@ Example Zuul an API gateway
 
 	3. Add API gateway proxy routes
 	Routes can be added using the zuul.routes.<routeName>.path=/<URI> and 
-	
+
+Zuul definition
+"""
+
 	// This defines the Service ID registered with Eureka or Central service registry
 	zuul.routes.<routeName>.service-id=<ServiceName> . 
 	
@@ -354,6 +357,12 @@ Example Zuul an API gateway
 	http://Zuulhost:8080/service/id
 	
 	Note:  zuul.routes.<routeName>.strip-prefix=false - to avoid repetition in the path
+	
+	OR
+	
+	shorthand 
+	zuul.routes.<DISCOVERY_SERVICE_NAME>.path=/uri/**
+"""	
 	
 	- Wild card can be used as request matchers
 	- /uri/** - anything after the /uri
