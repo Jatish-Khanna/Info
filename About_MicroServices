@@ -244,6 +244,18 @@ Patterns -
       . In case of timeout in service
       . In case of Open circuit
   
+  4. API gateway pattern - The API gateway server act as 
+  	Orchestrator, 
+	aggregator, 
+	request/response formatter
+	Intelligent routing
+	Handling request from different sources or client types
+	Protocol transalation
+	Security
+	Loadbalancing
+  	that handles all the traffic b/w server and client without transperancy
+	
+  
 ====================
 
 Implementing Circuit breaker -
@@ -299,5 +311,52 @@ Implementing Circuit breaker -
     System.out.println(getFuture.get());
     
     
+=======================
+Reverse Proxy-
+
+	As the external interface doesn't know about the deployed applications/microservices
+	.  An API gateway will handle all the request from external systems
+	. It forward request to respective microservice
+	. The discovery of service has been completed using Central registry like Eureka
+	. The gathering, aggregating, formatting, orchestration has been done by API gateway
+	. No static API service information is required for client
+	. 
+
+Example Zuul an API gateway
+
+	1. Add dependency
+	<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zuul</artifactId>
+</dependency>
+
+	2. Add annotations
+	// To enable API gatewat patten and request routes will be defined
+	@EnableZuulProxy
+	// To find the API services registered with Central registry
+	@EnableDiscoveryService
+
+
+	3. Add API gateway proxy routes
+	Routes can be added using the zuul.routes.<routeName>.path=/<URI> and 
+	
+	// This defines the Service ID registered with Eureka or Central service registry
+	zuul.routes.<routeName>.service-id=<ServiceName> . 
+	
+	Note:  strip-prefix=false - to avoid repetition in the path
+	
+	- Wild card can be used as request matchers
+	- /uri/** - anything after the /uri
+	- /uri/*/service  - any text b/w uri and service
+
+// Provide the information of Central registry
+	eureka.client.service-url.defaultZone=http://localhost:8081/eureka
+
+
+
+
+
+
+
 
 
