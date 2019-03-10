@@ -363,7 +363,10 @@ Example Zuul an API gateway
 	eureka.client.service-url.defaultZone=http://localhost:8081/eureka
 
 
-
+Benefits of Zuul Gateway-
+	1. It uses Ribbon i.e. automatically balances the load b/w service instances
+	2. Zuul automatically configures Hystrix-
+		i.e. Fallback routes can be defined to implement FALLBACK PATTERN
 
 
 
