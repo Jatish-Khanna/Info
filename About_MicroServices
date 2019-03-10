@@ -72,3 +72,59 @@ Solution# to problem - when microservices are scaled, how they should share the 
       
       
   ==============================    
+
+Solution#2 - Load balancing between scaled applications
+
+  - An external loadbalancer can be requested in front of instances
+  - The above load balancer decides to f/w request b/w scaled services hosted on machinces is called as Server-side loadbalancing
+  
+  Issues with Server-side loadbalancing:
+    This is single point of failure if load balancer fails then we do not have access to any of instances
+    - For multiple such microservices which have multiple instances running a collection of LB's to be maintained
+    - Every hop in the n/w increases latency 
+    
+    
+    What can be done?
+     How about Client-Side load balancing
+      - Here client will decide to whom the quest will be sent to
+      - The client side load balancers are usually s/w load balancers
+      
+      Problems with Client-Loadbalancer?
+        - The client is managing another cross-cutting concern of load balancing 
+        
+        Example- Netflix OSS : Ribbon a client side load balancer
+        
+    How to do?
+      1. Add dependency
+        <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-starter-ribbon</artifactId>
+        </dependency>
+
+      2.Create bean -
+        @Bean 
+        @LoadBalanced
+        public RestTemplate restTemplate() {
+          return new RestTemplate();
+        }
+
+    3. Add ribbon annotation
+      @RibbonClient(name="<CUSTOM_NAME>")
+
+    4. Add properties  
+    <CUSTOM_NAME>.ribbon.eureka.enabled=false
+    <CUSTOM_NAME>.ribbon.listOfServers=http://localhost:8081,http://localhost:8082
+    
+    
+    5. Request the JSON from object
+      List<T> result = restTemplate.getForObject("http://<CUSTOM_NAME>/URI/", List.class);
+    
+
+
+
+
+
+
+
+
+
