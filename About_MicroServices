@@ -201,7 +201,8 @@ Problem#2.B - Service discorvery if in scalable instances we need to add/or remo
        
        restTemplate.getForObject("http://<SPRING_APP_NAME>"+"/service/, Service.class);
        
-      
+      3. Each instance should have unique instance Id
+        eureka.instance.instance-id=${random.value}
       
 
 
