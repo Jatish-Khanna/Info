@@ -126,11 +126,62 @@ Problems with above method=
      Solution -
       <CUSTOM_NAME>.default.NFLoadBalancerRuleClassName=com.netflix.loadbalancer.RandomRule
     
+==============================================    
+
+Problem#2.B - Service discorvery if in scalable instances we need to add/or remove or update connection details
+    . updating each time configuration on multiple microservice is cumbersome
+    . If you use Cloud ConfigServer even then we posses issue as new node would only be reflected after each service restart/refresh
+    . Each microservice may need a restart
     
+    Solution:
+      . Register service with the central regirsty once started
+      . Provide/store details at central registry
+      . The new services are ready to be discovered by clients
+      
+      Example of Central Service registry:
+        . Netflix Eureka
+        . Zookeeper
+        . Consul
+        
+        
+    How to do it?
+      1. Update the details of Euraka or Central regirsty in Git
+      2. Spring CloudConfig will be used to load the configuration of regirsty from VCS
+      3. While starting microservice, register itself with the Central Registry
+      
+   Code it--
+    1. Create an application with Central regirsty 
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-eureka-server</artifactId>
+      </dependency>
 
 
+    2. Configure Central registry application-
+      spring.application.name=<REGISTRY_NAME>
+      server.port=<PORT>
+      
+      eureka.client.fetch-registry=false
+      eureka.client.register-with-eureka=false
+      eureka.client.service-url.defaultZone=http://localhost:<PORT>/eureka
 
+    
+    3. In the main file, annotate with @EnableDiscoveryServer
+    
+    
+    
+    On Clients:
+     1. Add the annotation to register with the discovery client
+     @EnableDiscoveryClient
+     
+     2. Access the loadbalanced instance
+     
+    @Autowired
+    private DiscoveryClient discoveryClient;
 
-
-
-
+    @RequestMapping("/service-instances/{applicationName}")
+    public List<ServiceInstance> serviceInstancesByApplicationName(
+            @PathVariable String applicationName) {
+        return this.discoveryClient.getInstances(applicationName);
+    }
+    
