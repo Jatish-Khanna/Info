@@ -280,6 +280,23 @@ Implementing Circuit breaker -
     then Hystrix will again Open the circuit for rollingStats time span
 
     
+ ====================
+  Aysnchronous Communication using Hystrix-
+    
+    1. Hystrix method for Asycn communication
+    
+    public Future<T> getDataById(int id) {
+		return new AsyncResult<T>() {
+			@Override
+			public T invoke() {
+				return template.getForObject("http://<HOST_NAME>"+"/service/"+id, T.class);
+			}
+		};
+	}
+    
+    2. Get the result once Callable or Future has the value
+    Future<T> getFuture = serviceClass.getDataById(id);
+    System.out.println(getFuture.get());
     
     
 
