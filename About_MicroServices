@@ -120,7 +120,13 @@ Solution#2 - Load balancing between scaled applications
       List<T> result = restTemplate.getForObject("http://<CUSTOM_NAME>/URI/", List.class);
     
 
-
+Problems with above method=
+    . Hardcoded instance as a part of ribbon list, creates dependency 
+    . If one of instances fails then request still goes to instances and it will fail - i.e. NoOpPing strategy
+     Solution -
+      <CUSTOM_NAME>.default.NFLoadBalancerRuleClassName=com.netflix.loadbalancer.RandomRule
+    
+    
 
 
 
