@@ -185,3 +185,29 @@ Problem#2.B - Service discorvery if in scalable instances we need to add/or remo
         return this.discoveryClient.getInstances(applicationName);
     }
     
+==================
+  Problem#2.C - Still we need an iterable to decide whcih instance where request will be sent
+      . It can be biased based on programming practise
+      
+      Solution Use @RibbonClient along with @EnableDiscoveryClient annotation
+      
+      On client:
+       1. Annotate with
+       @EnableDiscoveryClient
+       @EnableRibbon
+       
+       2. Access each instance using "spring.application.name" using restTemplate
+       
+       restTemplate.getForObject("http://<SPRING_APP_NAME>"+"/service/, Service.class);
+       
+      
+      
+
+
+
+
+
+
+
+
+
