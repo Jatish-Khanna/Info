@@ -189,7 +189,8 @@ Problem#2.B - Service discorvery if in scalable instances we need to add/or remo
   Problem#2.C - Still we need an iterable to decide whcih instance where request will be sent
       . It can be biased based on programming practise
       
-      Solution Use @RibbonClient along with @EnableDiscoveryClient annotation
+      Solution Use @Loadbalanced rest template along with @EnableDiscoveryClient annotation
+      
       
       On client:
        1. Annotate with
