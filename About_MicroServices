@@ -445,3 +445,48 @@ class ZuulFallbackPattern {
 
 
 
+
+
+================================
+
+Issue while using the restTemplate
+	Calling the other services to fetch the date we use "restTemplate.getForObject " method
+	. Developer should be aware about the API details of restTemplate
+	. While implementing the load balancing, a bean has been recreated @Loadbalanced
+	. The request header has not been forwarded by API gateway Zuul when using restTemplate
+
+A good tool required that helps us define connection b/w multiple API's
+
+Solution to the challenge is - "Feign" - a declarative API where developers define the API contract
+	. Here, rules have been defined in the form of interfaces
+	. Feign will create the implementation of these declarations at runtime
+	. Thus providing clean code with interfaces defining the contract of communication
+	
+	Addidtional benefits-
+	. Feign uses Ribbon, thus all the request are automatically loadbalanced
+	. Feign works well with Hystrix, thus Feign will automatically uses circuit breaker and fallback for all the calls
+	without any need for a separate class
+	
+	
+Can you code it?
+	1. Create an interface
+	
+	@FeignClient("<EURREKA_SERVICE_NAME>")
+	public interface CustomFeign {
+		@RequestMapping(value="/service/{id}")
+		T getService(@PathVariable("id") int id);
+
+	}
+
+
+	2. Use the Feign bean
+	@Autowired
+	CustomFeign customFeign;
+	
+	customFeign.getService(id);
+
+
+
+
+
+
