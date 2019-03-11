@@ -54,5 +54,25 @@ resource:
     userInfoUri: <>
 
 
+Good now we have sercured the individual microservice
 
-
+is securing individual microservice sufficient?
+  Challenges-
+  . The authentication header from Zuul or API gateway doesn't get forwarded inter-communication b/w microservices
+  . It has to be done programmatically using the restTemplate
+  
+  ==================
+  
+  How to programmatically forward the request to restTemplate
+  
+  @Autowired
+  RestTemplate restTemplate;
+  
+  @GetMapping("/service/{id}")
+  public T getService(@RequestHeader HttpHeaders httpHeaders, @Pathvariable int id) {
+  
+    // The Header information to be exchanged b/w microservices
+    HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
+    // ReponseEntity has the relevant headers and Entity information
+    ResponseEntity<T> responseEntity = restTemplate.exchange("http://EUREKA_SERVICE_NAME/"+id, HttpMethod.GET, entity,List.class);
+  }
