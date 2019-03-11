@@ -1,0 +1,55 @@
+How we can trace the request b/w the multiple layers of services?
+
+  . Sleuth - helps in tracing the request b/w layers of microservices
+   - spanId - a unique ID for a single microservice
+   - traceId - a unique ID for  every request  
+   
+   
+ Can you code it?
+  1. Add the dependenccy in the pom.xml
+  
+  <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
+</dependency>
+
+
+ Problem#1 Slueth generated logs in the form of traceId, spanId, but looking at the logs from all the microservices
+  . Or chain of microservices is not feasible option
+  
+  How we can collate all the logs at single place?
+    . Zipkin - a distributed tracing system that gathers the information on trace of request
+    
+  Additional benefits-
+   . All the logs at single place
+   . The data is stored in memoryDb
+   . An interactive UI to analyze the raw logs from all the microservices
+   
+   
+   Can you code it?
+   1. A new microservice that is hosted 
+   2. Add the dependency
+   
+   <dependency>
+			<groupId>io.zipkin.java</groupId>
+			<artifactId>zipkin-autoconfigure-ui</artifactId>
+			<scope>runtime</scope>
+</dependency>
+<dependency>
+			<groupId>io.zipkin.java</groupId>
+			<artifactId>zipkin-server</artifactId>
+</dependency>
+
+2. @EnableZipkinServer - to declare it as zipkin server
+
+3. Configure Zipkin to run in port 9411 (default)
+
+How microservices know Zipkin server?
+  1. Add the dependency
+  
+  <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
+</dependency>
+
+2. Override the default properties if required.
