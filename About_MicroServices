@@ -486,7 +486,13 @@ Can you code it?
 	customFeign.getService(id);
 
 
+	3. Do not forget to add the dependecy
+	
+	        <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-starter-feign</artifactId>
+        </dependency>
 
-
+	4. @EnableFeignClients annotate the spring main class
 
 
