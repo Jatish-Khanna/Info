@@ -76,3 +76,53 @@ is securing individual microservice sufficient?
     // ReponseEntity has the relevant headers and Entity information
     ResponseEntity<T> responseEntity = restTemplate.exchange("http://EUREKA_SERVICE_NAME/"+id, HttpMethod.GET, entity,List.class);
   }
+
+
+
+
+
+============================
+
+Secure application using Basic or Spring starter security
+
+1. Add the dependency
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+
+  2. Add the username and password details in application.properties/yml
+  
+  spring.user.name=<>
+  spring.user.password=<>
+  
+  Walaaa! The application is secured with Basic authentication
+  
+  
+  How to access the application services programmatically
+  
+  http://USERNAME:PASSWORD@HOST_NAME:PORT
+  
+  
+=================================
+
+Problem#2 - Encrypt the private/sensitive information stored in VCS(Git) as the information available in public repository
+
+Solution-
+  1. Encrypt while storing the values in public repository
+  2. Decrypt using Config server to use the values
+  3. Decrypt using the individual microservice
+  
+  An example to use symmetric encryption@
+
+
+
+
+
+
+
+
+
+
