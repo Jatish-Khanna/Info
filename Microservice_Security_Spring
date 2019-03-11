@@ -6,6 +6,7 @@ In microservice- in an enterprise scenario, all the request has been offloaded a
   in addition to that-
     . An authorization to be done when service communicate with each other
    
+   ===============================================
    
  First and Most important - sercure Zuul Server?
   1. Add the dependency at the Zuul microservice
@@ -32,4 +33,4 @@ In microservice- in an enterprise scenario, all the request has been offloaded a
 resource:
     userInfoUri: <>
 
-
+===============================================
