@@ -115,9 +115,16 @@ Solution-
   2. Decrypt using Config server to use the values
   3. Decrypt using the individual microservice
   
-  An example to use symmetric encryption@
+  An example to use symmetric encryption@ Cloud Config Server
 
-
+bootstrap.properties
+  encrypt.key=<>
+    
+  Send a POST message to Config server service:port/encrypt
+  
+  Replace the encrypted value with plain text and append {cipher}<ENCRYPTED_VALUE>
+  
+  
 
 
 
