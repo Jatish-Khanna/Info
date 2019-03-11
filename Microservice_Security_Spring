@@ -125,7 +125,11 @@ bootstrap.properties
   Replace the encrypted value with plain text and append {cipher}<ENCRYPTED_VALUE>
   
   
-
+Problem: like encrypt @Cloud config server has service "decrypt"
+ 
+  How you can secure it?
+    Note: Refer above Secure application using Basic or Spring starter security
+  
 
 
 
