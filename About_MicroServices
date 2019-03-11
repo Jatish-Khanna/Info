@@ -8,7 +8,73 @@ Why Microservices?
   . Multiple technology stack
   . Multi interfacing
   
-  
+====================================================
+
+Problems with Microservices?
+	. With increasing the microservices count, it is hard to manage
+	. Security is much more considerable concern across microservices
+	. Monitoring becomes a challenge
+	. Debugging microservices and flow is an issue
+	. Logging information and extracting the Error 
+	. Cascading failures
+	. Interacting with external services 
+	. Testing microservices at broader scale or Integration test
+	
+  ==============================================
+	
+	Solutions using Desing patterns-
+	
+	. Scaling microservices - Client load balancing [Ribbon]
+	. Cascading failures - Circuit breaker [Hystrix] and Fallback Pattern [Hystrix]
+	. Security b/w the microservices - Security pattern [OAuth2, Spring Security]
+	. Monitoring microservices - 
+			Distributed Tracing pattern Zipkin(log collection with traceID, spanID), 
+			Turbine(Log monitoring pattern)
+			ELK stack (Elastic Search, Log stash, Kibana)
+  . Looking for Microservices hosted - Service Discovery Pattern (Eureka)
+	. Deploying, maintaining microservice - Containers (Docker, Dockerswarm)
+	
+	========================================
+	
+	Database for Microservices - 
+		1. Shared database - all or some microservices share the database across them
+		2. DB per API - Each microservice owns database which provides service API's to retrieve and store data
+		
+			. API composition: The microservice acts as an aggregator which retrieves data from different microsevice having respective DB
+			
+			. Saga - The event driven database operation Model, where each operation has been sent as an event to connecting microservices
+			  * the operation has been performed on the local database by respective microservice
+				
+			. CQRS - Command Query Responsibility Seggaragation
+			  * two views has been mainted at database level
+				* One database provide the view of join of different tables where common queries get executed 
+				* View#2 is when update operation get executed on the database
+				
+				This seggragates the common query responsibility from the update operations
+				
+				
+================================================
+Deployment of microservices -
+	1. Runnable without dependencies - where microservice need underlined infra like application server ...
+	2. Runnable with Dependencies - where all the dependencies are packaged in the runnable Jar
+	3. Containerized - using the containers to deploy and maintain the services (Docker, dockerswarm)...
+	
+	
+==============================================
+Microservice Testing-
+
+	1. Spring cloud contract which help in testing 
+		. Unit test - creating the mocks
+		. Receiver Contract test - that upstream inter-communication is proper
+		. Sender Contract test - that downstream inter-communication is proper
+		
+		. Integration test - The application is able to test all the microservices
+		. Functional Test - 
+
+	
+	
+	
+=====================================================  
 Why API gateway?
 
 An API Gateway is the element that coordinates and orchestrates how all the requests are processed in a Microservices architecture, and this also includes to the Serverless model.
