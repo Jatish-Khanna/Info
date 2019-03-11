@@ -53,3 +53,12 @@ How microservices know Zipkin server?
 </dependency>
 
 2. Override the default properties if required.
+// 1.0 is equivalent to 100%
+  spring.sleuth.sampler.percentage=1.0
+  
+  // The spring zipkin URL
+  spring.zipking.baseUrl=http://localhost:9411
+	
+	
+	
+	
