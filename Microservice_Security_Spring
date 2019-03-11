@@ -34,3 +34,25 @@ resource:
     userInfoUri: <>
 
 ===============================================
+
+1. Add the dependency
+
+<dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-security</artifactId>
+</dependency>
+
+2. Add @EnableResourceServer  annotation to all the microservices application file
+
+
+3. Configuration-
+
+client:
+    accessTokenUri: <>
+    userAuthorizationUri: <>
+resource:
+    userInfoUri: <>
+
+
+
+
