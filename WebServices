@@ -40,3 +40,35 @@ SOAP and ReST - both provides the support to access resources over n/w
  
  . Service contract is defined using WSDL
  . REST - Service contract can be defined using WADL (Web Application Description Language) only if required
+
+
+
+REST principles:
+ 1. Uniform interface - 
+   . An API interface to be finalized which will be exposed to all the customers
+   . Any single resource should not provide all the information at once
+   . A relevant URI - HATEOS referring to other related resources
+   . Once a developer is familarized with the approach it should be applicable to similar resources provisioned by webservice
+     
+   
+ 2. Client-Server
+  . Servers and client can be developed independent of each other, as long the interface is not altered
+ 
+ 3. Stateless
+  . No context should be stored on the server
+  . The client is responsible for maintaining the state of application
+  . When a client received an session from the server, all the following request should contain Authentication and Authorization info.
+ 
+ 4. Cacheable
+  . Well managed cache partially or eliminates client-server communication
+  . Further improves the scalability and performance
+ 
+ 5. Layered subsystem
+  . REST allows to builds layered subsystem where aggregators, orchestrator and specific services provide response
+ 
+ 6. Code on demand (Optional)
+  . At times required to recieve executable code as reponse from the service and is acceptable
+  
+  Note: 
+   All of the above principles help you build a RESTful API. A times one or more principles have been violated
+   but it is not true RESTful but considered as RESTful API
