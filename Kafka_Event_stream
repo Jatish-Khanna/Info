@@ -1,5 +1,5 @@
 kafka-
-  A database that is storing, processing, and reacting infinte streams of data
+  A database that is storing, processing, and reacting infinte streams of data - a Pub/Sub stream data platform
   
   1. Like Hadoop - but Kafka stores continuous stream 
     whereas Hadoop stores big-batch of the files and process them on scheduled batches
@@ -14,6 +14,10 @@ kafka-
       A self driving car - ingress data from different cameras and sensors
        egress - the predictive actions
        
+      Fraud detection systems
+      E-com recommendation systems
+      Log monitoring
+      
       
   Kafka considers each action as event and such we have stream of events
   
@@ -42,11 +46,17 @@ Kafka Streams-
 Kafka Stream Interactive Query - 
   to retrieve state from Kafka i.e. monitoring
   
+  ------------------
+  Confluent OpenSS Kafka
 Schema Registry - for data governance/quality
-
+Connectors - drivers for different systems
+------------------
+Confluent Enterprise 
 Control Center - for management, Graphical management and alerting
 Replicator - Multi-data center replication between Kafka clustures
-
+Auto databalancer - shifts data to create an even workload across the Kafka
+Client Library: JMS messaging serive
+And Enterprise support -
 
 
 
