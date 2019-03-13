@@ -31,6 +31,27 @@ Application to Cloud-
   
 
 
+Kafka Connect-
+  ingest from RDBMS, Mainframe, IoT ...
+  Consumers as Hadoop, NoSQL, data stores, Object storages like S3
+  Middleware integration b/w different API's
+  
+Kafka Streams-
+  For embedded stream processing in applications like another library
+
+Kafka Stream Interactive Query - 
+  to retrieve state from Kafka i.e. monitoring
+  
+Schema Registry - for data governance/quality
+
+Control Center - for management, Graphical management and alerting
+Replicator - Multi-data center replication between Kafka clustures
+
+
+
+
+
+
 
 
   
