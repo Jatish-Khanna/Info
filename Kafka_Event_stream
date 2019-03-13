@@ -1,0 +1,17 @@
+kafka-
+  A database that is storing, processing, and reacting infinte streams of data
+  
+  1. Like Hadoop - but Kafka stores continuous stream 
+    whereas Hadoop stores big-batch of the files and process them on scheduled batches
+    
+  2. Enterprise Messaging - It is unified,elastic, cloud ready and modelled on distributed foundation systems
+      
+  3. Evolution of ETL and intergration-
+    Any channels of input can source data/event to Kafka
+    
+    
+    Example -
+      A self driving car - ingress data from different cameras and sensors
+       egress - the predictive actions
+       
+       
