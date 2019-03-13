@@ -14,4 +14,28 @@ kafka-
       A self driving car - ingress data from different cameras and sensors
        egress - the predictive actions
        
+      
+  Kafka considers each action as event and such we have stream of events
+  
        
+-----------------
+Application to Cloud-
+  Rather than having point to point connections b/w the public and on-premise cloud
+  we have a bridge as a Kafka that publishes the streams on both sides
+  
+  . This helps in maintaining
+  . Sync data
+  . All this is real-time as part of event stream
+  . Scalable with Kafka clustures
+  . Huge storage as if connection is down or backpressure to be implemented
+  
+
+
+
+
+  
+  
+  
+  
+  
+  
