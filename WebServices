@@ -1,0 +1,42 @@
+
+A software system that is designed to support inter-communication over network
+
+ - These services mostly communicate over HTTP
+ - These services can be running on diverse s/w and h/w platforms
+ - Main benefits include interoperatibility and extensibility 
+ - It could be component or an aggregator in the E2E request flow
+ - It supports Single Responsibility and reusability
+ 
+ 
+ Webservices-
+ 
+ . SOA - Service Oriented Architecture (designed, developed and accessed using standards) 
+  - usually uses SOAP (Simple Object Access Protocol)
+   It is a strongly types messaging framework that relies on XML and schemas
+ 
+ 1. SOAP based services-
+    a) Discovered - UDDI (Universal Description, Discovery and Integration) - is a registration services to register/discover
+    b) Described - WSDL (Web service description language) written in XML
+    c) Accessed - SOAP - An XML template that defines information exchange and message format
+    
+    All supported by XML schemas
+  
+ 2. ReSTful - Representational state transfer ()
+  Requesting a resource over web does mean either 
+    . Retrieve the current state of an Object
+    . Retrieve the update state of an Object by proposing change (update, delete)
+    
+    
+SOAP and ReST - both provides the support to access resources over n/w
+
+ . SOAP is a protocol that defines that message exhange definition i.e. Describe and Access over n/w
+ . REST is an architecture that access resource over n/w using HTTP
+
+ . SOAP can utilize other layers like transport (SMTP, FTP ...)
+ . REST is based on HTTP
+ 
+ . SOAP - Request from client has an additional overhead of processing at client and server
+ . REST - Can directly send data, no need to wrap any data 
+ 
+ . Service contract is defined using WSDL
+ . REST - Service contract can be defined using WADL (Web Application Description Language) only if required
