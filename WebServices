@@ -38,6 +38,7 @@ SOAP and ReST - both provides the support to access resources over n/w
  . SOAP - Request from client has an additional overhead of processing at client and server
  . REST - Can directly send data, no need to wrap any data 
  
+ 
  . Service contract is defined using WSDL
  . REST - Service contract can be defined using WADL (Web Application Description Language) only if required
 
@@ -82,3 +83,39 @@ HTTP PUT and PATCH
 - PATCH : is used when a set of instances to be updated under the corresponding Object represented by unique ID
 
 Note: There is no annotation like @PATCH does mean it has to be custom created
+
+
+
+
+===========================
+
+Custom Exception handeling
+
+* Exception Mappers - These are the custom classes that catch custom application exception and return HTTP response to client
+
+These are the classes annotated with @Provider annotation
+- implement ExceptionMapper interface
+
+When an exception is thrown an ExceptionMapper finds the assocaited HTTP response to handle it.
+
+An Example of implementing ExceptionMapper
+
+@Provider
+MyCustomExceptionMapper extends ExceptionMapper<ContraintViolationException> {
+
+ @Produces(MediaType.APPLICATION_JSON)
+ public Response toResponse(ConstraintViolationException e) {
+  //build the application response using ResponseBuilder
+  Response.setStatus(400)
+          .entity("<Error>Parsing the client input</Error>").build();
+ }
+
+}
+
+
+
+
+
+
+
+
