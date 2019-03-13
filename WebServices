@@ -72,3 +72,13 @@ REST principles:
   Note: 
    All of the above principles help you build a RESTful API. A times one or more principles have been violated
    but it is not true RESTful but considered as RESTful API
+
+
+
+HTTP PUT and PATCH
+. Both are used to modify data at the server end
+
+- PUT : Is used when entire data has to be replaced corresponding to unique ID
+- PATCH : is used when a set of instances to be updated under the corresponding Object represented by unique ID
+
+Note: There is no annotation like @PATCH does mean it has to be custom created
