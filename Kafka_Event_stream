@@ -33,7 +33,8 @@ Application to Cloud-
   . Scalable with Kafka clustures
   . Huge storage as if connection is down or backpressure to be implemented
   
-
+------------------
+Apache kafka
 
 Kafka Connect-
   ingest from RDBMS, Mainframe, IoT ...
@@ -46,12 +47,15 @@ Kafka Streams-
 Kafka Stream Interactive Query - 
   to retrieve state from Kafka i.e. monitoring
   
-  ------------------
+ ------------------
   Confluent OpenSS Kafka
+
 Schema Registry - for data governance/quality
 Connectors - drivers for different systems
+REST proxy - 
 ------------------
 Confluent Enterprise 
+
 Control Center - for management, Graphical management and alerting
 Replicator - Multi-data center replication between Kafka clustures
 Auto databalancer - shifts data to create an even workload across the Kafka
@@ -64,9 +68,4 @@ And Enterprise support -
 
 
 
-  
-  
-  
-  
-  
-  
+
