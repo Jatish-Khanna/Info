@@ -302,15 +302,40 @@ What is more in Kafka - than other middleware integration systems?
    3. Timestamp to file offset
 
 
+============================================
+
+Kafka Replication - fault tolerant?
+  * A single partition has been replicated across multiple brokers in clusture
+  * Three is the replication factor in production
+  
+  * Where 1/ 3 nodes is Leader and others are followers
+  * All writes are handled by leaders, which has been propagated to followers
+
+  * ISR's (in-sync replicas) which replaces leaders in case of failures
+  
+ 
+ Note: One broker is designated as Controller in the entire clusture
+  - This broker detects failure and spawn new instances via Zookeeper
+  - Selecting new leader from the ISR list
+  - Stores leader information and ISR list in Zookeeper
+  - Propagate changes to all the brokers (e.g. ISR list or new leader elected)
+ 
+ If Controller failed, then one of other broker is elected as new Controller
+ 
+ 
 
 
 
 
- 
- 
- 
- 
- 
+
+
+
+
+
+
+
+
+
 
 
 
