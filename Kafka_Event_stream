@@ -124,14 +124,54 @@ Kafka Producers?
     
  ==================================
  
+  Kafka Brokers?
+    - Brokers receive messages and store messages when they are sent by the Producers
+    - A Kafka cluster has multiple brokers
+     - Each Broker has multiple partitions
+     
+  Note: Kafka is not a database 
+  
+  Kafka runs faster as the contract b/w Producer and Consumer is simple
+  
+ A typical architecture looks like---
+  . Each Message in a Topic has been distributed across Partitions in Multiple brokers
+  . A broker has multiple partitions 
+  . Each partition has log files on the Broker disk to which it belongs to
+    Properties of Logs?
+      . Append only
+      . Written data is immutable
+      . Rolling file when size grows or based on the retention policy
+            
+  . Each message in the log is identified by its Offset'
+    - Example a sequence number or monotonically increasing value
     
+  . Each Broker has retention policy to manage log file growth (Default - 7 days)
+  
+  
+  Benefit-
+    . Each Consumer maintains it ReadOnly Offset to read the value from the logs files
     
-    
-    
+ =============================
  
+ Kafka Message?
+  A segment which has been transferred by Broker using a partition
+  This would be read and processed by Consumer later on.
 
+Message Metadata?
+  Key/value pair
+  Offset
+  Timestamp
+  CompressionType
+  
+  
+  |Offset.....|MessageSize.....|CRC...Magicbyte...Attributes...Timestamp....|KeyLength...KeyContent..ValueLength..ValueContent|
+  
+===============================
+    12 Bytes                   =============================================
+                                          6 or 14 Byte Header               ==================================================
+                                                                                    Key/value pair(Bytes varies)
 
-
+Magic Byte - Indicates the timestamp is present, which impacts the consumer
 
 
 
