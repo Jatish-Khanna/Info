@@ -465,46 +465,67 @@ class KafkaConsumerExample {
       // create instance for properties to access consumer configs   
       Properties properties = new Properties();
       
-      // Kafka server
+      // Kafka server - should list multiple servers in production
+      // Three brokers at least in production and should be up and running
       properties.put("bootstrap.servers", "localhost:8081");
 	  
-	  properties.put("group.id", "test");
+	  // To apply the magic of Consumer group
+      properties.put("group.id", "myFirstGroupId");
+      // To notify clusture the Offset until the consumer has read the messages
       properties.put("enable.auto.commit", "true");
+      // Default: 5s i.e. 5000Sec
       properties.put("auto.commit.interval.ms", "1000");
+      // 
       properties.put("session.timeout.ms", "30000");
       
  
       
-	  // Key and value serializer
-      properties.put("key.serializer", 
+	  // Key and value deserializer 
+      properties.put("key.deserializer", 
          "org.apache.kafka.common.serialization.StringSerializer");
          
-      properties.put("value.serializer", 
+      properties.put("value.deserializer", 
          "org.apache.kafka.common.serialization.StringSerializer");
       
-      Consumer<String, String> consumer = new KafkaConsumer
+      KafkaConsumer<String, String> consumer = new KafkaConsumer
          <>(properties);
 		 
 	 //Kafka Consumer subscribes list of topics here.
+	 // Multiple topics can be subscribed by single Consumer
       consumer.subscribe(Arrays.asList(topicName))
       
       //print the topic name
       System.out.println("Subscribed to topic " + topicName);
       int i = 0;
       ConsumerRecords<String, String> records;
-      while (true) {
-         records = consumer.poll(5);
+    try{
+    while (true) {
+      // Number of ms the call should blocked if no messagess are found
+      // Here it is 100 ms
+      
+         records = consumer.poll(100);
          for (ConsumerRecord<String, String> record : records)
          
          // print the offset,key and value for the consumer record.
          System.out.println("Offset: "+ record.offset());
 		 System.out.println("Key: "+record.key() + " Value: "+ record.value());
       }	 
-         
+        }finally {
+		consumer.close();
+	}
    }
 	
 }
 
+// defines the size of data per poll()
+// max.partition.fetch.bytes : default 1048576 - 1MB
+
+
+// Consumer is not thread-safe
+
+Note: Bigger messages than architecture should be reconsidered,
+  Ideally, the blobs should be stored on Distributed FileSystem and reference should be passed using Kafka
+---------------------------
 
 
 
