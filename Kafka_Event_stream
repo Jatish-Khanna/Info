@@ -207,8 +207,26 @@ Kafka Consumers?
   * Kafka store the messages as per the retention policy
 
 
+=======================================
+
+Zookeeper?
+  A project out of Hadoop
+  Centralized service that is highly reliable distributed Coordination to synchronize resources
+  
+  * Open source project
+  * distrubuted coordiantion service
+  * synchronization b/w clients
+  * Maintains the configuration information
+  
+ *The Service usually consists of three or five nodes in production quorum
 
 
+How does Kafka relates to Zookeeper?
+  - Brokers use Zookeeper for Clusture management
+  - Failure detection and recovery
+  - Leader election
+  - ACLs
+  - Maintaining metadata
 
 
 
