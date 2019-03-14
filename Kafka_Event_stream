@@ -436,6 +436,82 @@ class ProducerKafkaExample {
 
 
 
+----------------------------------------------
+ REST proxy - Producer (to allow any type of client to use Kafka)
+ 
+  - the REST proxy allows to perform HTTP actions on Kafka clusture
+  - REST calls are translated to native Kafka calls
+  - Key/Value JSON should be encoded in Base64 
+  
+  - POST is used to send the data
+  - GET to retrieve the data from the Kafka clusture
+
+
+========================================
+
+
+import java.util.Properties;
+import java.util.Arrays;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+
+class KafkaConsumerExample {
+
+
+	public static void main(String []args) {
+      String topicName = args[0].toString();
+      
+      // create instance for properties to access consumer configs   
+      Properties properties = new Properties();
+      
+      // Kafka server
+      properties.put("bootstrap.servers", "localhost:8081");
+	  
+	  properties.put("group.id", "test");
+      properties.put("enable.auto.commit", "true");
+      properties.put("auto.commit.interval.ms", "1000");
+      properties.put("session.timeout.ms", "30000");
+      
+ 
+      
+	  // Key and value serializer
+      properties.put("key.serializer", 
+         "org.apache.kafka.common.serialization.StringSerializer");
+         
+      properties.put("value.serializer", 
+         "org.apache.kafka.common.serialization.StringSerializer");
+      
+      Consumer<String, String> consumer = new KafkaConsumer
+         <>(properties);
+		 
+	 //Kafka Consumer subscribes list of topics here.
+      consumer.subscribe(Arrays.asList(topicName))
+      
+      //print the topic name
+      System.out.println("Subscribed to topic " + topicName);
+      int i = 0;
+      ConsumerRecords<String, String> records;
+      while (true) {
+         records = consumer.poll(5);
+         for (ConsumerRecord<String, String> record : records)
+         
+         // print the offset,key and value for the consumer record.
+         System.out.println("Offset: "+ record.offset());
+		 System.out.println("Key: "+record.key() + " Value: "+ record.value());
+      }	 
+         
+   }
+	
+}
+
+
+
+
+
+
+
+
 
 
 
