@@ -351,7 +351,12 @@ Create a Producer ?
    value.serializer - Class to serialize the value, ""
    compression.type -The data compression like none, gzip, lz4, snappy. The compression is done on batch of messages
 
-
+   acks: The no. of acknoledgements the producer requires the leader to have before 
+    considering the request complete.
+      
+     acks=0 No ACK required by the producer
+     acks=1 Unitl leader has committed the log to Commit log file
+     acks=All for all the nodes to replicate the change 
 
 
 
