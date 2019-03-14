@@ -526,6 +526,20 @@ class KafkaConsumerExample {
 Note: Bigger messages than architecture should be reconsidered,
   Ideally, the blobs should be stored on Distributed FileSystem and reference should be passed using Kafka
 ---------------------------
+============================
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
