@@ -64,6 +64,94 @@ And Enterprise support -
 
 
 
+==================================
+Components when discuss Kafka -
+
+  Kafka clusture
+  Producers - Serilalized 
+  Consumers
+  Brokers
+  Message
+  Topics - Named pipes/queues - Ordered collection []
+  Zookeeper
+
+Message in the topic are in the form of byte-array but 
+  the typing contract is required which defines the format of message inside each topic
+  
+  - Each topic maintains the ordered collection of messages
+  - Many producers can write to topic
+  - Multiple consumers can read from topic
+  
+Kafka is a scalable middleware integration system, considering that problems to deal with-
+ *) One broker may fail and all the data stored or topics may lost
+ *) Huge load on a topic to be handled or Too much data that cannot be stored on one machine
+ 
+ 
+ Solution:
+ Partitioning Data ingestion:
+ . Each partition contains the subset of the "Topic's messages"
+ . Each partition is an "ordered" like queue, immutable log of messages
+ 
+Partitions are distributed across brokers
+*) Message key determines which partition a message is assigned to [Hashes the Key]
+  - Consumer can override the Key at the time of Ingestion
+
+
+==============================
+Kafka Producers?
+  Are the Channels/Programs that writes messages to Kafka Clusture/Broker/Partition
+  - this can be done using the API's
+  - Producers can be written in any Language as Drivers are available
+  - native language of Kafka is Java
+  - REST proxy provides that can also be used to send messasges
+  - A CLI is available for debugging and testing purpose
+  
+  Partitioning Strategy? or I say it Loadbalancing b/w the Kafka paritions
+    How Producer decides to choose Kafka Topic distributed amond Kafka Brokers in clusture
+    
+  How This is done?
+    * Hash the key of Kafka message
+    * Select the respective Parition for the hash
+    * If Keys are not specified than default (Round robin fashion)
+    
+  Challenges or  Virtue?
+    - The above partitioning strategy doesn't maintain the Order of Kafka messages
+    - If Ordering is important than-
+      Override the Partitioning strategy or Load balancing
+      
+      
+    Note: By default, Each partition maintains the Order but Topics (doesn't maintain)
+    
+ ==================================
+ 
+    
+    
+    
+    
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
 
 
 
