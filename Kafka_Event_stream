@@ -335,9 +335,21 @@ Partition strategy for assignment and re-assignment with the Consumer in Consume
   
   Note: All messages with the same key will got to same Consumer, until there is change due to failure or addition
   
+=========================================
 
 
+Create a Producer ?
+  - Extend KafkaProducer class 
+  - KafkaProducer class is threadsafe
+  - A producer instance will be shared among multiple threads instead of creating multiple instances
+  - Use Properties class to configure Producer
 
+===Common properties====
+   
+   bootstrap.servers: host/port pairs to establish connection with KafkaClusture
+   key.serializer - Class to serialize the key, implements Serializable interface
+   value.serializer - Class to serialize the value, ""
+   compression.type -The data compression like none, gzip, lz4, snappy. The compression is done on batch of messages
 
 
 
