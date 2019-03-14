@@ -347,19 +347,92 @@ Create a Producer ?
 ===Common properties====
    
    bootstrap.servers: host/port pairs to establish connection with KafkaClusture
+   
+   // StringSerializer, ByteArraySerializer, IntegerSerializer...
+   
    key.serializer - Class to serialize the key, implements Serializable interface
    value.serializer - Class to serialize the value, ""
+   
    compression.type -The data compression like none, gzip, lz4, snappy. The compression is done on batch of messages
 
    acks: The no. of acknoledgements the producer requires the leader to have before 
     considering the request complete.
       
-     acks=0 No ACK required by the producer
-     acks=1 Unitl leader has committed the log to Commit log file
+     acks=0 No ACK required by the producer  // Unreliable delivery
+     acks=1 Unitl leader has committed the log to Commit log file // 
      acks=All for all the nodes to replicate the change 
 
 
+  =====================================
+  send() - a non-blocking call to send the messages to partition
+    returns a Future
+    
+  
+  
+import java.util.Properties;
 
+
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+
+class ProducerKafkaExample {
+  
+  
+	public static void main(String []args) {
+      String topicName = args[0].toString();
+      
+      // create instance for properties to access producer configs   
+      Properties properties = new Properties();
+      
+      // Kafka server
+      properties.put("bootstrap.servers", "localhost:8081");
+      
+      // Only leader should ACK the message     
+      properties.put("acks", "1");
+      
+      // If the request fails, the producer can automatically retry,
+      properties.put("retries", 0);
+      
+	  /*
+	  * Batch Configuration
+	  * High throughput - 
+	  *   large batch.size and linger.ms
+	  * low latency -
+	  *   small batch.size and linger.ms
+	  */
+	  
+      // Message Batch size - 16KB
+      properties.put("batch.size", 16384);
+      
+      // Time to wait for messages to batch together (Deafault: 0 send immidiatly) 
+      properties.put("linger.ms", 1);
+      
+      //The buffer.memory controls the total amount of memory available to the producer for buffering
+	  // Default 32 MB
+      properties.put("buffer.memory", 33554432);
+      
+	  // Key and value serializer
+      properties.put("key.serializer", 
+         "org.apache.kafka.common.serialization.StringSerializer");
+         
+      properties.put("value.serializer", 
+         "org.apache.kafka.common.serialization.StringSerializer");
+      
+      // Create an Object using the configuration
+      Producer<String, String> producer = new KafkaProducer<>(properties);
+            
+      for(int i = 0; i < 10; i++) {
+      // can be replaced with Lamda or Future/Callback
+        producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), Integer.toString(i)));
+        
+        System.out.println("Message sent successfully”);
+		}
+      producer.close();
+		
+   }
+	
+}
 
 
 
