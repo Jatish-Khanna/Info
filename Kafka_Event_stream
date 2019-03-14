@@ -228,7 +228,46 @@ How does Kafka relates to Zookeeper?
   - ACLs
   - Maintaining metadata
 
+====================================
 
+What is more in Kafka - than other middleware integration systems?
+  * Publisher/Subscriber messaging system
+  * Falut tolerant
+  * Data storage as per retention policy
+  * Multip consumer (can read the same message) e.g. a slow processing queue, and real-time stream
+    consumes messages at different rate
+  
+  * Each Consumer can maintain offset
+  * Highly available and durable
+    - Messages are replicated on multiple machines
+    - Clusture with help of Zookeeper can handle failures
+    
+  * Scalable [desinged for scale out] - Each clusture and broker can process huge number of messages
+  * Realtime and Batch Consumption
+
+  * Decouple producers and consumers
+  * Multi
+    . brokers
+    . topics
+    . Consumers [Pull architecture, each consumers polls a message]
+    . Consumer groups [Manages the heartbeat with each consumer]
+    
+    
+  * All the messages are processed by brokers as log messages
+  * Utilizes OS page cache to hold recent produced data which can be consumed
+  
+  * High speed transfer - (A zero copy transfer)
+    Data is not written by JVM on heap instead directly transferred to n/w 
+    using OS page cache once message has been received from broker
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 
 
