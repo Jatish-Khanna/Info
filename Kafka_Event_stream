@@ -174,12 +174,50 @@ Message Metadata?
 Magic Byte - Indicates the timestamp is present, which impacts the consumer
 
 
+Fault Tolerant with Brokers?
+  Replication - A typical replication factor is 3
+    A lead broker and two follower that Keep standby copies and sync with the leader
+    
+  The Failover process has been handled by Kafka infrastructure does mean
+  developer should not build that aspect in code
+  
 
+=========================================================
 
-
-
-
+Kafka Consumers?
+  A client program that polls the data from the Kafka Topics/partitions
+  - A consumer subscribes to Kafka Topics in the clusture
+  - Each consumer maintains its Offest irrespective of the Other Consumers
+  - As each message written by Kafka on logs with a retention Policy
+   . Consumers can change the offset to re-read messages
+   
+ - The consumer Offset is stored in a Kafka special topic, for the partition
+ - A Consumer can be written in multiple languages
+ - Also a CLI consumer is available to test, bebug Kafka setup
  
+ 
+ * Deafult(Each consumer will receive all the message from the Topic)
+ * Different Consumer can subscribe to same Topic
+ * Consumer can create scalining group i.e. Consumer Groups
+  where each Consumer is assinged to a subset of partitions of a topic
+ 
+ 
+** How to handle Backpressure?
+  * Using Consumer Groups - Dynamically adds or/ remove Consumers
+  * Kafka store the messages as per the retention policy
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  
  
