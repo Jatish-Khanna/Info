@@ -260,15 +260,46 @@ What is more in Kafka - than other middleware integration systems?
     Data is not written by JVM on heap instead directly transferred to n/w 
     using OS page cache once message has been received from broker
   
+  ===================================================
+  A sample Kafka commands or CLI:
   
+    1. Start Kafka
+      
+    2. Produce messages
+       kafka-console-producer --broker-list HOSTNAME:PORT --topic TOPIC_NAME
+       ...
+       ^+d to stop typing and send the data
+    
+    3. Consumer messages
   
-  
-  
-  
-  
-  
-  
+      kafka-console-consumer \
+    --bootstrap-server HOSTNAME:PORT \
+    --from-beginning \
+    --topic TOPIC_NAME
 
+      ^+c for stop reading the messages
+    
+    4. Administer Kafka using Zookeeper
+    
+     zookeeper-shell NAME
+        ls /
+      [schema_registry, cluster, controller_epoch, controller, brokers, zookeeper, admin,
+      isr_change_notification, consumers, config]
+
+
+===================================================
+  Kafka Logs - a fault tolerant feature with Partition logs in Kafka?
+    1. Commit logs-
+      Persist the messages sent by consumers on the disk
+      This provides the privilege to iterate using Offset
+      
+      - Producer can write to single partition (provides sequenctional access using commit logs)  
+      - Prodcuer can write to multiple partitions
+  
+  
+   2. Offset Logs- That stores index offset for each consumers
+   
+   3. Timestamp to file offset
 
 
 
