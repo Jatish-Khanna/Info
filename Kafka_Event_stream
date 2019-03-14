@@ -323,7 +323,18 @@ Kafka Replication - fault tolerant?
  If Controller failed, then one of other broker is elected as new Controller
  
  
+* All reads/writes are done through leaders of the topic paritions
 
+* A single partition has been consumed by single consumer in the Consumer group
+
+========================
+Partition strategy for assignment and re-assignment with the Consumer in ConsumerGroups?
+  1. Range partition - 
+  2. round robin
+  
+  
+  Note: All messages with the same key will got to same Consumer, until there is change due to failure or addition
+  
 
 
 
