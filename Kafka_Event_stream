@@ -796,6 +796,118 @@ For Maven to generate the code<>
 
 ===================================
 
+Schema Registry?
+  An Open source component Confluent.io -> 
+    a central registry/manager for the schemas of Complex Object types
+   * Stores versioned history of all the schemas
+   * Provides RESTful interface for storing and retrieving Avro schemas
+   * Check data with the schema and throws Exception in case data doesn't conform to schema
+   * Allows evolution of schemas according to configured compatibility setting
+   
+Why you think regirsty is required? or I say benefits
+ * Data validation/Assertions with schema
+ * Schema administration and evolution is easy
+ * A unique ID can be used to represent schema b/w Reader/writer instead of transporting complete schema
+ * Schema registry is stored in a special Kafka Topic
+ * Registry is accessible by multiple ways (REST, Java, CLI)
+  
+Using Schema regirsty ? Funny!! Can you code it?
+
+  Properties properties = new Properties();
+  properties.put("schema.regirsty.url", "http://<Host_NAME>:port")
+
+  and done...! you are registered
+  
+  =================================
+  Schema Registration and Dataflow -
+  
+    * The message Key and Value can independently serialized
+    * Producers serialize data and prepend the schema ID
+    * Consumers use the schemaID to deserialize the data
+    * Schema Registry communication is only on the first message of a new schema
+     - Producers and Consumers cache the schema ID mapping for future message
+  
+====================================
+Schema Evolution is important as Business changes?
+  *  NONE Schema registry allows schema evolution
+  * Ensure BACKWARD compatibility - 
+     Code with newer schema should read data written in old schemas
+     Code read data written with the schema will initialize with default values
+     
+  * Ensure FORWARD compatability-
+    Code with previous version of schema should read data written in new schema
+    Ignore the new fields
+    
+  * FULL compatability
+    i.e. Forward and Backward
+
+
+
+Example -
+
+ Properties p = new Properties();
+ p.put("bootstrap.servers", "HOSTNAME:PORT");
+ 
+ // Configure Serializers
+ p.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializer.
+ 							KafkaAvroSerializer.class)
+
+
+ p.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializer.
+ // Schema registry							KafkaAvroSerializer.class)
+p.put("schema.registry.url", "URL");
+// New producer
+KafkaProducer<String, Object> producer = new KafkaProducer<>(p);
+// New producer record
+ProducerRecord<String, Object> record = new ProducerRecord<>("TOPIC","1", "1");
+// Send message
+producer.send(record);
+
+
+
+==========================================
+
+ConsumerExample ----
+
+ Properties p = new Properties();
+ // Basic settings
+ p.put("bootstrap.servers", "HOSTNAME:PORT");
+ p.put("group.id", "first_group");
+ p.put("enable.auto.commit", true);
+ p.put("auto.commit.interval.ms", "1000");
+ p.put("session.timeout.ms", "30000");
+ 
+ 
+ // Configure Deserializers
+ p.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializer.
+ 							KafkaAvroSerializer.class)
+
+
+ p.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializer.
+ // Schema registry							KafkaAvroSerializer.class)
+p.put("schema.registry.url", "URL");
+
+p.put("specific.avro.reader","true");
+
+// New producer
+KafkaConsumer<String, Object> consumer = new KafkaConsumer<>(p);
+consumer.subscribe(Arrays.asList("TOPIC_NAME"));
+
+// New producer record
+while(true) {
+	List<ConsumerRecords<String, Object>> records = consumer.poll(100);
+	// ... iterate and print data
+	for(ConsmerRecord<String, Object> record : records) {
+		System.out.println(record.key() + " " + " " + record.value());
+	}
+
+}
+
+
+
+
+
+
 
 
 
