@@ -1,0 +1,159 @@
+The Apache Avro is a part of Hadoop project.
+
+The Marshling and Unmarshling of data done using I/O stream 
+ of Hadoop Implementation of WritableComparable interface like IntWritable.class
+ is not standard way, in addition to that have strong dependency
+ 
+ 
+==========
+Avro is the solution to the challenge where we have advantage of Marshling and Unmarshling
+  - A schema based utility
+  
+
+{
+   "type" : "record",
+   "namespace" : "com.test.avro.schemas",
+   "name" : "Employee",
+   "fields" : [
+      { "name" : "Name", 
+        "type" : "string" 
+      },
+      { "name" : "Age",
+        "type" : "int" 
+      }
+   ]
+}
+
+
+Schema Metadata information-
+  1. type -> Describes the type of content or Value
+  2. namespace -> defines the name in which object resides
+  3. name -> Describes the schema or subschema name
+  4. fields -> attribute which contains the following
+             - name -> describes the name of field
+             - type -> the type of the field
+
+
+
+Primitive datatypes in Avro -
+  int
+  boolean
+  long
+  double
+  string
+  null
+  float
+  bytes
+
+Complex datatypes of Avro?
+  record -> has name, namespace, type, fields
+  enum -> name, namespace, symbols (the array of names)
+  
+  Example enum:
+  {
+   "type" : "enum",
+   "name" : "OneToThree", 
+   "namespace": "data", 
+   "symbols" : [ "ONE", "TWO", "THREE" ]
+  }
+  
+  array -> type, items
+  
+  Example 
+  
+  { 
+    "type" : "array", 
+    "items" : "int"
+  }
+  
+  unions - When the field has One or more types 
+  
+  Example -
+  
+{
+   "type" : "record",
+   "namespace" : "com.test.avro.schemas",
+   "name" : "Employee",
+   "fields" : [
+      { "name" : "Name", 
+        "type" : "string" 
+      },
+      { "name" : "Age",
+        "type" : "int" 
+      }
+   ]
+}
+  
+   
+  fixed
+  
+  { 
+    "type" : "fixed" , 
+    "name" : "bdata", 
+    "size" : 1048576
+  }
+  
+  map
+
+  {
+    "type" : "map", 
+    "values" : "int"
+  }
+
+
+
+===============
+
+Avro datatypes have been serialzed and deserialized :
+
+  1. SpecificDatumWriter class:
+    The class implementation converts Java Object to an in-memory serialized format
+    
+    method - getSpecificData() provides the SpecificData implementation used by this writer
+    
+    1.a DataFileWriter(DatumWriter<T>  datumWriter)
+      This class writes a seq. serialized records of data to a schema, along with schema ina file
+    
+      append(T datum)
+      appendTo(File file) -> to append to existing file
+    
+    
+  2. SpecificDatumReader class:
+    It reads the schema and determins the in-memory data representation
+    
+    SpecificDatumReader(Schema schema) -> contructs where writers and readers are the saame
+    
+    SpecificData getSpecificData()
+    setSchema(Schema actual) -> To set the writer's schema
+    
+    
+    2.a DataFileReader (File file, DatumReader<T>)
+      provides a random access to file written with DataFileWriter
+    
+   - next() reads the next datum in the file
+   hasNext() - returns true if more entries are available in file
+
+
+
+
+
+  3. Schema.Parser -> contains the methods to parse the schema written in a file
+  
+    parse(File file) -> Parses the schema in the given file
+    parse(InputStream in) -> Parses the schema provided in the InputStream
+    parse(String s) -> Parses the schema in the given string
+
+
+  4. Fetch a record -?
+  
+  GenericData.Record
+   Object get(String key) ->  return the value of a field of given name
+   Schema getSchema() -> return the schema of given instance
+   void put(String key, Object value) -> set the value for the key
+
+
+
+
+
+
+
