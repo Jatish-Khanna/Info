@@ -709,9 +709,92 @@ array - Zero or more values, each of same type
 map - Key/value pair. Where Key is String and Value can be Complex or Simple datatype
 fixed - Fixed bytes
 
+Example JSON-
+
+Note:
+  1. The "doc" - provides the details for documentation
+  2. Keys defined are always string
+  3. type: define the type of value it stores, refer above all the type references
+
+  4. Dependency list-
+    <groupId>org.apache.avro</groupId>
+    <artifactId>avro</artifactId>
+    
+    <groupId>org.apace.avro</groupId>
+    <artifactId>avro-tools</artifactId>
+    
+
+{
+    "namespace": "com.sample.employeejson",
+    "type": "record",
+    "name": "AVROExample",
+    "fields": [
+        {
+            "name": "id",
+            "type": "string"
+        },
+	"doc": "The employee ID"
+	,
+        {
+            "name": "employee_id",
+            "type": "int"
+        },
+        {
+            "name": "industry_name",
+            "type": "int"
+        },
+        {
+            "name": "technologies",
+            "type": {
+                "name": "Technology",
+                "type": "record",
+                "fields": [
+                    {
+                        "name": "technology_id",
+                        "type": "int"
+                    },
+                    {
+                        "name": "experience",
+                        "type": "string"
+                    },
+                    {
+                        "name": "certification",
+                        "type": "boolean"
+                    }
+                ]
+            }
+        }
+    ]
+}
 
 
+================
+For Maven to generate the code<>
 
+  <plugin>
+   <groupId>org.apache.avro</groupId>
+   <artifactId>avro-maven-plugin</artifactId>
+   <version>...</version>
+   
+   <executions>
+     <execution>
+       <phase>
+       	generate-sources
+       </phase>
+       <goals>
+         <goal>schema</goal>
+       </goals>	 
+       
+       <configuration>
+         <sourceDirectory>${project.basedir}/src/main/avro</sourceDirectory>
+	 <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+       </configuration>
+     <execution>
+   </executions>
+ </plugin>
+	 
+
+===================================
 
 
 
