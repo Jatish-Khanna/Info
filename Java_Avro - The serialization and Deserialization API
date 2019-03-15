@@ -155,5 +155,142 @@ Avro datatypes have been serialzed and deserialized :
 
 
 
+=============================
+
+How to generate the Avro class based on the schema
+  .avsc ---------> Utility ----------> Bean/.java file
+
+1. Define an Avro schema
+
+Example schema-
+
+{
+   "namespace": "com.test.avro.schema",
+   "type": "record",
+   "name": "EmployeeRecord",
+   "fields": [
+      {"name": "name", "type": "string"},
+      {"name": "id", "type": "int"},
+      {"name": "salary", "type": "int"},
+      {"name": "age", "type": "int"},
+      {"name": "address", "type": "string"}
+   ]
+}
+
+2. Compile the schema using the Avro utility. A code will be generated corresponding to schema
+
+java -jar <path/to/avro-tools-1.7.7.jar> compile schema <schema-file> <destination-folder>
+
+Output>
+A class file the contents in it-
+EmployeeRecord.java
+
+a. Default constructor, and parameterized constructor which accept all the variables of the schema.
+b. The setter and getter methods for all variables in the schema.
+c. getSchema() method which returns the schema.
+d. Builder methods.
 
 
+3. Populate the schema with the data
+EmployeeRecord firstEmployee = new EmployeeRecord();
+firstEmployee.setXXX(...);
+
+4. Serilaize the data using Avro library
+
+      //Instantiate DatumWriter class
+      DatumWriter<EmployeeRecord> employeeDatumWriter = new SpecificDatumWriter<>(EmployeeRecord.class);
+      DataFileWriter<EmployeeRecord> loyee = new DataFileWriter<>(employeeDatumWriter);
+	
+      empFileWriter.create(firstEmployee.getSchema(), new File("serialized_employee.avro"));
+	
+      empFileWriter.append(firstEmployee);
+      empFileWriter.close();
+
+
+
+5. Deserialize Avro Object-
+DatumReader<EmployeeRecord> employeeDatumReader = new SpecificDatumReader<>(EmployeeRecord.class);
+DataFileReader<emp> dataFileReader = new DataFileReader(new File("serialized_employee.avro"), employeeDatumReader);
+
+EmployeeRecord employeeRecord = null;
+while(dataFileReader.hasNext()){
+
+   employeeRecord = dataFileReader.next(employeeRecord);
+   
+}
+
+
+==================================================
+
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.avro.Schema;
+import org.apache.avro.file.DataFileWriter;
+
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericDatumWriter;
+import org.apache.avro.generic.GenericRecord;
+
+import org.apache.avro.io.DatumWriter;
+
+class AVRODynamicSchemaLoadingExample {
+
+   public void serialize() throws IOException{
+	
+      //Instantiating the Schema.Parser class.
+      Schema schema = new Schema.Parser().parse(new File("employee.avsc"));
+		
+      //Instantiating the GenericRecord class.
+      GenericRecord generalRecord = new GenericData.Record(schema);
+		
+      //Insert data according to schema
+      generalRecord.put("name", "ramu");
+      generalRecord.put("id", 001);
+      generalRecord.put("salary",30000);
+      generalRecord.put("age", 25);
+      generalRecord.put("address", "chenni");
+		
+      GenericRecord generalRecord2 = new GenericData.Record(schema);
+		
+      generalRecord2.put("name", "rahman");
+      generalRecord2.put("id", 002);
+      generalRecord2.put("salary", 35000);
+      generalRecord2.put("age", 30);
+      generalRecord2.put("address", "Delhi");
+		
+      DatumWriter<GenericRecord> datumWriter = new GenericDatumWriter<GenericRecord>(schema);
+		
+      DataFileWriter<GenericRecord> dataFileWriter = new DataFileWriter<GenericRecord>(datumWriter);
+      dataFileWriter.create(schema, new File("serialized_employee.avro"));
+		
+      dataFileWriter.append(generalRecord);
+      dataFileWriter.append(generalRecord2);
+      dataFileWriter.close();
+		
+      System.out.println("data successfully serialized");
+   }
+   
+   // DatumReader
+   // DatumFileReader
+   
+   public void deserialize() {
+         //Instantiating the Schema.Parser class.
+      Schema schema = new Schema.Parser().parse(new File("schema.avsc"));
+      DatumReader<GenericRecord> datumReader = new GenericDatumReader<GenericRecord>(schema);
+      DataFileReader<GenericRecord> dataFileReader = 
+          new DataFileReader<GenericRecord>(new File("serialized_employee.avro"), datumReader);
+     
+     GenericRecord employee = null;
+		
+      while (dataFileReader.hasNext()) {
+         emp = dataFileReader.next(employee);
+         System.out.println(emp);
+      }
+   }
+}
+
+
+
+=========================================
