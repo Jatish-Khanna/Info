@@ -657,17 +657,57 @@ Method#2 -
   ProducerRecord<String,String> record = new ProducerRecord<>(topicName, partitionNumber, key, value)
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
+===============================
+	
+Serialization -> converting a data object into bytes
+"""
+Apache AVRO?
+ Datastructures that are represented as Strings like 
+   - JSON
+   - XML
+ 
+ 
+  An efficient data serialization system
+  Data is defined with metadata
+  Provides a datastructure as a format
+  Storage is space efficient
+  TypeChecking of data is done at serialization time
+  
+  
+ Apache AVRO schemas?
+   The data structure or format of your data. Schemas are represented in JSON format
+   AVRO has three different ways of creating records-
+   
+   * Generic API- 
+      Code to map Schema field to a field in your Object
+   * Reflection API -
+      Generate a schema from an existing Java class
+   * Specific (Best way to use AVRO) API-
+      Generate a Java class from schema
+      JSON file(*.avsc) defines the schema and a Code generation will be done		
+	
+ Good location where Java code will be generated-  src/main/avro	
 
+Note: The files generated are schemas shouldn't be checked-in to SVN.
 
+Simple datatypes?
 
+boolean ---------- boolean
+int 32-bit signed---------- int
+long 64-bit signed---------- long
+float single precision float---------- float
+double double-precision float---------- double
+string Sequence of Unicode chars---------- string
+byte Sequence of Bytes---------- ByteBuffer
+null not present---------- null
+
+Complex Datatypes?
+**record - Userdefined field with simple and complex datatypes
+enum - A specified set of values
+union - Exactly onen value from a specified set
+array - Zero or more values, each of same type
+map - Key/value pair. Where Key is String and Value can be Complex or Simple datatype
+fixed - Fixed bytes
 
 
 
