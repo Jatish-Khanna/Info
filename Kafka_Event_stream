@@ -529,15 +529,56 @@ Note: Bigger messages than architecture should be reconsidered,
 ============================
 
 
+Consumer Offset in Kafka-
+	auto.offset.reset - defines the action if Consumer offset is not available
 
+	* earliest - The earliest available [begining]
+	* latest [default]- resets to latest offset
+	* none - Exception as no Offset is defined by Consumer
 
+	Posibilities when Consumer's Offset is not available?
+		. When a new ConsumerGroup has been initialized
+		. Consumer offset is smaller than smallest offset
+		. Consumer offset is greater than largest offset
+		
 
+The KafkaConsumer API provides ability to customize the Offset for each Consumer
 
-
-
-
-
-
+ * View Offset - 
+ 		position(TopicPartition) - Offset of the next record to be retrieved
+		offsetsForTimes(Map<TopicPartition, Long>) - provides offsets for the given partitions by timestamp
+ 
+ * Change Offset (methods)
+		- seekToBeginning(Collection<TopicPartition>) - seeks Earliest offset of each partition
+		- seekToEnd(Collection<TopicPartition>) - seeks to latest offset for all the partitions
+		- seek(TopicPartition, offset) - seeks to Offset for specified partition
+		
+		
+	assignment() -> Returns Collection(list) of all partitions Consumer is subscribed to
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 
 
