@@ -635,12 +635,26 @@ Override the Commit funcationality to Manual?
 Kafka Offsets in a special Topic?
   The topic where Consumer offsets have beens stored asre __consumer_offsets
   
-  
+================================
 
+Default(Symantic Partitioning scheme): 
+ - Kafka will hash the key and map to specific partition
+ - It is certain that same key will be hashed to same partition
+ - If Key is null, then default partition is used
+   The record will be sent to random partition(round-robin algorithm)
+   
+ 
+Implement the Partitioner interface to create custom partition?
+ Methods:
+ - configure
+  close  
+  partition - takes Topic, key, serialized key, value, serialized value and Clusture metadata
+    [0-indexed partition scheme]
    
    
 		
-		
+Method#2 -
+  ProducerRecord<String,String> record = new ProducerRecord<>(topicName, partitionNumber, key, value)
 		
 		
 		
