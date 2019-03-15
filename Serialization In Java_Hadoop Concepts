@@ -1,0 +1,146 @@
+Java provides facility using I/O interface to serialize and deserialize the objects
+
+- ObjectInputStream and ObjectOutputStream have been used to serialize and deserialize
+
+In Distributed Systems like Hadoop -
+  Serialization and Deserialization is used for 
+    * Inteprocess Communication
+      The nodes connected over internet share data using n/w
+      The message transported over n/w is first converted to Binary format
+      
+          
+    * Persistent Storage
+    
+    
+ Best features of Serialization and Deserialization?
+   Compact - To make the best use of N/w bandwidth
+   Fast - The timetake intercommunication b/w the nodes is crucial in distributed system is 
+   Extensible - The protocols and standards evolve, so the mechanism should adopt them
+   Interoperable - The communication is done b/w nodes of different types
+   
+   
+   
+ ====================================
+ 
+ Interfaces that help in Marshling and Unmarshling?
+   1. Writable:
+     The methods provided by interface are-
+     . readFields(DataInput in)
+     . write(DataOutput out)
+     
+   2. WritableComparable 
+     The interface extends "Writable" and "Comparable" interfaces. It has additional method
+     . int compareTo(class obj)
+     
+     
+ Hadoop provides implementation of these methods under multiple classes as a wrapper on
+  Java primitive types
+  
+  Example -  BooleanWritable, FloatWritable, ByteWritable, LongWritable...
+  
+  
+  Funny!! Can you code it?
+    1. Create new instance of any implementation ex. IntWritable
+    2. Wrap Integer value for IntWritable implementation
+    3. Instantiate ByteArrayOutputStream class
+    4. Instantiate DataOutputStream and decorate with ByteOutputStream
+    
+    
+    5. Serialize the integer value in IntWritable object using write() method
+    6. the serialized data will be stored in the byte array object
+    
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;  
+    
+class HadoopSampleDataSerialization {
+  public byte[] serialize() throws IOException {
+  // Step#1 Instantiate the Object
+    IntWritable intWritable = new IntWritable(12);
+  
+  // Instantiate ByteArrayOutputStream 
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    
+    // Decorate DataOutputStream with byteArray stream
+    DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+    
+    // Serialize
+    byte[] serializedObject = intWritable.write(dataOutputStream);
+    
+    byteArrayOutputStream.close();
+    return serializedObject();   
+  
+  }
+
+}
+    
+  
+===============================
+
+Steps for Deserialization?
+  
+   Funny!! Can you code it?
+    1. Create new instance of any implementation ex. IntWritable
+   
+    3. Instantiate ByteArrayInputStream class
+    4. Instantiate DataInputStream  and decorate with ByteArrayInputStream
+    
+    
+    5. DeSerialize the integer value in IntWritable object using readFields() method
+    6. the deserialized data can be retrieved using ".get()" method
+    
+  import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+
+import org.apache.hadoop.io.IntWritable;
+
+class DeserializationHadoopExample {
+
+  public Integer deserialize(byte []byteArray) throws Exception {
+    // Instantiate IntWritable 
+    IntWritable intWritable = new IntWritable();
+    
+    // Instantiate ByteArrayInputStream using the bytes accepted
+    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
+    
+    // Decorate DataInputStream with ByteArrayInputStream
+    DataInputStream dataInputStream  = new DataInputStream(byteArrayInputStream);
+    
+    // Read in IntWritable
+    intWritable.readFields(dataInputStream);
+    
+    return intWritable.get()
+  
+  }
+
+}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
