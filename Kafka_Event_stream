@@ -557,16 +557,88 @@ The KafkaConsumer API provides ability to customize the Offset for each Consumer
 	assignment() -> Returns Collection(list) of all partitions Consumer is subscribed to
 		
 		
+======================================
+
+Consumer Liveness?
+  Heartbeat is a part of separate thread(background) 
+New defaults?
+	- session.timeout.ms - Default 10sec
+	- max.poll.records - defaults 500
+	// When poll thread is hung
+	- max.poll.interval.ms - Defaults 5min (maximum allowable intervals b/w calls to pill)
 		
+
+==================
+Consumer Rebalancing?
+  - A consumer leaves the ConsumerGroup(either failed or graful shutdown)
+  - A new Consumer Joins the group
+  - A Consumer changes it subscription
+  - The Consumer Group notice a change to the Topic metadata 
+    like increase/decrease/failure of Topic partition
 		
+Note: During rebalancing the consumption has been paused
+
+What will happen after rebalancing?
+  - Allows to dynamically modify the consumer groups without impacting the flow
+    like adding/removing a new consumer to the ConsumerGroup
+  - To handle failure conditions with Consumer Failure
+  
+ Issues and mitigation while Rebalancing?
+   - If a consumer maintains internal state of Offset then rebalancing will cause problem
+   - A paused partition will no longer be paused
+   
+ Option#2 while rebalancing ?
+   Provide a ConsumerRebalanceListener, while subscribing to Topic
+   - implement onPartitionsRevoked and onPartitionsAssigned method
+   
+ // This means upgrade the Consumers to streams
+ 
+=====================
+
+Manually Committing Offsets?
+  Consumer offsets are committed in background to Controlled Broker
+  enable.auto.commit - true 
+  // This autocommit happens when calling poll() method - default 5 sec
 		
-		
-		
-		
-		
-		
-		
-		
+Issue?
+  - A rebalance happens after Two seconds of Last autocommit (default 5 sec)
+   . New consumer reassigned during rebalancing will start consuming messages from
+     latest committed offset position
+   . The messages were processed two seconds will processed again
+   
+   [High latency, and High load systems will need to process those Hundereds and thousands messages again]
+ 
+ 
+Override the Commit funcationality to Manual?
+  1. Disable the enable.auto.commit=false 
+  
+  2. commitSync() -> 
+    call it after poll(), and then process the messages i.e. At most once delivery
+    The method call commitSync() is blocked until it succeeds and retry as long as 
+      it doesn't receives a fatal error
+      
+    Issue-
+    All the messages retrieved by poll() should be processed properly else Consumer may miss messages
+    
+  
+  3. commitAsync() -
+    This method is immediately returned after the call
+    Parameterized callback i.e. optional and this will be triggered when Broker reponds
+    Throughput is high as Consumer can process next batch 
+    
+    The Issue - 
+    Noticed if the commit failed
+  
+  Note: Use seek() methods to start processing messages from offset
+  
+  ==========================================
+Kafka Offsets in a special Topic?
+  The topic where Consumer offsets have beens stored asre __consumer_offsets
+  
+  
+
+   
+   
 		
 		
 		
