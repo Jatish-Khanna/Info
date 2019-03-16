@@ -373,9 +373,8 @@ Example and Mapping for the types -
  ]
 }
 
-
-
-
+====================
+Avro to java classes conversion
 
 Employee.java 
 
