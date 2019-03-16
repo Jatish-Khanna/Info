@@ -294,3 +294,143 @@ class AVRODynamicSchemaLoadingExample {
 
 
 =========================================
+
+Example and Mapping for the types -
+
+*.avsc file
+
+{
+ "name": "Employee",
+ "type": "record",
+ "namespace": "com.example.avro.entity",
+ "fields": [
+  {
+   "name": "avroArray",
+   "type": {
+    "type": "array",
+    "items": "string"
+   }
+  },
+  {
+   "name": "avroMap",
+   "type": {
+    "type": "map",
+    "values": "string",
+    "doc": "A union is used to indicate that a field may have more than one type. They are represented as JSON arrays."
+   }
+  },
+  {
+   "type": [
+    "int",
+    "null"
+   ],
+   "doc": "It will create Integer not int",
+   "name": "id"
+  },
+  {
+   "type": [
+    "long",
+    "null"
+   ],
+   "doc": "It will create Long not long",
+   "name": "ld"
+  },
+  {
+   "type": "int",
+   "doc": "It will create int",
+   "name": "intField"
+  },
+  {
+   "type": "long",
+   "doc": "It will create long",
+   "name": "longField"
+  },
+  {
+   "doc": "aggregation",
+   "name": "address",
+   "type": {
+    "type": "record",
+    "name": "Address",
+    "fields": [
+     {
+      "name": "street",
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     {
+      "name": "flatNo",
+      "type": "int"
+     },
+     {
+      "name": "pincode",
+      "type": "long"
+     }
+    ]
+   }
+  }
+ ]
+}
+
+
+
+
+
+Employee.java 
+
+   private java.util.List<java.lang.CharSequence> avroArray;
+   private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> avroMap;
+  /** It will create Integer not int */
+   private java.lang.Integer id;
+  /** It will create Long not long */
+   private java.lang.Long ld;
+  /** It will create int */
+   private int intField;
+  /** It will create long */
+   private long longField;
+  /** aggregation */
+   private com.example.avro.entity.Address address;
+
+
+Address.java
+
+   private java.lang.CharSequence street;
+   private int flatNo;
+   private long pincode;
+   
+   
+ pom.xml
+<build>
+<plugins>
+    <plugin>
+     <groupId>org.apache.avro</groupId>
+     <artifactId>avro-maven-plugin</artifactId>
+     <version>1.8.2</version>
+     <executions>
+      <execution>
+       <phase>generate-sources</phase>
+       <goals>
+        <goal>schema</goal>
+       </goals>
+       <configuration>
+        <sourceDirectory>${project.basedir}/input</sourceDirectory>
+        <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+	<!-- Note the PRIVATE specifies all the fields as private else it will be @deprecated public-->
+        <fieldVisibility>PRIVATE</fieldVisibility>
+       </configuration>
+      </execution>
+     </executions>
+    </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-compiler-plugin</artifactId>
+     <configuration>
+      <source>${java.version}</source>
+      <target>${java.version}</target>
+     </configuration>
+    </plugin>
+   </plugins>
+</build>
+
+
