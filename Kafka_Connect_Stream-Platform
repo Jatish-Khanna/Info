@@ -129,7 +129,72 @@ KafkaConnect modes-
   . Workers distribute load within this Kafka connect "cluster"
   
   
+================================  
+Configuring Connectors-
+  . Connectors configuration depends on the mode (standalone or distributed)
+  . in distributed mode, configuration can be done only via REST API
+    . Changes will be applied on restart of each worker
+    . The configuration is stored in a special Kafka topic\
+    . group.id - to merge connectors to make a group
+    . num.partitions (default: 1)
+    . replication.factor (Default: 1) - best would be 3 at least
+    
+    /etc/kafka/connect-distributed.properties
+   
+  . in standalone mode, the configuration is done via properties file
+    . Configuration done using REST API are temporary change
+    . /erc/kafka/connect-standalone.properties
   
+  . Connectors can be added, removed or modified using REST API
+    . REST request can be made to any worker
+
+
+GET /connectors - Get a list of active connectors
+POST /connectors - Get a new connector
+GET /connectors/(string: name)/config - Get configuration information for a connector
+PUT /connectors/(string: name)/config - Create a new connector or update the existing config
+
+
+===================================
+SMT (Single message transforms) - a light weight operations performed on message
+  The ability to transform a message at a time
+  - Configured at the connector-level
+  - Applied at message key or value level
+  
+Few transformations Example-
+ InsertField: insert a field using attributes from the message metadata or from configured static value
+ ReplaceField: rename fields, or apply filters(whitelist, blacklist)
+ ValueToKey - Replace the Key with a new keyformed from a subset of fields in value payload
+ TimestampRouter - Update the Topic field as a function of Original Topic value and timestamp
+
+=================================
+
+Administration of Kafka - 
+  * Different types of installers - tar, archive, zip, RPM or docker images
+  * Brokers are built as backward compatible
+  * In clusture rolling upgrade is possible
+  
+  
+-- Topics have been automatically created when first used
+  Deafult (Single replication and Single Partition)
+
+in production the auto.create.topics.enable=false. the topics should not be generated automatically
+
+Instead of autogeneration, create topics manually-
+
+kafka-topics --zookeeper HOST:PORT --create --topics TOPIC_NAME \
+  --partition 6 --replication-factor 3
+  
+kafka-topics --zookeeper HOST:PORT --alter --topic TOPIC_NAME \
+  --partitions 30
+  
+ kafka-topics --zookeeper HOST:PORT --delete --topic TOPIC_NAME
+ // Stop all producers/Consumers before deleting a topic
+ // All Brokers must be running for a delete to be successful
+
+
+=====================================
+Kafka Log management-
 
 
 
@@ -148,4 +213,11 @@ KafkaConnect modes-
 
 
 
+
+
+
+
+
+
+/
 
