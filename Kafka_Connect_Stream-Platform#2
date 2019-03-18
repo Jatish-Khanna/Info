@@ -264,6 +264,48 @@ Parallelization -
 
 =======================================
 
+Kafka Security?
+  Encyption, Authentication (Who you are?) and Authorization (What you are allowed to do?)
+
+Note:kafka brokers can listen on multiple ports
+
+  1) Plain text (no wire encryption or authentication)
+  2) SSL  (wire encryption and Optional SSL authentication)
+  3) SASL - Simple Authentication and Security Layer
+    . Connects to external Kerberos server
+    - Salted and Hashed passwords
+    - clear text user/passwords
+   
+   SSL has huge impact on performance of Broker and Clients
+   
+  
+Authorization?
+  Kafka supports ACLs
+  Example-
+    Allow Producers to write to specific Topics
+    - Consumsers to read from Specific Topics
+    Allow certain users to Administer
+    
+ How to modify ACLs
+  kafka-acls --authorizer-properties zookeeper.connect=HOSTNAME:PORT \
+  --add --allow-principal User:Jatish --operation Read --operation write \
+  --topic TOPIC_NAME
+  
+-----------------------------------------
+The Schema registry can be confnigured with securitu\y
+
+- Secure communication and authentication b/w Schema registry and the Kafka cluster
+ * SSL (Secure communication for end-user REST API calls [HTTPS])
+ * SASL (Authentication with Zookeeper)
+
+Note: Schema evolution or updated is an administrative action. All other users have read-only access
+
+
+
+
+
+
+
 
 
 
