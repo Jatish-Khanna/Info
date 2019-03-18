@@ -1,0 +1,52 @@
+Kafka connect is a data streaming platform
+  This platforms interfaces Kafka with other systems
+  - OSS under Apache Kafka distribution
+  - Simple, scalable and reliable
+
+
+Input channels --------->Connect ->>>>Kafka clusture ->>>>Connect ----------->Output channels
+
+Example-
+  Stream an entire SQL data from the database into Kafka
+  Stream the entire topics into HDFS for analytics and processing
+  Stream the data into Elastic Clusture for secondary indexing
+  (CQRS -> Command query responsibility seggragation pattern for External search and queries)
+
+
+Kafka Connect is using producer and Consumer API's and that automatic
+  - COTS and deeply tested connect components are available for common data sources
+  - Automatic loadbalancing for distributed systems
+  - No "do it yourself" i.e. no external coding required
+  - Easy use existing connectors and extensible for new features
+
+The basic responsibility of Apache Connect to 
+ - Trasfer data b/w Kafka and Other systems
+ - Connectors recieve data from different channels into Kafka (ingress/source)
+ - Connectors sends data to external systems (egress/sink)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
