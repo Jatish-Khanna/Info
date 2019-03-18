@@ -25,12 +25,111 @@ The basic responsibility of Apache Connect to
  - Connectors sends data to external systems (egress/sink)
 
 
+Types of Connect Connector:
+  - aleardy developed connectors can be used [COtS]
+  - New connectors can be created 
+  
+1. File stream 
+    - Read from the last of file
+    - Appends Kafka messages at end of file
+    
+2. JDBC
+  - Polls database a new or Updated rows. Creates a Kafka message for each record modified
+  - Each table has separate Topic where records are published
+  - New and deleted records in table have been handed automatically
 
+Properties (topic name
+  connection.url - JDBC URL
+  topic.prefix - prefix to table name for generating Kafka_Topics
+  mode - mode for detecting the table changes, incrementing, timestamp, timstamp+incrementing,  bulk
+  query - The custom query to run
+  poll.interval.ms - the frequency poll for new data
+  table.blacklist - a list of tables to ignore
+  table.whitelist - a list of table to specify (one of table.whitelist or blacklist should be present)
 
+3. HDFS
+  Polls Kafka and write to HDFS
+  Integration with Hive (Auto table creation and Schema evalutation with Apache Avro)
+  Uses Kerberos to connect with HDFS and Hive metastore
+  Plug-ins for partitioner (Kafka, fields, time, custom partitioner)
 
+4. Elastic search
+5. AWS S3
+...
 
+=================================
+How do you detect new or updated rows?
+  - Incrementing Column: It check for the sequence number but cannot be used for updates
+  - Timestamp column - Checks a single "last_modified" column but doe not guratee all updates are read
+  - Timestamp and incrementing column - Combination does achieve benefit of above
+  - Custom query - 
 
+=====================
 
+Converters create a custom format for data to serialize the stream to Kafka
+Converters are decoupled from connectors to enable reuse
+  - Allow any connector to work with any serialization format
+  
+  DataSource ->> Custom format ---> Connectors ---> Converter --[bytes]-->Kafka clusture
+                                                        ||
+                                                     ========
+                                                     Schema registry
+
+Converter Data formats-
+  - Key converter
+  - Value Converter
+  
+Examples -
+  AvroConverter (Best practice)
+  JsonConverter
+  StringConverter
+
+----------------------
+It is good to use AvroConverter with SchemaRegistry with the connectors
+
+key.converter=io.confluent.connect.avro.AvroConverter
+key.converter.schema.registry.url=<URI>
+
+value.converter=io.confluent.connect.avro.AvroConverter
+value.converter.schema.registry.url=<URI>
+
+Benefits of Using AvroConverter:
+  - A datastructure format support
+  - Generation of Code files from Datastructure
+  - Avro stores data efficiently
+  - Typechecking of data or validation
+  - Avro schema updates and evolution
+  
+===============================
+Benefits of KafkaConnect:
+  . The track record of producer and consumer connctors, for fault tolerant
+ 
+ The method of tracking offset depends on type of Connector being used
+=========================
+KafkaConnect modes-
+  1. Standalone mode -
+    Single worker process on a single machine
+    Example-
+    
+    connect-standalone connect-standalone.properties connector1.properties [...]
+    
+    The argument for properties is varards specifies properties for each Connector to be started locally
+    Each connector will run in seperate worker thread locally
+    
+  2. Distributed mode - Multiple workers distributed across machines
+  
+  In this mode Kafka Connect starts on each worker node
+  connect-distributed connect-distributed.properties
+  
+ ------------
+ The Group coordination b/w distributed nodes-
+   . The communication is done using group membership protocol
+    (Configure working with same "group.id")
+ 
+  . Workers distribute load within this Kafka connect "cluster"
+  
+  
+  
 
 
 
