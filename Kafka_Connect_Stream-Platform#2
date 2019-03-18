@@ -195,6 +195,74 @@ kafka-topics --zookeeper HOST:PORT --alter --topic TOPIC_NAME \
 
 =====================================
 Kafka Log management-
+  [Default duration]Retain - Messages will be retained for seven days
+  Retention policy can be configured using-
+    log.retention.ms
+    log.retention.minutes
+    log.retention.hours
+    log.retention.bytes - size of log
+  
+
+Kafka can store the message for ephermal time period
+ - When cleaning upa a log, the default policy is delete. Removes all log segments
+   where all messages are older than the retention.ms or until the log size is below 
+   retention.bytes (or both)
+
+
+---------------------------
+Regular Topic - every event is a discrete event in time, and all the events will be tracked
+
+Compacted Topic- A compacted log retains at least the last known message value
+  for each key within partition
+  Example-
+   Storing state of external applications
+   A DB/table change log
+   in IM&P last activity done in group, somebody joined the group
+   
+   When does a broker call Compaction algorithm-
+    log.cleaner.min.cleanable.ratio
+    : ratio of dirty(uncompacted) to total log size 
+    - trigger log clean if the ratio of dirty/total is larger than this value
+
+  default (0.5)
+
+At broker level -
+  min.cleanable.dirty.ratio - A topic's property override, defined a property at Broker leveel
+
+-------------------------
+
+**Determine the partition sizing ?
+  Default - A single partition and a single broker replica
+  If a Topic is manually created, you can specify the number of Partitions,
+   and the number of Replicas per partition
+   
+ 
+ kafka-topics --zookeeper HOST:PORT --create --topic TOPIC_NAME \
+  --partitions 6 --replication-factor 3
+
+Note: The number of partitions has impact on performance
+
+Parallelization -
+  Produces can write to multiple partitions in parallel
+  - More partitions can result in better throughput when sending data to cluster
+  
+  The performance Challenges?
+    1) If Broker fails  and it is leader for some partitions, each of these partitions 
+    will be unavailable until leader is elected
+    
+    * The more partitions for a leader, the longer leader election will take
+  
+    2) More partitions means increase in End-to-End latency [time from producing a message to it being read by Consumer]
+     - A broker uses a single thread to thread for data replication b/w shared partitions
+       across multiple brokers
+       
+     - Larger clustures where replicas are distributed amongst more Brokers
+     
+     3) Memory requirements(buffers on clients per partition)
+      - Each parition need a separate bugger on client i.e. increases with number of partitions
+            mitigation max.poll.records 
+
+=======================================
 
 
 
@@ -219,5 +287,10 @@ Kafka Log management-
 
 
 
-/
+
+
+
+
+
+
 
