@@ -1,0 +1,92 @@
+Kafka Stream API - 
+  It is streaming data API, built on Producer and Consumer. 
+  - Supports Stateless, stateful and Windowing processing
+  - Supports per record stream processing with millisecond latency
+  - A functional level desing is focused instead of Producer and Consumer
+  
+  * Kafka streams has DSL (Domain specific language)
+   - Provides different implementation like Avg, frequency, sum, filter, map, flatMap
+   
+** Kafka Streams API provides streaming capabilities with-
+  Spark Streaming
+  Apache storm
+  Apache Samza
+  
+ Note: The streams API doesn't require a clusture of its Own 
+   . Can run on a stand-alone machine or multiple-machines
+   
+ Using streams API reduces the workload on DBMS by efficiently processing data and aggregationf unctions
+
+
+=================================
+What is a Stream?
+  An unbounded, continuous real-time flow of  data
+ - A consumer doesn't need to request a new record whereas it has been published
+
+: Messages in Stream are in Key/Value pair.
+
+A stream Processor, transforms data in a stream. A processor topology defines the data flow through the stream processorrs
+
+-
+ A stream reads a data from the Topic, perform operations and process the data, writes back to Topic
+
+TOPIC -----------> Stream processor --------------> Topic
+
+=================================
+Kstreams and KTables?
+  A KStream is an abstraction of record stream
+  - Each record is an individual event
+  
+  KTable is an abstraction over changelog stream (a collection of evolving facts)
+   - Each record represents "an Update"
+   like a compacted topic (a hashmap of Key/value pair if present update)
+   
+   
+ Windowing, Joining and Aggregation?
+   Kafka streams API allows us to windows the stream y time
+   - A time based buckets
+   
+  * Aggregate functions is the best operations that can be performed
+  * Join operation on different sources
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
