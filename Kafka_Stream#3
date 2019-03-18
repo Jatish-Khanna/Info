@@ -49,23 +49,73 @@ Kstreams and KTables?
   * Aggregate functions is the best operations that can be performed
   * Join operation on different sources
    
+  ===================================== 
+   
+   1. Configuration
+     -java.util.Properties
+     
+     APPLICATION_ID_CONFIG should be unique in the Kafka clusture
+     BOOTSTRAP_SERVERS_CONFIG: a list of Kafka brokers to lookup in clusture (3 hostport pair is good approach)
+     
+     
+     Properties properties = new Properties();
+     properties.put(StreamConfig.APPLICATION_ID_CONFIG, "Sample-Application");
+     properties.put(StreamConfig.BOOTSTRAP_SERVER_CONFIG, "HOSTNAME:PORT");
+     ...
+     
+   
+   2. Serializers and Deserializers (Serdes)
+     Key Serdes can be different from Value Serdes
+     Lot of Serdes are available and custom serdes are available as well.
+   
+   properties.put(StreamConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass()_;
+   properties.put(StreamConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serde.String().getClass());
+   
+   // Avro serdes are also aviable for Complex types and Custom Serde can be created by implementing the interface
    
    
+   3. Process of topology
+   StreamBuilder builder = new StreamBuilder();
+   KStream<String, String> stream = builder.stream("TOPIC_NAME");
+   
+   Transformation of data stream can be done using - Aggregation(result:KTable), filtering, mapping functins available for Kstream
+   
+   These streams are similar to Stream API in Java 8
+   
+   ---------------------
+              Aggregations and Semantics
+            ||============================ |
+                                           \/
+   KStream                                KTable
+            ^                              
+            |=============================||
+              toStream()
    
    
+   Streams can be writting to Kafka topic-
+      stream.to("TOPIC_NAME");
+      
+      - Write to Topic and then continue to process the data
+      stream.through("TOPIC_NAME").flatMap(...);
+   
+   This is also Lazy processing, until externally called to start it would lazly wait to evaluate
+   ===============================================
+   KafkaStream kafkaStreams = new KafkaStreams(builder.build(), properties);
+   kafkaStreams.start();
    
    
+   this is blocking call, until the stream processing is finished the above operation will wait and block the application processing
    
+   -----------------
+   Allow application to Gracefully shutdown?
+     in response to SIGTERM
+     
+     Runtime.getRuntime().addShutdownHook(new Thread(stream::close));
+     
+     After an application has been stopped Kafka transforms any task that is running under this instance 
+     to available remaining instances
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
+   This is recommended and cleaner way to close the Streams.
    
    
    
