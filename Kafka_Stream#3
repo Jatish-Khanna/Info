@@ -118,11 +118,58 @@ Kstreams and KTables?
    This is recommended and cleaner way to close the Streams.
    
    
+   =========================================
+   Managing Kafka Stream applications-
+     . Same Kafka stream application under multiple m/c's
+     . Kafka clusture will automatically distribute the workload b/w all the nodes/ instances of the applications
+     
+     . Parallelizing Kafka Streams or KSQL applications improves throughtput and performance
+     . It makes application fault tolerant
+     . The number of taska in Kafka Streams application may increases with increase in partition count
    
+   --------------------
+   The architecture of Streams the Scale pointof view-
+    . The bottleneck for scale is number of partitions
+    . The maximum number of instances can be equal to maximum number of partitions for a Topic
    
+   num.standby.replicas (default: 0) Number of standby replicas for each task
    
+   The clients manage the standby replicas for streaming application.
+   These replicas sync the running copy of stream application and ensures the backup in case of failures
    
-   
+   ==================
+   How streams manages Stateful applications?
+     - Stateful application use stream operations such as aggregation
+     - The client keep state in local state stores i.e. RockDB [Key/Value DB]
+     - The state is stored locally on the client machine
+     - 50-100Mb of memory overhead for the metadata
+     - The state is stored in Compacted Kafka Topics
+      . If client state store is failed, a recovery point is available
+      
+    - Using standby copies where No Paritions are allocated to Brokers, helps storing and replicating the state o
+    
+    
+If Client performance is CPU bound, a scale up is the option 
+num.stream.threads (Default: 1)
+
+If the client performance is bound by the IO or n/w 
+  Scale out is the additional option
+  
+How Clients use Stream processing impact Utilization of Kafka Cluster
+  - Kafka Streams API creates a local state of client and stores that on Kafka Cluster
+  
+  The more metadata of the client state, the more sync operation are required impacts the performance of Kafka cluster
+  However, using kafka streams will result in extra Consumers and n/w bandwidth utilizaation
+  
+  
+  
+
+
+
+
+
+
+
 
 
 
