@@ -161,12 +161,90 @@ How Clients use Stream processing impact Utilization of Kafka Cluster
   The more metadata of the client state, the more sync operation are required impacts the performance of Kafka cluster
   However, using kafka streams will result in extra Consumers and n/w bandwidth utilizaation
   
+============================
+
+KSQL for the Kafka - 
+ SQL like decalrative stream processing language for Kafka. KSQL is stream SQL engine
+ 
+  KSQL transforms and enriches data in a Kafka Cluster, it does real-time processing using the Kafka Stream API
+  KSQL is an alternative any programming language
+  
+  KSQL STREAM -------------- KStream 
+  KSQL TABLE --------------- KTable
+
+It is used to read, write and process streaming data using SQL like Semantics
+
+CREATE TABLE example As
+  SELECT test_data_1 from test_table 
+  WINDOW TUMBLING (SIZE 5 SECONDS) -- For each 5 second fixed(tumbling) window
   
   
+=======================
+KSQL CLI - >  Client to the KSQL server, to interactivly issues command to the server
+KSQL Server -> servers runs the engine that executes KSQL queries
+  Process, writes and reads data from the cluster
+  
 
+KSQL is an API wrapper on Kafka streams is another wrapper on Producer and Consumers
 
+======================
 
-
+KSQL queries samples-
+  . Has synatax similar to SQL
+  must be terminated with a semicolon
+  multiline statements with "\"
+  
+  Describe : List the columns in a stream or table along with datatypes
+  Create STREAM L new stream backed by new TOPIC based on underlined SELECT statement
+  CREATE TABLE: creates table instead of STREAM
+  SHOW TOPICS|STREAMS|TABLEs
+  
+  
+  Note: SELECT is the continuos streams so it won't stop and has to manually terminated
+  - Pesistent queries will be TERMINATE like CREATE STREAM | TABLE
+  
+  KSQL also support scalar functions like ABS, CEIL, LEN, ROUND, TRIM...
+  KSQL TABLES and STREAM can be merged
+  KSQL supports aggreagation functions like COUNT, MAX, MIN...
+  
+  A special PARTITION BY clause, that helps to partition the stream and underlined TOPIC with new Key from the data
+  
+  ----------------
+  Different Kind of WIndowing
+   1. Tumbling (fixed ) - every window will reset the counters
+   2. Hoping (A windows size and Hop) - 
+   3. Session: Group data by key, if a key doesn't occur a new session will be started,
+     else a same window will be used
+     
+     
+     
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 
 
