@@ -1,5 +1,11 @@
 The most important feature Java 9 has brought into market is "Modularization"
 
+The distribution of Java projects can be done as-
+  Modular Jars
+  JMOD files
+  Custom runtime image
+
+
 Java platform updates-
   Module System 
   JShell
@@ -136,20 +142,91 @@ Policies on Modules?
   2. export package to X - export the package named "package" only to module X
   
   
+Note: while exporting a package, all the sub-packages haven't been exported
+ Using anything that is not exported or that is not specified as required will cause compilation error
+
+
+Both Service Consumer and providers read providers interfaces  
   
   
+  -------------------------------------
+
+Distribution Files:
+ 1. Jar files:
+  jar -c -f <jar output path\jar-name.jar> -e <module name/main class> -C <module output path\module name> .
+  
+  -c create new jar file
+  -f specifies the Jar file name
+  -e specify the main class
+  -C The directory to include files from 
+  . means all the files from Path
+
+** Execute the jar file and a specific modules
+
+java -p <PATH_NAME> -m <MODULE_NAME>
   
   
+2. JMOD - 
+  a new packaging format similar to JAR, but it can contains files other than class, metadata and resources 
+
+Example Native code
+
+Note: JMOD are not executable archives 
+
+To create new JMOD files-
+jmod create --class-path out\production\<module> jmods\<module>
+
+To extract JMOD files-
+ jmod extract --dir bin\com.greeter.ui jmods\greeter.ui.jmod
   
-  
-  
-  
-  
-  
-  
+3. Custom runtime images-
+  These applications bundled with JVM and required modules. The executable doesn't require any 3rd part dependency
+
+How to create runtime images? - jlink
+ It assembles all the modules and their dependencies into custom runtime images
+jlink -p "%JAVA_HOME%\jmods;<application output path>" --add-modules <MODULES_TO_INCLUDED> --output <OUTPUT_CUSTOM_PATH>
+
+
+-p : specifies the module paths for dependency resolution 
+--add-modules : specify the root module and addition modules (a comma separated list)
+--output : provides the path for dependency resolution
+
+**Other switches**
+--launcher <name of launcher>=<module name/main> to create a launcher (batch file)
+--no-header-files to exclude header files
+--no-man-pages to exclude manual pages
+--strip-debug to exclude debug information from the output image
+--compress=2 to compress the content (using ZIP compression)
+
+Note:
+  The exporting and requiring modules do not allow access through reflection.
+  If reflection is required, code has to be opened for it  -
+
+a) Add open clause in the module descriptor
+  open module com.test{}
+
+b) Adding opens clause for each package (cannot be combined with open).
+   module com.test1 { opens test; }
    
-   
-   
+  --add-opens <source/package>=<target module> to override the module definition
+
+
+------------------------
+Modules and it benefits?
+  1. Modules create scaled down images for smalled computing devices
+    . The JDK/JRE has been modularized to enable this feature
+
+  2. Strong encapsulation: A module can declare which of public types are accessible to other modules.
+     This allows exposing only what should be public, and provides interfaces among modules for interactions
+
+  3. Reliable Configuration: A module can declare its depedency on the other modules,
+       the dependency has been checked at compile and runtime, hence helps the JARs related issue in older Java versions
+
+  4. Each modules follows Single responsibility. This helps in easier construction and maintenance of large Cohesive 
+     and loosely coupled applications
+
+  5. The actual requirements/dependecy are known that helps to know all components to run an application.
+       
   
   
   
@@ -160,8 +237,12 @@ Policies on Modules?
   
   
   
-  
-  
+
+
+
+
+
+
 
 
 
