@@ -1,0 +1,85 @@
+The most important feature Java 9 has brought into market is "Modularization"
+
+Java platform updates-
+  Module System 
+  JShell
+  
+Library Features-
+  New factory methods in Collections framework
+  Stream API enhancements
+  Process API
+  HTTP/2.0
+  Compact Strings
+  Enhancement of @Deprecated annotation
+  
+  
+Java language Features-
+  New try-with resources
+  Private methods in interfaces
+  @SafeVarargs on private instance methods
+  Diamond Operator with Anonymous classes
+  
+JVM -
+  Garbage collection
+  
+  =======================
+  JPMS - Java platform module system
+    * JDK/JRE the rt.jar is too big for the modern day infrastructure like IoT devices
+    * Weak encapsulation?
+      A package exposes all its public types to other packages and no way to prevent the global visibility
+      No encapsulation above the packages, not even by Jars 
+    
+    
+   Actual specification from JSRs
+   1. JEP 261 - Create a module system for the language
+   2. JEP 220 - Update the runtime to support modularity
+   3. JEP 201 - Modularize JDK source
+   4. JEP 200 - Modularize the JDK libs
+   5. JEP 260 - Encapsulate most internal API's 
+   6. JEP 282 - Create smaller runtime with subset of modules from JDK
+   
+   
+   Why modularity?
+   * Ease of support of runtime for different h/ws
+   * Maintenance and reusability 
+   * Improved performance, startup time and memory usage of applications
+   
+   Platform modules-
+     1. Standard modules -
+       The name of these modules starts with java.*
+       These are supported and intended to be used by developers
+       
+       
+       Example-
+       java.rmi.*
+       java.log.*
+     
+     2. Non-standard modules - 
+       The name of these modules start with jdk.*
+       Non-standard modules contain packages and specific JDK code, distinct b/w implementations of JDK
+       
+   How to identify and describes the modules?
+     java --listmodules
+     java --describe-module <MODULE_NAME>
+     
+     
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+  
+  
+  
+  
+  
+
+
+
