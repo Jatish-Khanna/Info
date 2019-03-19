@@ -63,18 +63,100 @@ JVM -
      java --describe-module <MODULE_NAME>
      
      
+  ===========================
+  Module - An encapsulated package having self-describing code and features
+    module-info.java provides details of packages, resource files,
+      * The module descriptor file that specifies behaviour and accessibility
+      
+      - A unique name of the module (which can only be used by other modules to access it)
+      - A list of other modules it requires
+      - List of packages that it exports to other modules
+      - A list of services it uses
+      - a list of service implementation it provides
+      
+      
+      
+   Contents of module-info.java
+   
+   module com.module.name { }
+   
+   Looking at Above code in module-info.java, the package structure should be like-
+   
+   Project_name|
+                |__com.module.name|
+                                  |_____packages
+                                  |
+                                  |_____module-info.java
+   
+   
+   How to Compile the completed Project?
+     javac -d output --module-source-path .
+   
+    -d <OUTPUT_PATH_FOLDER> : The compiled files will be stored at the specified path
+    --module-source-path specifies the location containing source files for multiple modules
+    
+    
+    Funny! can you execute the Program?
+      java -p <OUTPUT_PATH> -m <MODULE_NAME>
+      
+      -m specifies the module name where main class resides
+   
+   
+   Module accessibility?
+   Main Module-
+   ---------
+   exports - to expose the specific package from the modules
+   
+   module com.module.name {
+      exports com.module.name;
+    }
+   
+   Other Modules
+   ---------------
+   requires specifies the module it depends on
+   
+   
+   module com.module.requires {
+    requires com.module.requires;
+  }
+   
+====================
+Policies on Modules?
+  When a module requires another modules-
+  . Module First should mention the package required
+  . Module Second should export the package required by module First
+  . The types in the exported package must be public
+  
+  Controlling what module requires and what module exposes defines the encapsulation at package level
+  ------------------------------------------
+  
+  Module readability?
+  
+  1. requires transitive X - if module Y reads X module, all other modules which require module Y will be able to read X. 
+  2. export package to X - export the package named "package" only to module X
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
    
    
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
+  
+  
+  
+  
+  
+  
+  
   
   
   
