@@ -88,38 +88,6 @@ Most used commands in JShell-
  Though if a snippet throwing a checked exception is used inside a method, 
  it will have to be handled or declared to be thrown. 
   
+  ----------------------
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-....
-
-
