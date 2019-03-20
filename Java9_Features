@@ -228,10 +228,70 @@ Modules and it benefits?
   5. The actual requirements/dependecy are known that helps to know all components to run an application.
        
   
+  ------------------------------
   
+  Flow API -
+    The new flow API is available in java.util.concurrent package and java.base module
+    The modules is a publisher/subscriber model with easy management of data flow.
+    
+    Main Componenets?
+     1. Publisher<T> - A client which send the data to all the subscribers 
+       A funtional interface with "subscribe()" method
+       
+     2. Subscriber<T> - A client which receives messages from the Publisher
+       The methods to be implemented by subscribers-
+       onSubscribe() - when the client has subscribed to Publisher
+       onNext() - For each received item
+       onError() - If an error occurred at Publisher or Subscriber end
+       onComplete()  - When Publisher has finished the stream
+       
+     3. Subscription -
+       An Object to represents the connection b/w Publisher and Subscriber
+       request() - 
+       cancel() - Allows the Subscriber to cancel the subscription 
+       
+       Note: The subscription Object has been sent to establish a connection by Subscriber with Publisher
+       
+     4. Processor<T, R> - Represents a common component b/w Publisher and Subscriber
+       - This transforms the messages from Publisher to be received by the Subscriber
+       
+       
+   Publisher/Subscriber model-
+   
+   Publisher                                            Subscriber
+    subscribe()     <---------------------------
+     
+             Subscription --------------------->        onSubscribe()
+                             
+                           <-------------------------request(n) / cancel()        // Requesst n items or cancel the subscription
+                           
+               ---------send items to Subscribers----------> onNext()
+               
+               ----if error----------------------------->  onError()
+               ----End Stream ------------------------->     onComplete()
+               
+               
+ a) The Subscriber subscribes for a Publisher and on successful subscription onSubscribe method has been called
+  b) Once subscription is established all the interactions happen using Subscription
+ c) The Subscriber request for items from the Publisher using the Subscription
+ d) For each item being published onNext() has been called
+ e) If there are no more items to be published, it invokes onComplete() method
+ f) To cancel the subscription cancel() method has been called - 
+ 
+ Note: All the pending request before the cancel() will be served
+ if Failed on any of above steps -> onError method is called and ends the stream with IllegalStateException
   
-  
-  
+==============================
+Advantages of Streams?
+  1. Aysnchronous process of infinte events -
+    a) Pub/Sub are independent of each other, 
+      . The Publisher publishes independent of Subscription
+      . The Subscribers independently process the message 
+      
+  2. Backpressure - The backpressure is maintained at the Publisher end since it doesn't overwhelms slow Subscribers
+    The Publisher works independently with other Subscriptions maintaining backpressure independently
+    
+    
   
   
   
