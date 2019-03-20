@@ -292,7 +292,75 @@ Advantages of Streams?
     The Publisher works independently with other Subscriptions maintaining backpressure independently
     
     
-  
+ =============================
+ Improvements in Core Libraries-
+   ** Collection API updates
+   
+   ** Compact String - The string that represent encoding with 8byte are represented with space efficient way instead of 16 byte
+   
+   ** Enhanced @Deprecated annotation 
+     . Specifies when the resource will be removed in Future releases
+     . Specifies when the resource was deprecated in the API  
+     
+     Example - 
+     @Deprecated(forRemoval = true, since = "1.1")
+     // To remove the deprecated and removal warning
+     @SuppressWarnings({"deprecation","removal"})
+     
+   ** Stream API
+    1. takeWhile() method
+    This method is used to get a stream of the elements until the Predicate is satisfied
+   
+   NOte:
+     a) If the original Stream is unordered but some elements satisfy 
+     the Predicate condition then the behavior of this method cannot be determined
+     b) If none of the elements satisfy the Predicate condition, then irrespective of 
+     whether the original Stream is ordered or not, the method will return an empty Stream
+     c) If all the elements satisfy the Predicate condition, then irrespective of whether the original Stream is ordered or not, 
+     the method will return a Stream with elements same as the original Stream
+   
+   2) 2. dropWhile() method
+    The dropWhile() method works exactly opposite of the takeWhile() method
+    will start adding the  objects from the original Stream, after the first true condition based on the Predicate is reached.
+   
+    a) If the original Stream is unordered but some elements satisfy 
+     the Predicate condition then the behavior of this method cannot be determined
+     b) If none of the elements satisfy the Predicate condition, then irrespective of 
+     whether the original Stream is ordered or not,  the method will return a Stream with elements same as the original Stream
+     c) If all the elements satisfy the Predicate condition, then irrespective of whether the original Stream is ordered or not, 
+     the method will return an empty stream
+   
+   3) Overloaded Iterate-
+     Stream<Integer> integerStream = Stream.iterate(1, i->i<101, i->i+1);
+     Stream<Integer> integerStream = Stream.iterate(1, i->i+1);
+   
+   
+   ** HTTP/2.0-
+   
+   The main problem with HTTP/1.1 was that there couldn’t be more than six open connections at a time.
+    it used one thread per request/response. To overcome the issues, HTTP/2.0 was designed.
+    
+    Features of HTTP 2.0 :
+      . Multiple request over the same connection
+      . WOrks in Sync and 
+      
+   
+   * Process API -
+      This API handles OS processes. 
+      A new process can be started and process stream can be read using input streams or can be redirected to a file.
+      the updated API can be used to get the process ID, process start time, CPU usage by the process or the process owner. 
+      The improved API can also be used to gather information about all the processes in a system.
+     
+     Example-
+     
+     ProcessBuilder pb1 = new ProcessBuilder("notepad.exe");    // Line 1
+      Process notepadProcess = pb1.start();                      // Line 2
+    
+    // To get information related to Process using the ProcessHandle 
+     ProcessHandle ph = notepadProcess.toHandle();        // Line 1
+    ProcessHandle.Info info = ph.info();                 // Line 2
+     
+ ==============
   
   
   
