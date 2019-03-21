@@ -473,13 +473,66 @@ Different Garbage Collection Algorithm Explained?
      
      ---------------------------
      
-  2. Parallel Garbage Collection - 
+  2. Parallel Garbage Collection (Default Java 7)- 
+     The major difference b/w the Serial and Parallel Garbage collection is-0
+       In Serial Garbage Collection algorithm only single threads performs job
+       In Parallel Garbage Collection multiple threads performs the garbage collection activity
   
   
-  
+    What it does?
+    Minor Garbage Collection-
+      * It moves all the Objects from Eden space to S1
+      * It moves all the Objects from S0 --> S1
+      * Finally Eden and S0 is empty 
+      * Represent S1 as S0 
+      
+      
+    Major Garbage Collection-
+      * Moves Everything from Young generation to Old generation
+      * Objects in Old generation are active will be retained and others will be sweeped
+      * The rest of memory Young generation and inactive Objects without references will be removed from the memory
 
-
-
+    ------------------------------
+    
+    3. Concurrent Mark and Sweep Garbage Collection algorithm (CMS)-
+      
+      What is different from Others?
+        * The CMS stops all the threads during minor GC for Initial Mark
+        * It uses multiple threads for GC to collect the inactive references
+        
+        ** During Full GC, 
+          * The application threads are not stopped
+          * Uses multiple threads for Garbage collection in parallel to application running
+          
+          
+       What do you achieve? - a low pause collector
+         No more long pauses associated with the garbage collection
+         
+        
+      Minor or Young generation Collector?
+        * Similar, to GC of parallel collector where multiple threads work 
+         - Empties the Eden space
+         - Empties one of the Survivor space
+         - Move the Objects to Old generation
+         
+       Major or Old Generation Collector?
+         The CMS algorithm runs a concurrent cycle to clean inactive references from Old generation space
+         
+         a) Initial Mark: All the application threads are stopped,  all the GC root Objects in the heap have been searched
+         b) Concurrent Mark phase: 
+           While application is running, all the active Objects have been marked.
+           It is not guranteed to Mark all the Live Objects because the Object graph has been modified in parallel to GC execution
+           
+         c) Remark: Live Objects are looked for that were missed during phase two
+            Multiple threads execute the phase to complete it efficiently
+            
+          d) Concurrent Sweep - 
+            The marked Objects have been sweeped from the memory without stopping the application
+            
+            
+      ----------------------------------
+      
+           
 
 
 
