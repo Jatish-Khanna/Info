@@ -565,7 +565,27 @@ Different Garbage Collection Algorithm Explained?
        Diving the Heap in different regions gives a great advantage to select where the garbage resides
        The Eden space is promoted during Minor garbage collection
        
-
+    How it does the Garbage Collection? Phases ---
+    
+    a) Young Generation or Minor Garbage Colleciton:
+      . Object is created on Eden space
+      . When the region is completly occupied, a new region is allocated and filled
+      . This continues until Cumulative Eden regions have been filled
+      . Once Eden regions are filled an evacuation pause has been triggered
+      
+      * The Cumulative Eden space defines number of  regions can be collected within Evacuation pause
+      - The Cumulative regions is 5% - 60% of total heap 
+      - is adjusted based on the peformance of previous young generation collection
+      
+    During the Young generation Collection?
+      * Stop-The-World pause occurs - All application threads are stopped
+      * Live Objects from Eden are promoted to Survivor
+      * If Survivor space is full, these are directly promoted to Old generation
+      * Live Objects from Survivor space which are Old has been promoted to Old generation
+      
+      
+      
+      
 
 
 
