@@ -439,7 +439,7 @@ Advantages of Streams?
    - is called Stop-the-world event and such Garbage collectos are known as Stop-The-World garbage collectors
    
  =================================  
- Mark-Sweep Algorithm - 
+ Mark-Sweep-Compact Algorithm - 
    1. Marking Phase - mark all the Object which are not being used and being used indivually
    2. Normal Deletion phase - Unused Object have been deleted and memory is reclaimed for other Objects
    3. Deletion with Compaction Phase - After deleting the Object, memory has been reclaimed 
@@ -448,11 +448,47 @@ Advantages of Streams?
 
 ====================================
 
+Different Garbage Collection Algorithm Explained?
+  1. Serial Garbage Collector- (Java 5 and 6 default algorithm)
+    * It uses Mark-Sweep-Compact algorithm to reclaim the space
+    * A single garbage collection thread is executed for Minor and Major garbage collection algorithms
+    * It has Stop-The-World pause for both the garbage collection phases (Minor or Major)
+    
+    
+    What it does?
+    --Minor Garbage Collection--
+     a) During Mark phase - all the Objects has been marked in Eden and Survivor space
+     b) Sweep phase - all the Objects have been sweeped in Eden and Survivor space
+     c) Compaction - 
+       It moves Object from S0 ---> S1
+       It moves Objects from Eden --> S1
+       It moves Older objects to S0 --> Old generation
+       Cleans the S0 space
+       Represent S1 as S0, i.e. S1 will be empty
 
-        
+    --Major Garbage Collection--
+     a) Mark all the Objects in Old generation
+     b) Sweep - Sweep all the unused Objects and clean the space
+     c) Compaction - Place all the active objects at the front of Old generation
+     
+     ---------------------------
+     
+  2. Parallel Garbage Collection - 
   
   
   
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
