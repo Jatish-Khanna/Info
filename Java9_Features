@@ -584,13 +584,54 @@ Different Garbage Collection Algorithm Explained?
       * Live Objects from Survivor space which are Old has been promoted to Old generation
       
       
-      
-      
+    b) Concurrent Marking Cycle: (along with Young Collection)    
+      This phase has been initiated when -
+        Old region account for more than 45% [default] of total heap
+        This phase has been started with Young generation collection
+        
+      what does Concurrent Marking cycle does?
+        **) Initial Mark - To take the advantage of Stop-The-World phase when initiated with Young generation collection
+          Scans all the root Objects and mark all the live Objects
+        **) Remark - It tracks all the references and marks the live Object (faster than the CMS algorithm)
+        **) Clean up - Peforms clean up on live Objects and free regions
+        
+     
+     c) Mixed Collection :
+        This is initiated Once the Concurrent Marking Cycle has been completed
+        It perfoms series of quick mixed Collection activities 
+        
+      What Mixed Collection does it?
+        - Live Objects from Young and Old regions are evacuated and compacted to new unused regions
+        - The Mixed Collection will Collect all the marked regions 
+        
+        - Once Mixed Collection has been completed, G1 starts the regular Young generation #a
+        
+     d) Collection Humongous regions:
+       These regions are reclaimed only after "Concurrent Marking Cycle - Cleanup phase" 
+       or
+       During Full GC if they become unreachable 
+       
+       - These regions never move, not even during Full GC
+       
+       Issues -
+         this causes premature slow  Full GC's 
+         Unexpected OutOfMemoryError with lot of space left as fragmented regions
+         
+         
+    Note: G1 - Garbage First Collector tries to avoid Full GC
+    
+ ==============================
 
+Wow! Can You select a GC for me?
+  -XX:+<TYPE>
+   
+   1) UseSerialGC
+   2) UseParallelGC - To use Parallel GC on Young generation and Old generation will use Serial GC
+   3) UseParalleOldGC - to Use parallel GC on both Old and Young generation
+   4) UseConcMarkSweepGC - CMS garbage collector
+   5) UseG1GC -  Default Java 9
 
-
-
-
+==================================
 
 
 
