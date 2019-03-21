@@ -633,7 +633,98 @@ Wow! Can You select a GC for me?
 
 ==================================
 
-
+Modules in Java 9-
+  Q1. Can we run a project which is non-modular in Java 9?
+   a non-modular application using libraries is placed in the classpath, 
+   the module system automatically puts everything together into a single module called the "unnamed module."
+   
+   
+  Note: The Unnamed Module -
+          exposes all its packages 
+          Has access to all the exposes components of every module
+          This has access to platform modules
+          
+          
+   Q2. Can a Modular project access the non-modular Library?
+     When the libraries are available in class path but to use these libraries it must be available to modular project.
+     
+     the libraries in the classpath become part of the unnamed module which cannot be referenced. 
+     Hence, a modular application cannot access the unnamed modules explicitly.
+          
+     Solution#
+       The Modular project can put libraries in "Modular Path" instead of classpath. Such modules are called Automatic Modules
+       
+   Q3. What are the names for Automatic Modules?
+     Removes .jar extension
+     removes version string
+     Non-alphanumeric characters like '-' are replaced by a dot '.'
+          
+     For example, 'log4j-api-2.8.2.jar' gets the module name 'log4j.api'.
+     
+     The name and description of an automatic module can be generated from a JAR as below: 
+     jar -d -f <jar file>
+     
+          
+   Q4. Can you tell me accessibilty of automatic Module?
+     It 'requires transitive' all the modules (application modules, platform modules and other automatic modules)
+     It exports and opens all its packages
+     It reads the unnamed module (to fulfill their own dependencies on other non-modular libraries)
+     
+     
+     The accessibility is only provided -
+       * help in using a non-modular JAR with the least restriction until it gets a modular update. 
+       * third-party JARs required for the automatic modules 
+          which cannot be converted to modules can still be placed in the classpath as part of the unnamed module.
+          
+      Problem with Automatic Modules -
+              If multiple JARs in the module path have the same package, it will lead to split package case and cause error.
+          
+      -p or --module-path : to provide module path
+      -cp or --classpath : to provide libraries in classpath
+      
+      
+    Q5. Can we have a multiple release Jar?
+      o retain code compiled from previous Java versions, 
+      Java 9 can create multi-release JARs containing the Code for Older Java versions as well as the new Java 9 code. 
+    
+     * MANIFEST.MF file which includes the entry Multi-Release: true in its main section, 
+     * the META-INF folder of this JAR contains a 'versions' sub-directory 
+      integer-named sub-directories (starting with '9' for Java 9) contain version-specific classes and resources.
+    
+      JAR Root
+       Common.class
+       VersionSpecific.class
+       META-INF
+          MANIFEST.MF
+          versions
+             9
+                VersionSpecific.class
+             10
+                VersionSpecific.class
+    Java 8 will use Common.class and VersionSpecific.class file in the root folder, and ignore the rest. 
+    Java 9 will use Common.class from the root folder, and VersionSpecific.class from versions/9 folder. 
+    Java 10 will use VersionSpecific.class from versions/10 folder.
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+          
+          
+          
+          
+          
 
 
 
