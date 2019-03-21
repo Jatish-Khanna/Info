@@ -340,9 +340,12 @@ Advantages of Streams?
    The main problem with HTTP/1.1 was that there couldn’t be more than six open connections at a time.
     it used one thread per request/response. To overcome the issues, HTTP/2.0 was designed.
     
-    Features of HTTP 2.0 :
+    Features of HTTP 2.0 :  module (jdk.incubator.httpclient)
       . Multiple request over the same connection
-      . WOrks in Sync and 
+      . WOrks in Sync and Ansync mode
+      . Smaller header size when compared to older version
+      . Server push is possible, also possible when clients has not made any request
+      
       
    
    * Process API -
@@ -362,6 +365,91 @@ Advantages of Streams?
      
  ==============
   
+  Other Java 9 Language features-
+    1) No single underscore as variable name
+      int _= 1;  // Valid till Java 1.8 
+      // In Java 9 this will give compilation error
+      
+    2) Improved try-with-resources
+    
+    void fileReader() throws IOException{
+    BufferedReader reader1 = new BufferedReader(new FileReader("sample.txt
+    // Without "new" operator we get a compilation error in lower version of Java 9
+    try(reader1) {
+        System.out.println(reader1.readLine());
+    }
+    catch(Exception e) {
+        System.out.pritnln(e.getMessage());
+    }
+}
+    
+    
+    3) private methods in interfaces
+    
+    public interface InterfaceWithPrivateMethodExample {    
+      private void privateMethod(){         
+           System.out.println("I am a private method inside @Interface");
+      }
+    }
+    
+    4) @SafeVargs annotation on private methods
+      This annotations can be applied on -
+       . Static method
+       . Final method
+       . Constructors
+       
+       ** Java 9 allows to write annotation on private methods
+       
+       To notify the compiler use of Variable arguments and Generic Type is safe.
+       
+    5) Diamond <> operator with anonymous classes
+    
+      Comparator<String> comparator = new Comparator<>() {          // On the right side <> cannot be used before Java 9(Compilation Error)
+        @Override
+        public int compare(String o1, String o2) {
+            // Code
+        }
+      };
+    
+ ====================================================
+ 
+ Garbage Collection in Java 9----
+  Built in feature of Java is memory management
+  
+  Old Generation ||   Young Generation
+                  ===========================================
+                    Survivor space || Eden Space
+                    ==============
+                     S0 || S1
+                     
+   1) Eden Space - The newly created Objects are allocated 
+     When the space is full upto percentage, a garbage collection is performed for the young generation 
+     Known as minor Garbage Collection
+     
+   2) Survivor Space - Once the Object survives the minor Garbage collection, it will be moved to One of Survivor space
+        - The transformation happens b/w both the survivor space during Minor Garbage collection
+        - All the Object which survive will be moved to Other Survivor 
+        - At single point, one of Two survivor space will be empty
+        
+        
+    3) Old Generation - The Object is moved to Old Generation when it survived multiple cycles of Minor garbage collection
+      - When Old Generation is full, the Major garbage collection is performed on JVM
+      
+ ** When all the Java threads have been put on Hold during the Garbage Collection algorithm execution
+   - is called Stop-the-world event and such Garbage collectos are known as Stop-The-World garbage collectors
+   
+ =================================  
+ Mark-Sweep Algorithm - 
+   1. Marking Phase - mark all the Object which are not being used and being used indivually
+   2. Normal Deletion phase - Unused Object have been deleted and memory is reclaimed for other Objects
+   3. Deletion with Compaction Phase - After deleting the Object, memory has been reclaimed 
+        The free spaces is compacted to bring all empty slots together.
+        This increases the performance of allocation of memory
+
+====================================
+
+
+        
   
   
   
