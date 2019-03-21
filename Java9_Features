@@ -706,6 +706,14 @@ Modules in Java 9-
     Java 10 will use VersionSpecific.class from versions/10 folder.
     
     
+   =====================
+   Unamed Modules--
+   
+    1. It doesn't have module-info.java
+    2. It requires all other modules
+    3. It exports all its packages
+    4. The classes written in Old Java version becomes part of Unnamed modules
+    
     
     
     
