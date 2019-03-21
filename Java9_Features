@@ -715,8 +715,22 @@ Modules in Java 9-
     4. The classes written in Old Java version becomes part of Unnamed modules
     
     
+Platform Modules – All the modules belonging to JDK are called platform modules
+
+Application Modules – All the modules that we create, and all the third-party modules are called application modules
+
+Automatic Modules –  To allow Java 9 projects to use pre-Java 9 libraries
+Non-modular JARs (e.g. pre-Java 9) in the module path become automatic modules. 
+    They implicitly expose all the packages and can access exposed components of all other modules. 
+    The module system generates a module name for them automatically using their JAR names
     
-    
+
+Unnamed Module – All JARs and classes in the classpath (which is still there) become part of the unnamed module. 
+              They do not have any name. 
+              They expose all their packages and have access to the exposed components of every module. 
+            application modules cannot access anything from the unnamed modules 
+            Application modules cannot specify a dependency on them, thereby making them unusable. 
+            Only automatic modules can access the unnamed module
     
     
     
