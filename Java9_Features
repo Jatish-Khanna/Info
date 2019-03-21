@@ -532,10 +532,39 @@ Different Garbage Collection Algorithm Explained?
             
       ----------------------------------
       
-           
+     4. G1 (Garbage first Collector) [Default Java 9]- 
+        To Overcome the issues with CMS collector- (since JDK 7 update 4)
+        
+        What do you acheive?
+          - Efficiently collect large heaps
+          - Can collect both Young and Old generation heaps
+          - It works concurrently with the application threads
+          - It supports String deduplication
+          
+          
+        What is G1 - Heap Structure?
+          . Partition the heap into equal sized regions
+          . These Heaps spaces can be marked as, i.e. each region can be marked any of the mentioned types -
+            Eden
+            Survivor
+            Old
 
-
-
+          . Regions belong to Eden, Survivor, Old types can be distributed across the total heap space
+          . The Total region size is defined when the JVM starts
+          
+          . Another region "humongous region", where Objects are allocated  -
+             - With 50% size of a single region
+             - With space requirement more than a particular region provides
+            
+            Humongous regions are allocated directly as Old generation
+            They are allocated contiguosly 
+            If Space if left in hungous region it get wasted 
+            
+            
+     What do you achieve?
+       Diving the Heap in different regions gives a great advantage to select where the garbage resides
+       The Eden space is promoted during Minor garbage collection
+       
 
 
 
