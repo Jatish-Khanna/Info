@@ -35,17 +35,24 @@ SQL v/s No-SQL:
 1) NoSQL Key/Value stores-
   Each Key is representing itself in an unique way
   Each Key has associated value in different formats like XML, JSON and data structures
+  Simple Design
+  Fast Read/write (When basic CRUD are required)
+  
   -Best suited for business case like session management, caching, 
   
   Limitations of Key/Value Pair
   - Key/Value stores doesn't allow direct operation on Value
   - Key/Value pairs are not apt for scenarios where search to be done using Non-key value
+  - No indexes on Non-key fields
   
 2) Column NoSQL datastores-
   A scalable database to store continous information with the s/w system
   Querying by non-key attributes i.e. Indexing can be created on Non-Key fields
   Patching the data i.e. Removing or updating section of complete record
   Must be efficient for heavy writes
+  
+  Useful for wide rows
+  Best suitable for Big-data operations, Content management systems, blogging platforms
   
   
   What are Column stores?
@@ -67,15 +74,21 @@ SQL v/s No-SQL:
    The rich set of DB operations are available such as- storing, fetching, modifying, deleting, sorting...
    Aggregations are possible on dataset
    Apt for read intensive operations over write intensive
+   Schema is likely to change
    
+   Best suiteable for-
+     Event logging, CMS, Blogging platforms, eCom, 
    
    Limitations -
+     Effiecieny is preffered over consistency
      To represent complex dataset relatioships it is hard with Document database
  
   
   4) Graph database-
     Data is represented as simple nodes and relationship is represented by edges b/w the nodes
     Graph traversal are much faster compared to SQL joins of different aspects or models
+    
+    Best suitable for - routing, relationships, recommendation engines
     
     Limitations-
       Inappropriate for transactional data
