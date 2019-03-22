@@ -83,7 +83,17 @@ SQL v/s No-SQL:
       Difficult in scaling in/out
       
     
+  ====================
+  Cassandra - Wide column, highly available and write intensive
+  HBase - Wide Column, Consistent and Read
   
+  CouchBase - Document oriented, Available, Write intensive
+  MongoDB - Document oriented, Consistent, Read
+  
+  Neo4j - Graph, Available, Read
+  
+  Redis - Key-Value, Available, Read
+  Riak - Key-Value, Available, Write
   
   
   
