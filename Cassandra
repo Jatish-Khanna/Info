@@ -1,0 +1,108 @@
+SQL databases
+            - Relational databases with a predefined structure 
+
+NoSQL (Not only SQL) databases
+            - Very flexible non-relational  databases with unlimited storage
+
+
+SQL v/s No-SQL:
+ 1) Architecture:
+    SQL - Centralized
+    No-SQL - Decentralized
+    
+  2) Reliability-
+    SQL - Failures if central node is down
+    NoSQL - Data is replicated over multiple nodes in clusture
+    
+  3) Data Model -
+   SQL - Fixed
+   NoSQL - Dynamic or document type
+   
+ 4) Scalability -
+  SQL - Demands Scale up/down
+  NoSQL - Demands Scale in/out
+  
+ 5) Cost:
+  SQL - Expesive s/w and h/w systems are required
+  NoSQL - S/w are OSS available and Scale in/out reduces cost compared to up/down
+  
+ 6) Performance-
+  SQL - Decreases with the increases load
+  NoSQL - Consistent as number of m/c can be added to clusture with increased load
+  
+================================
+
+1) NoSQL Key/Value stores-
+  Each Key is representing itself in an unique way
+  Each Key has associated value in different formats like XML, JSON and data structures
+  -Best suited for business case like session management, caching, 
+  
+  Limitations of Key/Value Pair
+  - Key/Value stores doesn't allow direct operation on Value
+  - Key/Value pairs are not apt for scenarios where search to be done using Non-key value
+  
+2) Column NoSQL datastores-
+  A scalable database to store continous information with the s/w system
+  Querying by non-key attributes i.e. Indexing can be created on Non-Key fields
+  Patching the data i.e. Removing or updating section of complete record
+  Must be efficient for heavy writes
+  
+  
+  What are Column stores?
+    databases are structured into group of related columns called Column-Families
+    Each Column families stores set of data that is used together
+    Every row has a different set of Columns
+    Useful for sparsly populated Columns
+    
+ Limitations of Wide-Column:
+   - Not possible to query on non-indexed fields
+   - Not suitable for queries including multiple fields
+   
+  Business Case: 
+    Where a product or list of products to be identified based on standard criteria e.g. Price, Range or other tech specs
+   
+ 3) Document database:
+   Schemaless database when compared to RDBMS
+   These database allows query by non-key and non-indexed fields
+   The rich set of DB operations are available such as- storing, fetching, modifying, deleting, sorting...
+   Aggregations are possible on dataset
+   Apt for read intensive operations over write intensive
+   
+   
+   Limitations -
+     To represent complex dataset relatioships it is hard with Document database
+ 
+  
+  4) Graph database-
+    Data is represented as simple nodes and relationship is represented by edges b/w the nodes
+    Graph traversal are much faster compared to SQL joins of different aspects or models
+    
+    Limitations-
+      Inappropriate for transactional data
+      Aggregations are not supported
+      Difficult in scaling in/out
+      
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
