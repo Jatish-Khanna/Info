@@ -1,0 +1,72 @@
+Executor an interface that represents Object that executes task
+
+Example of an Executor --
+
+public class SimpleExecutor implements Executor {
+    @Override
+    public void execute(Runnable runnable) {
+        runnable.run();
+    }
+}
+
+
+#2 ExecutorService
+ A service for async processing of tasks
+ It requires a pool size at the time of creation of ExecutorSerive
+ 
+ Example-
+ Executors.newFixedThreadPool(1);
+ newSingleThreadExecutor
+ ...
+ 
+ 
+#3 ExecutorService termination
+
+  shutdown(); - waits until all the task has been completed successfully
+  shutdownNow()  - immediately terminates all the task
+  awaitTermination(long timeout, TimeUnit unit)  - blocks until all the threads have completed execution or timeout specified
+  
+  
+  
+#4 ScheduledExecutorService 
+  to perform task preodically
+  
+  Example-
+  ScheduledExecutorService scheduledService = Executors.newSingleThreadScheduledExecutor();
+  
+  scheduledService.scheduleWithFixedDelay - after initial delay and then fixed delay after completion of task
+  .schedule - to schedule after time
+  .scheduleAtFixedRate - after initial delay and then after fixed delay rate
+  
+  
+  #5 Synchronization-
+    It uses intrinsic lock or monitor bound to an Object. All synchornized block over the Object can be accessed by single thread
+    
+    a) Instance method-
+      public synchronized void syncMethod() {
+      
+    b) Static method -
+      public synchronized void staticSyncMethod() {
+  
+      Methods synchronized on the Class object associated with the class
+      As only single class Object exists per JVM, only one thread can execute these static methods, irrespective of no. of Objects
+      
+      
+    c) Block sync-
+    Not the entire method but a block of code
+    Only one thread per monitor object can execute the code block
+    public void blockSynch() {
+      synchronized (this) {
+  
+    For static methods-
+    public static void staticBlockSync(){
+      synchronized (StaticMethodClass.class) {
+  
+  
+  
+  
+  
+  
+  
+  
+  
