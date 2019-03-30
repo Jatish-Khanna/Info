@@ -95,5 +95,39 @@ Use Atomic from the concurrent API to achieve thread syncronization or Mutual ex
   
   
   
+  =========================
+Future - represents the future result of async processing once it is complete
+Callable - Overrides a call method that represents task and returns result from future
+
+  isDone() - to verify if task has been completed
+  get() - to fetch the Future result
+  cancel() - to cancel the running task, calling get after cancel with throw CancellationException
   
+  
+ForkJoinPool - an abstract class implements Future, it is capable of executing large number of threads
+        - calls fork() to create subtask of single task
+        - calls join() to join the result of all the subtask
+        
+Implementation of ForkJoinPool -
+ a) RecursiveTask - returns a value on completion
+ b) RecursiveAction - doesn't return anything
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
