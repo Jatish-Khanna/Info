@@ -63,8 +63,35 @@ public class SimpleExecutor implements Executor {
       synchronized (StaticMethodClass.class) {
   
   
-  
-  
+============================
+Each thread works over its own memory; each location holds a copy of data in the memory
+When thread execution is complete, the data is copied back to Main memory which is shared among the Other threads
+
+ThreadSynchornization requires-
+  - Mutual Exclusion -
+    Only single thread allows to execute critical section
+  - Visibility - 
+    Changes done by One thread are available to Other thread
+
+- volatile : directs your thread to get the data from main memory for each read/write operation
+  This only provides Visibility but mutual exclusion
+
+  It should be used when next value of variable is dependent on previous value
+  Still a race condition can occur with -
+    A state thread updated value but not written yet to main memory
+    At same time other threads reads a stale value
+    **No Synch gurantee**
+    
+    
+Use Atomic from the concurrent API to achieve thread syncronization or Mutual execlusion
+    
+ =============================
+ wait() - releases the lock on Object inside synchronization block, to allow other thread to acquire it
+            notify(), notifyAll() [for all the threads in waiting state], both should be called from Synchronized context
+            
+ sleep() - Static method and can be called from any Context, pauses the current thread
+            Thread started after the specified interval, or it is interrupted
+            ** No locks releases with sleep() **
   
   
   
