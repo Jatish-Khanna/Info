@@ -112,22 +112,69 @@ Implementation of ForkJoinPool -
  a) RecursiveTask - returns a value on completion
  b) RecursiveAction - doesn't return anything
 
+==========================
+
+CompletableFuture -implements Future and CompletionStage() interface 
+CompletionStage - to define a contract how asynch computation step can be combined with Other steps
+            CompletableFuture<String> completableFuture 
+                                         = CompletableFuture.supplyAsync(() -> "Hello")
+                                           .thenCompose(s -> CompletableFuture.supplyAsync(() -> s + " World"));
+ 
+            assertEquals("Hello World", completableFuture.get());
+
+thenCompose() - method receives a function that returns another object of the same type.
 
 
+    CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "Hello")
+                                                    .thenCombine(CompletableFuture.supplyAsync(
+                                                    () -> " World"), (s1, s2) -> s1 + s2));
+
+thenCombine - execute two independent Futures and do something with their results
+thenAcceptBoth  - with two Futures‘ results, but don’t need to pass any resulting value down a Future chain
+    
+    CompletableFuture future = CompletableFuture.supplyAsync(() -> "Hello")
+                                .thenAcceptBoth(CompletableFuture.supplyAsync(() -> " World"),
+                                (s1, s2) -> System.out.println(s1 + s2));
 
 
+thenApply - return type wil be combined result of two calls
+thenCombine - it will flatten and return a future result directly
 
+CompletableFuture.allOf()  - static method allows to wait for completion of all of the Futures provided as a vararg
+            result is a CompletableFuture<Void>. 
+                    The limitation of this method is that it does not return the combined results of all Futures. 
+                    Instead manually get results from Futures.
 
+CompletableFuture.join()  - method is similar to the get method, 
+            but it throws an unchecked exception in case the Future does not complete normally. 
+            This makes it possible to use it as a method reference in the Stream.map() method.
 
+===============================
+Handle error CompletableFuture -
+  .handle method accepts two arguments-
+   * Succesful return after completing task
+   * Error while processing task
 
-
-
-
-
-
-
-
-
-
+CompletableFuture<String> completableFuture  
+  =  CompletableFuture.supplyAsync(() -> {
+      if (name == null) {
+          throw new RuntimeException("Computation error!");
+      }
+      return "Hello, " + name;
+  })}).handle((s, t) -> s != null ? s : "Hello, Stranger!");
 
   
+OR
+
+Thow error instead of handling gracefully
+
+completableFuture.completeExceptionally(
+  new RuntimeException("Calculation failed!"));
+ 
+
+
+
+
+
+
+
