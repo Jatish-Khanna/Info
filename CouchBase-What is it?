@@ -138,3 +138,56 @@ Case#2 - A complete rack lost
 Case#3 Datacenter failure
 
   . XDCR - Cross data center replication
+
+
+---------------------------
+Issues with RDBMS?
+ 1. Hardware problems - as they opt for scale up but scale out
+ 2. Data modeling - Tables have impedence mismatch with real world data (A complex Object to be represented as row)
+ 3. Fixed Schema - Future and changing needs 
+ 4. Premium h/w
+ 5. SPoF
+ 6. Scale issue
+ 7. Upgrade isses
+
+---------------------------
+What is Expected of E-DBMS (Engaged Database systems i.e. NoSQL)
+
+ 1. Elastic Architecture or schema
+ 2. In-memory storage
+ 3. Query & indexing
+ 4. Mobile and offline sync
+ 5. Search and Indexing
+ 6. Integrated Analytics
+ 7. Scaling
+ 8. Replication and Resillient
+ 9. Caching
+ 10. API definitions
+ ...
+ 
+--------------------------- 
+ Why still RDBMS?
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
