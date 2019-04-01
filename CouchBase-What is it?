@@ -1,0 +1,50 @@
+Transactional - [RDBMS]
+  Tabular data
+  Transactional data
+  
+#2 Analytical (Teradata, Hadoop, Spark)
+  Analysis of data
+  Batch or stream based workloads
+  
+  
+#3 Engagement - (NoSQL)
+  Clustures
+  Built to scale
+  High throughput, low latency, low cost
+  N1QL - (A SQL for JSON)
+  
+  
+  
+CouchBase Scalable services in each Node-
+  Key-Value or Data: Data storage and replication
+  N1QL - Query : Query planning and Optimization
+  Search : Full text search, Index replication, Natural language querying
+  Indexing : Global secondary search
+  Event processing - IoT/Mobile  : 
+  Computational intense analytical queries : Workload distribution in clusture, Batched queries
+  
+  Cache and Storage for each Service
+  Clusture Manager
+  
+CouchBase lite - A DB for low memory or mobile devices with the same features as CouchBase Server
+
+---------------------------
+How CouchBase stores the data?
+
+CouchBase allows a 25 byte Key - with ~250 UTF-8 charachters
+Value - upto 20Mb, 5M to 20M UTF-8 characters
+
+---------------------------
+CouchBase Node - an instance hosting CouchBase server
+Cluster - One/more nodes sharing data across distributed Buckets
+Bucket - Keyspace of uniquly keyed components, 
+Document- Unique key-value pair stored in bucket (e.g. a JSON model)
+---------------------------
+
+CouchBase scaling capabilities?
+ * All the services (data, Query, Search, Index, Event processing, Analytics) can be hosted over each node
+ * Any of service can be deployed on single node in clusture
+ * Any of service can be scaled as per requirements [Horizontal or Veritical]
+
+
+
