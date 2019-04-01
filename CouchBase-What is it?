@@ -104,8 +104,37 @@ vBuckets -  A datasegment on each node
   - Each Bucket in CouchBase is divided into 1024 vBuckets, evenly distributed across nodes in clusture
   - vBucket are rebalancing on changes in number of nodes
 
+---------------------------
+CouchBase ?
+  1. RPO - Recovery point Objective (Maximum permissible data loss)
+  2. RTO - Recovery Time Objective (Time to get back Online, with data to your RPO)
 
+HA - High Availablity
+  Rack-Zone aware replication
+  XDCR (Cross Data center Replication)
+  Appending/Removing nodes from Clusture
+  Resillient application design
 
+DR - Disaster recovery
+  XDCR 
+  BackUp and Restoration
+  
+Case#1 A node failed
+  . Replicas Promoted as master to serve request
+  . Updated clusture map is broadcasted
+  
+  . Configure a new node and add to clusture with Zero-downtime
+  . Data stream proportional to new node
+  . Updated clusture map sent to clients
 
+Case#2 - A complete rack lost
 
+  . RackZone awareness replication 
+  . Replicas promoted on all the nodes lost
+  . Zero downtime to add new nodes and rack
+  . Update clusture maps
+  
+  
+Case#3 Datacenter failure
 
+  . XDCR - Cross data center replication
