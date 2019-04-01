@@ -20,7 +20,7 @@ CouchBase Scalable services in each Node-
   N1QL - Query : Query planning and Optimization
   Search : Full text search, Index replication, Natural language querying
   Indexing : Global secondary search
-  Event processing - IoT/Mobile  : 
+  Event processing : Handlers to be triggered on any Operation or event e.g.  Propagte changes to Other nodes
   Computational intense analytical queries : Workload distribution in clusture, Batched queries
   
   Cache and Storage for each Service
@@ -45,6 +45,67 @@ CouchBase scaling capabilities?
  * All the services (data, Query, Search, Index, Event processing, Analytics) can be hosted over each node
  * Any of service can be deployed on single node in clusture
  * Any of service can be scaled as per requirements [Horizontal or Veritical]
+
+---------------------------
+What Data CouchBase service can do ?
+
+ 1. Data storage
+ 2. Caching - in-memory caching for high throughput
+ 3. Persistent Queue - to flow data from Cache#2 to Storage#1
+ 4. In-Clusture replication Queue - to replicate on nodes in clusture
+ 5. XDCR - Cross Data Center Replication Queue 
+ 
+ Note: Queues are shared, multi-thread pools
+
+---------------------------
+Caching in CouchBase?
+  Full - The Key-Value pair will be cached
+  Value-Only i.e. Key remains Cached and valued will be loaded from Storage
+
+---------------------------
+Data from the Application ---> CouchBase Cache --> Persistent Queue 
+                                                                ||
+                                                                \/
+          In-Cluster Replication <--- CouchBase Node storage <---
+                                                ||
+                                                \/
+                                         XDCR Queue for Datacenter replication
+                                         
+---------------------------
+
+Aggregate Views in CouchBase?
+  - A secondary index has been generated on Each CouchBase node
+  - Indexes are avaiable on REST service
+  
+---------------------------
+CouchBase Data buckets-
+  A bucket is a set of uniquely keyed Documents[Keyspaces]
+  Source of data for query, index, shadow data sets for Analytics, Events
+  
+  : Compare to a Database in Releational database
+  : Values are structured in JSON 
+  : Rows in RDBMS, document in CouchBase
+  : Schema is not enforced in CouchBase
+  : 10 Buckets per clusture
+ 
+ 1. Perform Caching and Persistence
+ 2. Replication
+ 3. Rebalancing on node failover or addidtions
+ 
+ Types of Buckets CouchBase supports?
+ 1. CouchBase - Persisted data and querable
+ 2. Ephemeral - KeyValue data not persisted but can be queried
+ 3. Memcached - binary cache
+
+
+Note: Databucket is a logical Keyspace
+
+vBuckets -  A datasegment on each node
+  - Each Bucket in CouchBase is divided into 1024 vBuckets, evenly distributed across nodes in clusture
+  - vBucket are rebalancing on changes in number of nodes
+
+
+
 
 
 
