@@ -166,11 +166,26 @@ What is Expected of E-DBMS (Engaged Database systems i.e. NoSQL)
  ...
  
 --------------------------- 
- Why still RDBMS?
+ Best Practice to Data modelling -
+   1. When you might embed : Atomic right of set of data, where Data and Cardinality are small
+   
+   2. When you refer - From One document to Other?
+    Common data shared across keys e.g. Multiple Students enrolled same course
+    Data and Cardinality are large
+    Data set is updated frequently
  
- 
- 
- 
+--------------------------- 
+Normalization Benefits-
+  . Minimal data inconsistencies
+  . Reduced update costs
+  . Preserve storage resources
+  
+Denormalization benefits-
+  . Data model can be optimized 
+  . Duplicate data tradeoff, increases access speed
+  . Support Clustured architecture, reduce server overhead and Costs for premium s/w h/w systems
+  
+  
  
  
  
