@@ -186,14 +186,57 @@ Denormalization benefits-
   . Support Clustured architecture, reduce server overhead and Costs for premium s/w h/w systems
   
   
+ --------------------------- 
+ Anti-Patterns JSON modeling-
  
+   1. Top level root Object-
+     All the Objects in JSON should not have single root, this is unecessary nesting
+       {
+        topNode : {
+          ...
+        }
+       }
+       
+       Note: Use Key/Value  type: "topNode" instead of nesting
  
+  2.  Entire Conceptual model in One  document - (Should normalize by references)
+    Entities should be seggragated properly
+    
+    E.g. Each Order has multiple products embedding them in JSON is data duplication
+     instead refer Product Object JSON
+     
+  3. When ever data Objects are Embedded into Other JSON objects-
+    - have a "updated" : "<timestamp>" shows which duplicated data is most recent
  
+ Why Embedd or De-normalize JSON - It achieves access benefits
  
+--------------------------- 
+Factors that influence Data modeling JSON
+  1. Document Size
+  2. Update Atomicity: Are changes comes as complete document or Patch updates
+    
+  3. Update Complexity: For de-normalized sets should this data be duplicated
+  4. Strength of Entity relationships: does data nested or contained belong together
+  5. Mapping to Code
  
+When should Embed?
+  Must have atomic writes to inter-related data
+  Data and Cardinality are relatively small
+  
+When Should refer?
+  Need to access same data from different keys/sources
+  Data and cardinality are relatively large
+  Data set has frequent updates
+  
+--------------------------- 
+Ways to Physically model data-
+  1. Embed data entity locally
+  2. Embed with duplicate or snapshot remote entity data
+  3. Refer to remote entity data
+  4. Add data to document ID and attributes
+  
+  
  
- 
-
 
 
 
