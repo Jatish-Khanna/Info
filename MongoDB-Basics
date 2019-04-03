@@ -3,8 +3,11 @@ Compass - a Mongo UI
 Database -> Collections -> Documents -> Fields
 
 
-
-
+Filter fields in MongoDB - 
+  1. Quality filters = {"key" : "value"}
+  2. Range = {"key" : {"$gte" : value1, "$lt" : value2 } }    // Used operators
+  3. Nested JSON = {"key" : {"$gte" : value1, "$lt" : value2 } }
+  4. GeoSpatial = {"key" : {"$geoWithIn" : [[x,y], radiusInRadians] }}
 
 
 
