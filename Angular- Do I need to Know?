@@ -1,0 +1,52 @@
+Opensource JavaScript framework to create single page web application.
+
+ - Different views will be rendered on single page
+ -----------------------
+ Why Sinlge page?
+  To efficient load web pages for clients (mobile and web)
+
+-----------------------
+TypeScript - A Microsoft extension for JavaScript that supports OOP features and has strong typing system which enhances the productivity
+  - Type script has been convereted to Javascript with tools like npm, gulp...
+  
+  Why because all the browsers support -> ES5(ECMAScript 5 i.e. Javascript).
+  
+  .ts ----> transpiler ------> .js
+  -----------------------
+  
+  Angluar follows component-based programming.
+  All Angular libraries have been created as node modules. So a prerequisite for Angular.
+  
+  1. Install Node
+  2. Install Angular CLI
+    ng v ---> to check version
+  
+  3. Install Angular for project folder
+  
+  -----------------------
+  @decorators - begins with @ symbol, to add meta data for the class
+    Angular has lot of built in decorators
+    E.g. @Component - mark the class as component
+    
+    @Component({
+      selector: 'ComponentName',
+      templateUrl : '',
+      styleUrls : ['']
+    )}
+  
+  lite-server - node.js application server
+  
+  -----------------------
+  1. Create COmponent -  ng generate component <COMPONENT_NAME>  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
