@@ -39,14 +39,139 @@ TypeScript - A Microsoft extension for JavaScript that supports OOP features and
   -----------------------
   1. Create COmponent -  ng generate component <COMPONENT_NAME>  
   
+  -----------------------
+  Directives in Angular ?
+    To change the behavior or extend the functionality of HTML using Angular
+    E.g. - <p *ngif="<CONDITION>" > </p>
+    
+    This will render when condition returns true
+  
+  1. Component Directive : These can be used as tags
   
   
+  2. Structural Directive : These can be used as an attribute in tags
+   Change the DOM layout by adding or removing the DOM elements
+   ngif
+   ngFor
+   ngSwitch
+   
+   Note: these directive start with "*" character
+   
+   E.g. - <p *ngif="<CONDITION>" > </p>
+   
+   <p *ngif="submitted"> Display this paragraph </p>
+   
+   app.component.ts
+   export class AppComponent {
+    boolean: submitted
+   }
+   
+   
+   <ul>
+    <li *ngFor="let user of users"> {{user.name}} </li>
+   </ul>
+   
+     
+   *.ts
+   export class AppComponent {
+     users : any[] {
+      [name : "Jatish"].
+      [name : "Jatish Khanna"]
+     }
+   }
+   
+   <li *ngFor="let user of users; index"> {{index}} </li>
+   <li *ngFor="let user of users; let localIndexVariable = index"> {{localIndexVariable} </li>
+   
+
+  3. Attribute directives:
+     Replacement of Style Binding where it will reduce the code
+  
+    ngStyle: To bind CSS style using Angular
+      <div [ngStyle]="{
+       'background-color':colorNameFromTypeScript,
+       'color':color
+      }">
+      ...
+     </div>
   
   
+  ngClass: To bind CSS class using Angular
+  
+  <div [ngClass]="{bordered: isBordered}">
+  ...
+  </div>
   
   
+  -------------------------
+  Style Binding: 
+    <div [style.background-color]="<bindingName>">... </div>
   
+  More CSS classes to be applied then it would be an issue, use Attribute directive
+   <div [class.boredered]="isBordered">
+   ...
+   </div>
   
+  Event Binding:
+    <button (click)="onClickMethodInTypeScript()"/>
+
+-------------------------
+
+Data binding in Angular?
+  1. One way data binding -
+    data flows only in One direction
+    E.g. Interpolation - to fetch the properties from the class
+    
+    a) Class to Template - The data is moving from Class to View
+     . Interpolation
+     . StyleBinding
+     . ClassBinding
+     . Property Binding
+       E.g. <img [src]="imageVariableStoresPath" ...> </img>
+       
+    
+    b) Template to Class - Event binding , the data is going from View to Class
+      <button (click)="onSubmit()">Submit Me for send data </button>
+    
+  2. Two way data binding
+    Should always include FormsModule in TypeScript
+    <input type="text" [(ngModel)]="name" />
+    
+    
+  -------------------------
+  Pipes - format the data before displaying on screen
+     name: string = "Jatish"
+    E.g. {{ name | uppercase }}
+    
+      Output: JATISH
+
+   Pass parameter to Pipe
+     {{1000 | currency:"CAD"}}
+
+
+Custom Pipe-
+  ng generate pipe <PIPE_NAME>
   
+  It will generate two files in Module directory
+  <PIPE_NAME>.pipe.ts
+  <PIPE_NAME>.pipe.spec.ts
   
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
