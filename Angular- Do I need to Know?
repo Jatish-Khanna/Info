@@ -340,11 +340,19 @@ const appRoutes : Routes = [
  ...
 ];
 
+ @NgModule({
+  imports: [
+   RouterModule.forRoute(appRoutes)
+  ],
+  exports : 
+ })
 
 
+<a [routerLink]='["/dashboard"]'> Dashboard </a>
 
-
-
+OR
+private router : Router;
+router.navigate(['/dashboard', model])
 
 
 
