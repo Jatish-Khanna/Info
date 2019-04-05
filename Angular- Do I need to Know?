@@ -202,9 +202,147 @@ Component Communication-
  
  Note: $event can recieve only single value for multiple values use any or Object or array
  
- 
- 
+
 -------------------------
+Forms-
+ 1. Template driven forms - the data binding and validation in the HTML forms
+  Issues with -
+  . Readability - databinding and validation all part of HTML
+  . Unit Test validation - the test can only be done using browser instead of Coding Unit test
+ 
+ <input type="text" [(ngModel)]="modelVariableName">...</text>
+ 
+ 2. Reactive Forms or Model driven forms - 
+   . Data binding and Validation can be written in the component class
+  
+  How you do it?
+    class -> formObj --> dataBinding + validation
+    FormBuilder - to create an Object in the class, using service class
+    
+    
+  Can you COde it?
+  
+    export class RegistrationForm implements OnInit {
+
+      registerForm : FormGroup;
+      contructor(private formBuilder : FormBuilder){}
+      ngOnInit() {
+       this.registerForm = this.formBuilder.group({
+       // Multiple validators in []
+         firstName : ['', [Validators.required, Validators.maxLength(10)]],
+         address : this.formBuilder.group({
+          zip : string
+          ...
+         }),
+         
+         email : ['', validateEmail]
+         
+       });
+      }
+      
+    }
+
+The mapping in angular
+
+<form [formGroup]="registerForm">
+ <input type="text" formControlName="firstName" />
+  <p *ngIf="registerForm.controls.firstName.errors">Field has error</p>
+  <p *ngIf="registerForm.controls.firstName.errors?.required">This field is required</p>
+ <p *ngIf="registerForm.controls.firstName.errors?.maxLength">MaxLength should be 10 chars</p>
+ 
+ <fieldset formGroupName="address">
+  <input type="text" formControlName="zip" />
+ </fieldset>
+ 
+ 
+ 
+ <input type="submit" (click)="submit()">
+</form>
+
+----------------------------
+Custom Vaidator-
+
+  function validateEmail(componentValue : FormControl) {
+    return emailvalid : { valid : true};
+  }
+
+Either should return null or emailvalid : { valid : true};
+
+ <p *ngIf="registerForm.controls.email.errors?.emailValid" > Email is invalid </p>
+ 
+ ----------------------------
+ 
+ Services - a class used to share data across independent components not like Container and child relationship
+   - it is a singleton object
+   
+   1. Create Custom Service class?
+     ng generate service <SERVICE_CLASS_NAME>
+     
+     files generated will be 
+      <NAME>.service.ts
+      <NAME>.service.specs.ts
+ 
+ 
+   @Injectable({
+   // With this it should not be added to providers: "" section in Component class
+    providedIn : 'root'
+   })
+   export class CustomProvider {
+   
+   }
+ 
+   
+  export class CustomComponent {
+  
+   // Only way to use the Custom services
+   constructor(customService : CustomProvider);
+  }
+ 
+ ----------------------------
+ implements OnInit - to extend the functionality by initializing stuff once the class is loaded
+  ngOnInit() {
+  
+  }
+ 
+ ----------------------------
+ 
+ Server Communication -
+  1. Fetch data from Server using built in Service Class - HttpClient
+  
+  constructor(private httpClient : HttpClient) {}
+  
+  getDataFromServer : Observable <ModelClass[]> {
+   return this.httpClient.get<ModelClient[]>(this.baseUrl)
+                                      .pipe(
+                                      tap(data => Console.log(JSON.stringify(data))),
+                                      catchError(this.handleError)
+                                      )
+  
+  
+  }
+ 
+ private handleError(httpErroResponse : HttpErrorResponse) {
+  let errorMessage = httpErrorResponse.error.status
+  
+  // This will be handled by Component, as Services are not supposed to handle the error either Client or Server side
+  return Observable.throw(errorMessage);
+ }
+ 
+ 
+----------------------------
+
+Routing - Navigation from One component to Other or map URL to respective component
+
+const appRoutes : Routes = [
+ {path : 'dashboard', component : DashboardComponent},
+ // default path
+ {path : '', redirectTo : '/dashboard', pathMatch : 'full | prefix'},
+ ...
+];
+
+
+
+
 
 
 
