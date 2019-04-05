@@ -156,15 +156,55 @@ Custom Pipe-
   <PIPE_NAME>.pipe.ts
   <PIPE_NAME>.pipe.spec.ts
   
+-------------------------
+Load a Sub component in Root component using Angular
 
+@Component 
+ selector defines the name of component to be used in .html to include other component
+ 
+ The COntainer component will load all the other Components using the name defined in Selector
 
+-------------------------
+Component Communication-
 
+ a) Pass data from Container to Child:
+   Using property binding as below
+   <app-any-name-custom-tag [bindingVariableName]="angularVariableName">... </app-any-name-custom-tag>
+   To recieve the value in child component use-
+   
+   @Input() set bindingVariableName(variale : string) {
 
+   }
+   
+  provides information to Angular that, the value will be recieved from Other component
+ 
+ b) Pass data from Child to Container component:
+   The data can only be passed using an event 
+   @Ouput decorator - defines the value will be sent to other component
+   
+   The output can only be of type Event created an Object using EventEmitter
+   // Step - 1 in child component
+   @Ouput onRegister = new EventEmitter<string>();
 
+  // Step - 2 trigger the event from UI calling the method with an argument
+  register(name : string) {
+  // Start sending the event
+    this.onRegister.emit(name);
+  }
+ 
+  // Step - 3 Receive the value in UI with the registered event
+  <app-any-name-custom-tag (onRegister)="displayMethod($event)">... </app-any-name-custom-tag>
 
-
-
-
+  $event - Stores all the parameters and metadata about the event
+  
+  // Step - 4 process the data in displayMethod of component
+ 
+ 
+ Note: $event can recieve only single value for multiple values use any or Object or array
+ 
+ 
+ 
+-------------------------
 
 
 
