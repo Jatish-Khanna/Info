@@ -50,6 +50,23 @@ An injection is the passing of a dependency to a dependent object (a client) tha
     ref - reference of the other bean
 
 
+-----------------------------
+
+autowire="byName" : Autowiring using property name.
+    If a bean found with same name as the property of other bean, this bean will be wired into other beans property
+    
+autowire="byType" : If a bean found with same type as the type of property of other bean, 
+    this bean will be wired into other beans property
+
+autowire="constructor" : If a bean found with same type as the constructor argument of other bean, 
+    this bean will be wired into other bean constructor
+    First byType and then byName
+
+autowire="no" : No Autowiring. Same as explicitly specifying bean using ‘ref’ attribute
+
+
+
+
 
 
 
