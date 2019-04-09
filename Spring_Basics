@@ -16,3 +16,42 @@ byName	Autowiring based on bean name through setter injection
 byType	Autowiring based on bean type through setter injection
 constructor	Autowiring based on the bean type through parameterized constructor
 no	No Autowiring, required dependency has to be injected explicitly using <property> or <constructor-arg> ref attribute in bean definition
+
+----------------------
+
+Inversion of Control (IoC) is a design principle (although, some people refer to it as a pattern). 
+As the name suggests, it is used to invert different kinds of controls in object oriented design to achieve loose coupling. 
+Here, the control means any additional responsibilities a class has other than its main responsibility, 
+such as control over the flow of an application, 
+control over the flow of an object creation or dependent object creation and binding.
+
+----------------------
+Application Context is Eager loading 
+BeanFactory is lazy loading
+
+BeanFactory doesn't support Enterprise services such as Internationalization, Validation
+  whereas ApplicationContext supports Enterprise services
+  
+BeanFactory doesn't support annotations based whereas ApplicationContext supports annotations based configuration
+
+
+dependency injection is a technique whereby one object (or static method) supplies the dependencies of another object. 
+A dependency is an object that can be used (a service). 
+An injection is the passing of a dependency to a dependent object (a client) that would use it.
+
+----------------------
+
+<bean id="" class="">
+  <constructor-args 
+    type - type of parameter [primitive are possible]
+    index - 0 based index 
+    value - value of the instance variable
+    name - matching name with the instance varibale name in the class to be injected
+    ref - reference of the other bean
+
+
+
+
+
+
+
