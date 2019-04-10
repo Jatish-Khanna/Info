@@ -9,5 +9,122 @@ Filter fields in MongoDB -
   3. Nested JSON = {"key" : {"$gte" : value1, "$lt" : value2 } }
   4. GeoSpatial = {"key" : {"$geoWithIn" : [[x,y], radiusInRadians] }}
 
+-------------------
+
+To show avaialble database
+show dbs
+
+Use available database
+use <COLLECTION_NAME>
+
+View data in collections
+db.<Collection_name>.find()
+
+Pretty print the data
+View data in collections
+db.<Collection_name>.find().pretty()
+
+it <for the next page of data>
+
+
+-------------------
+Data types - 
+
+int32
+int64
+Double
+Decimal128
+String
+Object 
+Array
+-------------------
+
+load("FILE_NAME") - to load the contents of file in the clusture
+
+db.<Collection_NAME>.
+insertOne() --- It accepts a String/JSON as an argument, that represents document
+  
+  Response - 
+    1) acknowledged - the Document is interted successfully or not
+    2) insertedId - ObjectId("...") - The ID representing this document
+
+
+if _id is present in the document, then insertedID will represent the supplied _id else Mongo DB will create _id for supplied document
+
+
+3) insertMany([...]) - An array of Documents will be supplied to be inserted in Collection
+
+  ** It is fail fast insert, as soon as the document has been inserted in the collection 
+   any failure will result in stopped insertion
+   
+ To Change the default behavior- 
+ 
+ 3b) insertMany([...], {"ordered": false})
+       Ordered key - false says, it will skip if _id field or Duplicate error is there 
+
+-------------------
+
+Sub document -
+  "documentKey.subdocumentKey"
+
+2) Quality matches - Match Arrays - (Full match)
+
+ { "documentKey" : ["value1", "value2"] }
+
+ or 
+ 
+ {"documentKey" : "value1"} - Only single value but present in all the documents either inside array 
+
+3) Index based search in array
+ { "documentKey.0" : "value1"}
+
+4) 
+
+
+-------------------
+
+it command in the Shell (default: 20 results for mongo shell)
+
+find method returns cursor to the resultset
+The result is returned are returned in batches
+Cursors are iterated to view the results
+
+-------------------
+
+Mongo Projections - reduce the network overhead and processing requirements
+  - Projection is a second argument to the default method.
+
+  find({...}, {"Key" : 1})
+
+Here "Key" shows the what all Objects/Keys to be retrieved from the Collection.
+Note: It also returns the _id column from the Collections, unless explicitly exclude it.
+
+Here Value : 1 specifies that field to be included in Projection whereas 0 says exclude it
+
+-------------------
+
+Updating Documents in Mongo DB
+
+1) db.<Collection_Name>.updateOne( {"FILTER_KEY" : "VALUE"}, {$set: { "updateKey" : "updateValue"}} )
+
+Operators:
+a) $set - takes document as an argument, all Key/value pairs reflect in new version of document to be updated
+
+Response- 
+acknowledged - true  // The command is succesful
+matchedCount - 1 // Total filter match count
+modifiedCount - 1 // Number of document modified (should be 0 or 1 as we're using updateOne)
+
+
+b) $unset - remove the specified field from the Collection
+c) $min - if specified value is greater than existing field value
+d) $max - if specified value is smaller than existing field value
+e) $currentDate - Sets the value of field to current date, either as Date or timestamps
+...
+
+
+
+
+
 
 
