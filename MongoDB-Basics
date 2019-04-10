@@ -122,6 +122,29 @@ d) $max - if specified value is smaller than existing field value
 e) $currentDate - Sets the value of field to current date, either as Date or timestamps
 ...
 
+-------------------
+
+Updating documents MongoDB - updateMany
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
