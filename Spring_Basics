@@ -52,6 +52,10 @@ An injection is the passing of a dependency to a dependent object (a client) tha
 
 -----------------------------
 
+Autowiring feature of spring framework enables you to inject the object dependency implicitly. 
+It internally uses setter or constructor injection.
+Autowiring can't be used to inject primitive and string values. It works with reference only.
+
 autowire="byName" : Autowiring using property name.
     If a bean found with same name as the property of other bean, this bean will be wired into other beans property
     
@@ -63,6 +67,42 @@ autowire="constructor" : If a bean found with same type as the constructor argum
     First byType and then byName
 
 autowire="no" : No Autowiring. Same as explicitly specifying bean using ‘ref’ attribute
+
+-----------------------------
+<context:annotation-config/>
+
+@Autowired default is byType should have Qualifier to resolve
+
+@Autowired
+@Qualifier("<BEAN_NAME>") 
+The @Qualifier annotation is used to resolve the autowiring conflict, when there are multiple beans of same type.
+
+
+<context:component-scan base-packages="..." />
+
+-----------------------------
+
+@Bean 
+public T methodName() { ... }
+
+The bean created would be name as method-name in class.
+
+
+@Configuration & @Bean Annotations
+Annotating a class with the @Configuration indicates that 
+  the class can be used by the Spring IoC container as a source of bean definitions. 
+  The @Bean annotation tells Spring that 
+    a method annotated with @Bean will return an object that should be registered as a bean in the Spring application context. 
+The simplest possible @Configuration class would be as follows −
+
+-----------------------------
+
+Spring AOP
+
+
+
+
+
 
 
 
