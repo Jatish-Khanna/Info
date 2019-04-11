@@ -97,7 +97,113 @@ The simplest possible @Configuration class would be as follows −
 
 -----------------------------
 
-Spring AOP
+Bean - An entity to instantiate Object 
+
+@Controller, @Service, @Component, @Repository
+
+Why autowire? - Exlicilty mentionning bean is not required
+
+-----------------------------
+
+Disadvantage of JDBC -
+  1. Boiler plate code - to register driver, initiate a connection, Prepare statement, fetch result
+  2. Handle checked Exception - 
+  3. Iterate Resultset
+  
+-----------------------------
+
+Spring JdbcTemplate is a powerful mechanism to connect to the database and execute SQL queries. 
+It internally uses JDBC api, but eliminates a lot of problems of JDBC API.
+
+Problems of JDBC API
+The problems of JDBC API are as follows:
+
+1) We need to write a lot of code before and after executing the query,
+  such as creating connection, statement, closing resultset, connection etc.
+  
+2) We need to perform exception handling code on the database logic.
+
+3) We need to handle transaction.
+4) Repetition of all these codes from one to another database logic is a time consuming task.
+
+Advantage of Spring JdbcTemplate
+Spring JdbcTemplate eliminates all the above mentioned problems of JDBC API. 
+It provides you methods to write the queries directly, so it saves a lot of work and time.
+
+
+-----------------------------
+
+<property name="hibernate.hbm2ddl.auto">create</property> will create tables. 
+But it will not create database. Change the connection url to generate the database. create - 
+It creates new tables corresponding mapping or annotation.
+
+-----------------------------
+
+private JDBCTemplate jdbcTemplate;
+
+@Autowired
+public void setJdbcTemplate(DataSource dataSource) {this.jdbcTemplate}
+
+-----------------------------
+
+1) jdbcTemplate.query - to fetch records from the database
+ Eg. 
+  List<T> query(sqlQuery, new RowMapper<T>(){ .... })
+
+2) jdbcTemplate.update - for Create, Update, Delete operations
+ Eg. 
+ update(sqlQuery, new Object[]{})
+ 
+ 3) queryForXXX(sqlQuery, new Object[]{primaryKey})
+    will return the object of the type we called in the form of Object class object
+    
+Object o1 = queryForObject(” select sysdate from dual “, Date.class) ;
+Object o2 = queryForObject(” select salary from emp”, Integer.class);
+Object o3 = queryForObject(” select empName from emp”,String.class);
+
+Date d = (Date)o1;
+Integer i = (Integer)o2;
+String s = (String)o3;
+
+-----------------------------
+
+RowMapper -
+
+RowMapper interface allows to map a row of the relations with the instance of user-defined class. 
+It iterates the ResultSet internally and adds it into the collection. 
+So we don't need to write a lot of code to fetch the records as ResultSetExtractor.
+
+Advantage of RowMapper over ResultSetExtractor
+RowMapper saves a lot of code becuase it internally adds the data of ResultSet into the collection.
+
+Method of RowMapper interface
+It defines only one method mapRow that accepts ResultSet instance and int as the parameter list. 
+
+public T mapRow(ResultSet rs, int rowNumber)throws SQLException  
+
+-----------------------------
+
+Disadvantages of Spring JDBC -
+  1. Spring JDBC is database dependent
+  2. Developer should know the concept of RDBMS - as query to be provided by developer
+  3. Problem of Granularity -  i.e. More or less number of Classes than number of tables
+  4. Problem of Identity - Java uses equal method where as records are compared with primary key
+  5. Problem of Subtype - Java has inheritance that is unavailable in RDBMS
+  6. Problem of Navigation - Java uses composition easily but RDBMS has joins to fetch and concatenate data from tables 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
