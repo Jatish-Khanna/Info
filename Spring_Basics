@@ -192,8 +192,29 @@ Disadvantages of Spring JDBC -
   6. Problem of Navigation - Java uses composition easily but RDBMS has joins to fetch and concatenate data from tables 
 
 
+-----------------------------
 
+ORM - Object relational Mapping (Every class is going to be mapped to a table in database )
+  . Class - Table
+  . Object - Record
+  . Attribute - Column
+  
+ Framworks - Hibernate, ibatis, toplink, eclipselink
 
+-----------------------------
+
+SessionFactory -
+
+Configuration object is used to create a SessionFactory object which in turn configures 
+Hibernate for the application using the supplied configuration file and allows for a Session object to be instantiated.
+The SessionFactory is a thread safe object and used by all the threads of an application.
+
+Dialect - specifies the format of query for the target database
+hbm2ddl - Drop and autocreate tables
+  validate: validate the schema, do not change happens to the database.
+  update[default]: update the schema with currently execute query.
+  create: creates new schema every time, and destroy previous data.
+  create-drop: drop the schema when the application is stopped or SessionFactory is closed explicitly.
 
 
 
