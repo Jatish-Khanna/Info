@@ -203,6 +203,7 @@ ORM - Object relational Mapping (Every class is going to be mapped to a table in
 
 -----------------------------
 
+HIbernate ORM - 
 SessionFactory -
 
 Configuration object is used to create a SessionFactory object which in turn configures 
@@ -225,10 +226,29 @@ hbm2ddl - Drop and autocreate tables
   create-drop: drop the schema when the application is stopped or SessionFactory is closed explicitly.
 
 
+----------------------
 
+EntityManagerFactory - this is Spring ORM JPA (as JPA is specification which is implemented by Other ORMs like Hibernate)
+  There are multiple JPA providers which are implementing ORM.
 
+EntityManger em = entityManagerFactory.createEntityManger();
+ em.getTransaction().begin();
+ ...
+ // persist, save - to save
+ // find - to look for Object
+ // remove - to remove the Object
+ 
+ em.getTransaction().commit();
 
-
+<bean id="entityManagerFactory" ...
+...
+  <property name="jpaVendorName" ref="hbAdapterBean"/>
+  ...
+</bean>
+ 
+<bean id="hbAdapterBean" class="...">
+  ...
+</bean>
 
 
 
