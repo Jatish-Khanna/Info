@@ -125,6 +125,46 @@ e) $currentDate - Sets the value of field to current date, either as Date or tim
 -------------------
 
 Updating documents MongoDB - updateMany
+  The same modification to all the documents that match the filter
+  All the operators works as updateOne() but here it will update all the documents macthing filter
+  
+  
+-------------------
+
+Upsert - Update operation to create new documents when filter doesn't match
+  - It use used with updateOne and updateMany() as a option parameter
+  
+  updateOne({"FILTER_KEY" : "FILTER_VALUE"}, 
+            $set: {...},
+            {"upsert" : true}
+            );
+  
+
+-------------------
+
+replaceOne() -  The replaceOne can't contain update operators
+  - First found document using the filter, the changes will be done only to that document
+  - $natural - uses the natural order of all the documents
+
+let filter = {...}
+let document = db.<COLLECTION_NAME>.findOne(filter)
+
+document.field1 = "New value";
+document.arry.push("New value in array")
+
+db.<COLLECTION_NAME>.replaceOne(filter, document);
+
+Note: replaceOne works with Complete document whereas updateOne deals with set(s) of fields to be updated
+-------------------
+
+Delete mongo document-  accepts the filter document to identify the documents to be removed
+  1) deleteOne({"FILTER_KEY" : "VALUE"})
+  2) deleteMany(...)
+
+
+
+
+
 
 
 
