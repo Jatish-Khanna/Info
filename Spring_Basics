@@ -209,6 +209,14 @@ Configuration object is used to create a SessionFactory object which in turn con
 Hibernate for the application using the supplied configuration file and allows for a Session object to be instantiated.
 The SessionFactory is a thread safe object and used by all the threads of an application.
 
+
+1. sessionFactory.openSession()
+2. session.beginTransaction()
+3. transaction.commit() or transaction.rollback()
+4. session.close()
+
+-----------------------------
+
 Dialect - specifies the format of query for the target database
 hbm2ddl - Drop and autocreate tables
   validate: validate the schema, do not change happens to the database.
