@@ -105,17 +105,90 @@ A simple Document in Java
 
 NOte: Documents are Bson datastructures thats why Document implements Bson interface in the API
 
+----------------------
 
+Find Using Java classes -
 
+ Document findOverFilter = new Document("FILTER_KEY", "FILTER_VALUE");
+ Document document = mongoCollection.find(findOverFilter);
 
+or 
 
+Bson findUsingBson = eq("FILTER_KEY", "FILTER_VALUE")
 
+ Document document = mongoCollection.find(findUsingBson);
 
+-----------------------
 
+Find in an Array Using Java
 
+ Document findOverFilter = new Document("FILTER_KEY", new Document(
+                                                            "$all", Arrays.asList("Key1", "Key2")));
+ List<Document> resultList = new ArrayList<>();
+ mongoCollection.find(findOverFilter)
+                                    .into(resultList);
 
+or 
 
+Bson findUsingBson = all("FILTER_KEY", "FILTER_VALUE1", "FILTER_VALUE2")
+List<Document> resultList = new ArrayList<>();
+mongoCollection.find(findUsingBson).into(resultList);
+ 
+-----------------------------
 
+A complex query using Java with multiple operators
+
+Bson findUsingBson = and(
+                      eq("FILTER_KEY", "FILTER_VALUE"),
+                      eq("FILTER_KEY1", "FILTER_VALUE1"),
+                      gte("FILTER_KEY2", "FILTER_VALUE2"),
+                      lt("FILTER_KEY3", "FILTER_VALUE3"));
+                      
+List<Document> resultList = new ArrayList<>();
+mongoCollection.find(findUsingBson).into(resultList);
+ 
+-----------------------------
+
+Projections using Java 
+
+    Document oldFilter = new Document("FILTER_KEY", "FILTER_VALUE");
+    Document oldResult =
+        moviesCollection
+            .find(oldFilter)
+            .limit(1)
+            .projection(new Document("projection_key", 1).append("projection_key_2", 1))
+            .iterator()
+            .tryNext();
+ 
+ or
+ 
+ 
+     Bson queryFilter = and(eq("FILTER_KEY", "FILTER_VALUE"));
+    Document result =
+        moviesCollection
+            .find(queryFilter)
+            .limit(1)
+            // this feels much more declarative
+            .projection(fields(include("projection_key", "projection_key2"))) // , exclude("_id") to exclude field or excludeId()
+            .iterator()
+            .tryNext();
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
 
 
