@@ -8,11 +8,102 @@ A utility for importing binary data into MongoDB.
 mongo
 The shell for exploring data in MongoDB.
 
+URL to connect to MongoDB -
+ mongodb://<USER>:<PASSWORD>@<HOST>/<database>?retryWrites=true
+  
+  HOST - is the host name of SRV server.
+   The HOST is not a database server, it only holds the SRV(Service) records.
+   It has a list of DNS which only SRV can resolve
+   
+   This is used when Servers in Clusture change, which gives privilege not to update anything on client when clusture changes
+ 
+ 
+ retryWrites - To try writes if error while writing the documents to DB
+ 
+ The --username and --password flags cannot be used with and SRV string. 
+ Instead, include the username and password in the SRV string 
+ (i.e. mongodb+srv://USER:PASSWORD@<your-cluster-address>)
+ 
+ ---------------------  
+   
+   MongoDB drivers Java-
+   
+   1) <groupId>org.mongodb</groupId>
+      <artifactId>mongo-db-sync</artifactId>
+      
+   2) 
+    <groupId>org.mongodb</groupId>
+      <artifactId>mongo-db-async</artifactId>
+      
+---------------------     
+ Driver Base Classes -
+   1) MongoClient - connection b/w app and Clusture
+   2) MongoDatabase
+   3) MongoCollection
+   4) Document
+   5) Bson
+   
+---------------------  
+Connection in action, Can you code it?
+  // MongoClients Builder provides a conncetion to the provided in the uri string
 
+  MongoClient mongoClient = MongoClients.create(uri)
+   
+ // The client configuration can be done using MongoClientSettings
+ // The instance can be extracted from MongoClient instance
+ // This class offers a builder method - that allows to create multiple clients with different options
+ MongoClientSettings mongoClientSettings;
+ 
+ ConnectionString connectionString = new ConnectionString(uri);
+ mongoClientSettings = MongoClientSetting.builder()
+                                          .applyConnectionString(connectionString)
+                                          .applyName("TestName")
+                                          .applyConnectionPoolSettings(
+                                            builder -> builder.maxTimeWait(1000, TimeUnit.MILLISECONDS)
+                                          .build();
+ MongoClient mongoClient = MongoClients.create(mongoClientSettings);
+   
+   
+---------------------  
 
+List all the Database names using the created MongoClient connection
+  MongoIterable<String> databaseListIterable = mongoClient.listDatabaseNames();
+   
+Note: MongoIterable<T> is exhaustible like a Cursor or ReadAHead queue. 
+  - So store the data persisted by MongoIterable in Custom DS/Collections
+   
+---------------------  
 
+Get Mongo Database from the MongoClient
 
+  MongoDatabase mongoDatabase = mongoClient.getDatabase("DB name");
+   
+---------------------     
+ Get Mongo Collection in the database
+ 
+   MongoCollection mongoCollection = mongoDatabase.getCollection("Collection_NAME");
+   
+ ---------------------  
+ 
+ Find the data in MongoCollection i.e. execute DML
+ 
+    MongoIterable<Document> mongoFullDB = mongoCollection.find().limit(10);
+   
+---------------------  
+A simple Document in Java
 
+{
+  "Top" : {
+    "First Key" : "value"
+  },
+  "Key2" : "value"
+}
+  Document document = new Document(
+                    "Top", new Document("First Key", "Value").append("Key2", "Value"));
+
+  mongoCollection.insertOne(document);
+
+NOte: Documents are Bson datastructures thats why Document implements Bson interface in the API
 
 
 
