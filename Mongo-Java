@@ -173,20 +173,86 @@ Projections using Java
             .iterator()
             .tryNext();
  
+ -------------------------
+ 
+ Why Using POJO and Custom Codecs -
+ 
+   1. Allows us to write a cleaner code
+   2. In our example the _id is a string and not an ObjectId in Java as in Mongo DB, 
+     that is a mismatch of data types
+     
+  With the CustomCodec we can convert a document to Object and vis-a-viz
+  
+  MyCustomCode customCodec = new MyCustomCodex();
+  
+  // Register Codec and create a registry instance
+ CodecRegistry codecRegistry = fromRegistries(
+                                          MongoClientSettings.getDefaultCodecRegistry(), fromCodecs(customCodec));
+                                          
+// Get a Bson Document
+//Bson queryFilter = new Document("FILTER_KEY", "FILTER_VALUE");
+Bson queryFilter = Filters.all("FILTER_KEY", "FILTER_VALUE");
+ 
+// To access Collection with Custom Codec and mapping to BeanClass
+MongoColelction<BeanClass> mongoCollection = mongoDatabase.getCollection("COLLECTION_NAME", BeanClass.class)
+                                                          .withCodecRegistry(codecRegistry);
  
  
+ // Retrieve Documents - 
+ BeanClass foundDocument = mongoCollection.find(Filters.eq(queryFilter)).first();
  
+ //Note: What else we get? we get an Update on Codec
  
+  foundDocument.setSomeInstance("SOME VALUE");
+  
+  // Insert the updated document;
+  mongoCollection.insertOne(foundDocument);
  
+ -------------------------
  
- 
- 
- 
- 
- 
- 
- 
- 
+ allows us to use the default CodecRegistry while customizing the
+ fields that we know need special treatment. For example, if you have
+ a field that would need type conversion, or has various different
+ data types in it. This needs to be addressed when the documents are
+ read into your Java application, here is another approach to handling
+ it.
+  
+ // select a class that will be used as our POJO
+    ClassModelBuilder<CustomBean> classModelBuilder =
+        ClassModel.builder(CustomBean.class);
+        
+    // get the property that needs type conversion
+    PropertyModelBuilder<String> idPropertyModelBuilder =
+        (PropertyModelBuilder<String>) classModelBuilder.getProperty("id");
+        
+    // apply type conversion to the property of interest
+    // StringObjectIdCodec describes specifically how to encode and decode
+    // the ObjectId into a String and vice-versa.
+    idPropertyModelBuilder.codec(new StringObjectIdCodec());
+    
+    
+    // use the default CodecRegistry, with the changes implemented above
+    // through registering the classModelBuilder with the PojoCodecProvider
+    CodecRegistry codecRegistry =
+        fromRegistries(
+            MongoClientSettings.getDefaultCodecRegistry(),
+            fromProviders(
+                PojoCodecProvider.builder()
+                    .register(classModelBuilder.build())
+                    .automatic(true)
+                    .build()));
+                    
+    // Get the data from the COllection
+    MongoCollection<CustomBean> mongoCollection =
+        mongoDatabase
+            .getCollection("COLLECTION_NAME", CustomBean.class)
+            .withCodecRegistry(codecRegistry);
+            
+    // build a search query
+    Bson queryFilter = all("FILTER_KEY", "FILTER_VALUE");
+    // find the actor that we want to test for
+    CustomBean foundCollection = actors.find(Filters.eq(queryFilter)).iterator().tryNext();
+    
  
  
 
