@@ -251,6 +251,72 @@ EntityManger em = entityManagerFactory.createEntityManger();
 </bean>
 
 
+----------------------
+
+1.2 BeanPropertyRowMapper
+In Spring 2.5, comes with a handy RowMapper implementation called ‘BeanPropertyRowMapper’,
+which can maps a row’s column value to a property by matching their names.
+Just make sure both the property and column has the same name, 
+e.g property ‘custId’ will match to column name ‘CUSTID’ or with underscores ‘CUST_ID’.
+
+public Customer findByCustomerId2(int custId){
+		 
+	String sql = "SELECT * FROM CUSTOMER WHERE CUST_ID = ?";
+ 
+	Customer customer = (Customer)getJdbcTemplate().queryForObject(
+			sql, new Object[] { custId }, 
+			new BeanPropertyRowMapper(Customer.class));
+	
+	return customer;
+}
+
+----------------------
+
+Spring JDBC -> JdbcTemplate interface accepts 
+  - update method will be used for Create, delete, updated
+  
+Spring ORM hibernate ->
+  dataSourceBean, sessionFactory beans are mandatiry
+  packagesToScan -> The packages where @Entity is found
+  
+  SessionFactory (Autowired) -> Session Object -> openSession -> beginTransaction -> save,  -> commit -> session.close() 
+
+Spring ORM JPA ->
+  Beans: EntityMangerFactory, dataSource, jpaVendorAdapter, packagesToScan
+  
+  EntityManagerFactory -> EntityManger -> Transaction begin -> persist, remove -> Transaction commit
+
+----------------------
+
+When do we prefer Programmatic transaction and Declarative? 
+
+----------------------
+
+bean id="transactionManager" class="...DataSourceTransactionManager"
+
+@Transactional - on a Method and a class
+
+----------------------
+Spring Data JPA - 
+
+  1. Repository -> provide implementation by the framework
+   public interface EmployeeRepository extends JpaRepository<Employee, Integer> { }
+ 
+  Employee -> Entity
+  Integer -> Primary Key type
+  
+  <jpa:repositories base-package="..." />
+  
+  Beans : dataSource, jpaVendorAdapter, entityManagerFactory (packagesToScan -> look for classes with @Entity)
+  , transactionManager [transaction is built in part of framework, no such bean will throw exception]
+
+
+----------------------
+
+
+
+
+
 
 
 
