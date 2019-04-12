@@ -254,6 +254,14 @@ MongoColelction<BeanClass> mongoCollection = mongoDatabase.getCollection("COLLEC
     CustomBean foundCollection = actors.find(Filters.eq(queryFilter)).iterator().tryNext();
     
  
+ ----------------------------
+ Benefits of Using CustomCodec POJO and/ Field Customization approach
+ 
+ Pojo Implementation is an elegante way to define Codecs to convert b/w Documents and Collection Class
+ @BeanProperty - to map Collection field to the Class field
+ Automatic Interospection i.e. Automatic analyzing of Beans design and map to Collection
+ Generics and Sub-documents are easier to maintain with POJO, instead of writing separate methods to traverse sub-documents
+ 
  
 
 
