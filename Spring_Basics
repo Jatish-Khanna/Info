@@ -453,13 +453,30 @@ A bean should be present in Spring to create the application context - but Dispa
     it can respond multiple types of argument, even cannot return anything [but an external viewResolver to be configured]
 -----------------------------
 
+Dispatcher Servlet
 
+Central dispatcher for HTTP request handlers/controllers, 
+Dispatches to registered handlers for processing
+ * a web request, providing convenient mapping and exception handling facilities.
 
+1) It can use any {@link HandlerMapping} implementation - pre-built or provided as part
+ * of an application - to control the routing of requests to handler objects.
 
+2) Its view resolution strategy can be specified via a {@link ViewResolver}
+ * implementation, resolving symbolic view names into View objects. Default is
+ * {@link org.springframework.web.servlet.view.InternalResourceViewResolver}.
+ 
+ A web application can define any number of DispatcherServlets.</b>
+ * Each servlet will operate in its own namespace, loading its own application context
+ * with mappings, handlers, etc. Only the root application context as loaded by
+ * {@link org.springframework.web.context.ContextLoaderListener}, if any, will be shared.
 
-
-
-
+ * Create a new {@code DispatcherServlet} that will create its own internal web
+	 * application context based on defaults and values provided through servlet
+	 * init-params. 
+Typically used in Servlet 2.5 or earlier environments, where the only
+	 * option for servlet registration is through {@code web.xml} which requires the use
+	 * of a no-arg constructor.
 
 
 
