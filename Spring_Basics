@@ -336,6 +336,53 @@ size - the size of the page to be returned.
 
 
 
+================================
+****************************
+================================
+Spring MVC -
+
+   JSP has provided the JSTL (Tag libraries), where Views and Business logic was coupled
+   
+Solution!! -
+  Some MVC framework - 
+    Model: Data
+    View: UI
+    Controller -
+    	Pre-process, business logic, view resolving...
+
+BUT
+  1) Coding of Controller is difficult, as it doesn't perform single responsibility
+  2) Routing logic in Java file [changes require rebuilt]
+  
+  
+----------------------
+
+Spring MVC - 
+
+Benefits - 
+  1. A ready controller to be configured
+  2. Navigation or Routing as a part of Configuration
+  
+  
+Spring Web MVC is the original web framework built on the Servlet API and 
+has been included in the Spring Framework from the very beginning. 
+The formal name, “Spring Web MVC,” comes from the name of its source module (spring-webmvc), 
+but it is more commonly known as “Spring MVC”.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
