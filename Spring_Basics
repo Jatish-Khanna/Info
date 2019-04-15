@@ -369,6 +369,93 @@ has been included in the Spring Framework from the very beginning.
 The formal name, “Spring Web MVC,” comes from the name of its source module (spring-webmvc), 
 but it is more commonly known as “Spring MVC”.
 
+-----------------------
+
+Spring MVC key components -
+  HTTP request
+  HTTP response
+  Dispatcher Servlet [Main Controller given by Spring MVC]: 
+  		     Front Controller pattern (all request and response will pass through controller)
+	or.springframework.web.servlet.DispatcherServlet  		
+  
+  web.xml
+    <servlet> ... </servlet>
+    <servlet-mapping> ... </servlet-mapping>
+  
+  
+  Handler Mapping:
+    It looks at the request and identifies the class/method[@Controller] which should be executed
+    @Controller - is a user defined the class[POJO], 
+    @RequestMapping - on a method/class, the approprite method will be choosen. That process the request
+    
+  Controller
+  View resolver - View resolver will identify the view, if it is XML, PDF, HTML... and pass the response to corresponding view
+  view - 
+
+
+
+@Component
+	@Service
+	@Controller: When coding the presentation layer
+	@Repository
+
+
+----------------------------------
+
+ModelAndView - built in class which holds information of data and viewName
+  new ModelAndView("myView.jsp", "myModel", objectInstance);
+
+----------------------------------
+
+The Spring configuration file - <SERVLET_NAME>-servlet.xml
+
+Can you Customize it?
+  <servlet>
+    <servlet-name>...</servletname>
+    <servlet-class>...</servletclass>
+    
+    <init-param>
+       	<param-name>...</param-name>
+	<param-value>...</param-value>
+   </init-param>
+   
+ </servlet>  
+
+
+
+-----------------------------------
+
+what should be the content of file-
+  <beans ....>
+    <!-- to import other configuration file, when multiple files are available -->
+    <import resource="..."/>
+    <!-- It will create beans for @Component @Repository @Service @Controller-->
+    <context:component-scan basePackages="..."/>
+  
+  </beans>
+
+-----------------------------------
+A bean should be present in Spring to create the application context - but DispatcherServlet creates for you
+
+	1. WebApplicationContext
+	2. DefaultAnnotationHandlerMapping
+	3. ViewResolver
+	
+-----------------------------------
+@RequestMapping
+  value="URI_PATTERN"
+  method="RequestMethod.XXX"
+  headers="application/xml"
+  params="PARAM_KEY=PARAM_VALUE"
+  
+  This method is flexible as,
+    it can accept multiple input arguments
+    it can respond multiple types of argument, even cannot return anything [but an external viewResolver to be configured]
+-----------------------------
+
+
+
+
 
 
 
