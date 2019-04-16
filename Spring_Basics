@@ -479,6 +479,35 @@ Typically used in Servlet 2.5 or earlier environments, where the only
 	 * of a no-arg constructor.
 
 
+------------------------------
+
+UI tag library of Spring ->
+  How it is better than JSP?
+   The amount of code to bind HTML forms with the POJOs
+
+  ModelMap -> this provides a Map of String keys and Object values that can be exchanged b/w UI and backend
+  
+  ModelAndView -> to pass a single value to UI
+
+@ModelAttribute -> maps the reverse the JSTL modelAttribute="" to the @ModelAttribute
+
+------------------------------
+
+IMplement Validations?
+  BeanValidation API is an annotation based API, and validation will be done by API
+  
+  1. Add the 3rd party dependencies, validation-api, javax-validation, hibernate-validator
+  2. Apply Built-in annotations on the Bean instance variables
+  3. In case of any errors in Validation, we want to keep control on same page-
+    use BindingResult
+
+
+
+
+
+
+
+
 
 
 
