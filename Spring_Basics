@@ -500,17 +500,56 @@ IMplement Validations?
   2. Apply Built-in annotations on the Bean instance variables
   3. In case of any errors in Validation, we want to keep control on same page-
     use BindingResult
+  4. @Valid attribute on @ModelAttribute to use the validations
 
 
+------------------------------
 
+ new bean -> ResourceBundleMessageSource -> to replace the keys by reading the values from properties file
+ 
+   <bean id="messageSource" class="...">
+     <property name="basename" value="fileName" />
+     
+   </bean>
 
+MessageSource implementation that accesses resource bundles using specified basenames. 
+This class relies on the underlying JDK's ResourceBundle implementation, 
+in combination with the JDK's standard message parsing provided by MessageFormat.
+-----------------------------
 
+InternalResourceViewResolver: 
 
+is used to resolve the provided URI to actual URI.
+The following example shows how to use the InternalResourceViewResolver using the Spring Web MVC Framework.
 
+<bean class="...InternalResourceViewResolver" >
+  <property name="prefix" value="/WEB-INF/jsp/" />
+  <property name="sufix" value=".jsp" />
+</bean>
 
+----------------------------
 
+LocaleChangeInterceptor
 
+Interceptor that allows for changing the current locale on every request, 
+via a configurable request parameter (default parameter name: "locale").
 
+ - Only when Configuring the Interceptor, a HandlerMapping should be provided
+ 
+ 
+<bean id="localeChangeInterceptor" class="...LocaleChangeInterceptor" >
+  <property name="paramName" value="theRequestLocale" />
+</bean>
+
+<bean class="...DefaultAnnotationHandlerMapping" >
+  <property name="interceptors">
+    <list>
+      <ref bean="localeChangeInterceptor" />
+    </list>
+  </property>
+</bean>
+
+<bean id="localeResolver" class="...LocaleResolver" />
 
 
 
