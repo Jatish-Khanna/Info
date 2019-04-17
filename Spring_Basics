@@ -564,6 +564,9 @@ REST is naturally stateless, but SOAP is designed to support conversational stat
 - It can use multiple protocols
 - It can Produce and Consume XML as a standard format
 
+Asynchronous processing and invocation
+Formal contracts;
+Stateful operations
 
 WHY REST 
 
@@ -576,6 +579,10 @@ Unlike SOAP, REST is designed to be stateless, and REST reads can be cached for 
 
 - It uses HTTP protocol
 - It can Produce and Consume multiple formats like JSON, XML...
+
+Limited bandwidth and resources;
+Totally stateless operations
+Caching situations
 
 
 
@@ -606,10 +613,42 @@ Multiple types to produce-
 
 @Consumesor @RequestMapping(consumes=MediaType.Application_JSON_VALUE)
 
+---------------------------
 
+ResponseEntity
 
+ResponseEntity represents the whole HTTP response: status code, headers, and body. 
+Because of it, we can use it to fully configure the HTTP response.
 
+If we want to use it, we have to return it from the endpoint; 
 
+In RestTemplate, this class is returned by getForEntity() and exchange():
+
+ ResponseEntity<String> entity = template.getForEntity("https://example.com", String.class);
+ String body = entity.getBody();
+ MediaType contentType = entity.getHeaders().getContentType();
+ HttpStatus statusCode = entity.getStatusCode();
+ 
+Can also be used in Spring MVC, as the return value from a @Controller method:
+
+ @RequestMapping("/handle")
+ public ResponseEntity<String> handle() {
+   URI location = ...;
+   HttpHeaders responseHeaders = new HttpHeaders();
+   responseHeaders.setLocation(location);
+   responseHeaders.set("MyResponseHeader", "MyValue");
+   return new ResponseEntity<String>("Hello World", responseHeaders, HttpStatus.CREATED);
+ }
+
+----------------------------------
+
+Global Exception Handler in Spring - 
+  
+  1. Error POJO - that has exception attributes to be sent in response
+  2. RestControllerAdvice - using @RestControllerAdvice over a class
+  3. @ExceptionHandler(MyException.class) - 
+    over the method that returns ResponseEntity<ErrorPojo>
+    this method receives parameter of MyException class
 
 
 
