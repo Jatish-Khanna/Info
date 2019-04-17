@@ -551,6 +551,62 @@ via a configurable request parameter (default parameter name: "locale").
 
 <bean id="localeResolver" class="...LocaleResolver" />
 
+---------------------------
+
+Why SOAP -
+
+SOAP is good for applications that require formal contracts between the API and 
+  consumer since it can enforce the use of formal contracts by using WSDL (Web Services Description Language).
+Additionally, SOAP has built in WS-Reliable messaging to increase security in asynchronous execution and processing.
+Finally, SOAP has built-in stateful operations. 
+REST is naturally stateless, but SOAP is designed to support conversational state management.
+
+- It can use multiple protocols
+- It can Produce and Consume XML as a standard format
+
+
+WHY REST 
+
+First, REST is easy to understand: it uses HTTP and basic CRUD operations, so it is simple to write and document. 
+This ease of use also makes it easy for other developers to understand and write services against.
+
+REST also makes efficient use of bandwidth, as it’s much less verbose than SOAP. 
+Unlike SOAP, REST is designed to be stateless, and REST reads can be cached for better performance and scalability.
+
+
+- It uses HTTP protocol
+- It can Produce and Consume multiple formats like JSON, XML...
+
+
+
+Note: While SOAP provides ways of remotely accessing and manipulating objects, 
+     REST focuses on the operations that can be executed on resources. 
+
+
+Jackson/Gson - a JAX-RS implementation to serialize and deserialize Java Objects
+
+
+------------------------------------
+
+Difference b/w @Controller and @RestConrtoller
+
+  - RestController = Controller + ResponseBody [All three are provided by Spring-framework]
+
+-------------------------------------
+
+org.springframework.web.
+  bind.annotations.*
+
+@Produces or @RequestMapping(produces=MediaType.Application_JSON_VALUE)
+
+In the postman client under "Headers" tab add parameter "Accept" --> "application/json" toget json response.
+
+Multiple types to produce-
+ @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+
+@Consumesor @RequestMapping(consumes=MediaType.Application_JSON_VALUE)
+
+
 
 
 
