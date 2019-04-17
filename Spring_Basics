@@ -650,6 +650,35 @@ Global Exception Handler in Spring -
     over the method that returns ResponseEntity<ErrorPojo>
     this method receives parameter of MyException class
 
+-----------------------------------
+
+An HttpMessageConverter is a Strategy interface that specifies a converter 
+that can convert from and to HTTP requests and responses. 
+Spring REST uses this interface to convert HTTP response to various formats e.g. JSON or XML.
+
+Each HttpMessageConverter implementation has one or several MIME Types associated with it. 
+Spring uses the "Accept" header to determine the content type client is expecting.
+
+It will then try to find a registered HTTPMessageConverter that is capable of 
+handling that specific content-type and use it to convert the response into that format before sending to the client.
+
+----------------------------------
+
+When do you need @ResponseBody annotation in Spring MVC? (answer)
+The @ResponseBody annotation can be put on a method to indicates that
+the return type should be written directly to the HTTP response body 
+(and not placed in a Model, or interpreted as a view name).
+
+-----------------------------------
+
+The @EnableWebMvc annotation is required to 
+  enable Spring MVC when Java configuration is used to configure Spring MVC instead of XML
+
+use @ResponseStatus annotation, which allows you to send custom HTTP status 
+code along with proper error message in case of Exception.
+
+In order to use it, you can create custom exceptions and annotated them 
+ using @ResponseStatus annotation and proper HTTP status code and reason.
 
 
 
