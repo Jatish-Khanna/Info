@@ -324,7 +324,7 @@ AggregateIterable<Document> getResultDocuments = <COLLECTION>.aggregate(pipeline
 List<Document> finalList = new ArrayList<>();
 getResultDocuments.into(finalList);
 
-
+-------------------------------------
 
 
 
