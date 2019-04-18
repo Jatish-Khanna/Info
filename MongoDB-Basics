@@ -162,15 +162,31 @@ Delete mongo document-  accepts the filter document to identify the documents to
   2) deleteMany(...)
 
 
+---------------------------------
+
+The Comparison operators MongoDB- 
+
+$eq	Matches values that are equal to a specified value.
+$gt	Matches values that are greater than a specified value.
+$gte	Matches values that are greater than or equal to a specified value.
+$in	Matches any of the values specified in an array.
+$lt	Matches values that are less than a specified value.
+$lte	Matches values that are less than or equal to a specified value.
+$ne	Matches all values that are not equal to a specified value.
+$nin	Matches none of the values specified in an array.
 
 
+$and - to specify multile criteria on the same Key, else the last KEY-Value would be considered for filter
+$all	Matches arrays that contain all elements specified in the query.
+$elemMatch	Selects documents if element in the array field matches all the specified $elemMatch conditions.
+$size	Selects documents if the array field is a specified size.
+-----------------------------------
 
-
-
-
-
-
-
+db.<COLLECTION_NAME>.find({"KEY": null}) -> will provide all the keys with value as Null or the Key doesn't exists
+db.<COLLECTION_NAME>.find({ "KEY" : {$type: "int"} }) -> filter will match all the documents where the corresponding key 
+                                                          has specific type of value
+db.<COLLECTION_NAME>.find({$or : [{"KEY1" : "VALUE1"}, {"KEY2" : "VALUE2"} ]}) -> 
+                                              Filter will match any of the provided conditions not all are required using $or operator
 
 
 
