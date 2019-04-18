@@ -432,7 +432,7 @@ Basic writes -
     pipeline:
     as: The name for the result
   
-   {
+   "$lookup" :{
      from: "COLLECTIONS",
      let: { "id" : "$_id" },
      pipeline: [
@@ -462,7 +462,7 @@ Basic writes -
   // Match operator and under that expr operator is used
   // Eq operator to check local_id (local field) with the foriegn field($$id defined in let)
   
-   {
+   "$lookup" : {
      from: "COLLECTIONS",
      let: { "id" : "$_id" },
      pipeline: [
@@ -488,12 +488,18 @@ Basic writes -
   
  ---------------------------------------- 
   
+  Delete document in MongoDb - 
+  
+  // delete  first natural Order Found record [InsertionOrder is the Natural order of the documents]
+  // Store the response from MongoDB in DeleteResult reference
+  DeleteResult deleteResult = <COLLECTION_INSTANCE>.deleteOne();
+  
+  System.out.println(deleteResult.getDeletedCount());
   
   
-  
-  
-  
-  
+  --------------------------
+  // Get the deleted document back
+  Document deletedDocument = <COLLECTION_INSTANCE>.findOneAndDelete("FILTER");
   
   
 
