@@ -326,15 +326,103 @@ getResultDocuments.into(finalList);
 
 -------------------------------------
 
+find().limit() -
+
+Use the limit() method on a cursor to specify the maximum number of documents the cursor will return. 
+limit() is analogous to the LIMIT statement in a SQL database.
+  :Zero Value
+  A limit() value of 0 (i.e. .limit(0)) is equivalent to setting no limit.
+  :Negative Values
+  A negative limit is similar to a positive limit but closes the cursor after returning a single batch of results. 
+As such, with a negative limit, if the limited result set does not fit into a single batch, 
+the number of documents received will be less than the specified limit.
+By passing a negative limit, the client indicates to the server that it will not ask for a subsequent batch via getMore.
 
 
+cursor.batchSize(size)
+  Specifies the number of documents to return in each batch of the response from the MongoDB instance.
+  Specifying 1 or a negative number is analogous to using the limit() method.
 
+Note: Java driver default batchSize is 0
+  That means it will use the batchSize defined by server i.e. 101
 
+---------------------------------------
 
+Sorting in MongoDB
+  Bson sortDescendingStage = Sorts.descending("KEY_TO_SORT_ON")
+  
+  Iterable<Document> sortedCollection = <COLLECTION_NAME>.find().sort(sortDescendingStage);
+  
+  
+Skip Documents -
 
+cursor.skip() method on a cursor to control where MongoDB begins returning results. 
+This approach may be useful in implementing paginated results.
+  
+    Iterable<Document> sortedCollection = <COLLECTION_NAME>.find().skip(10);
+  
+NOte: not using the sort order, actually sort the document as insertion order not the values of fields  
+  
+-------------------
 
+The sort, skip and limit method are also avaialble as a part of aggregation pipeline
+Why we need for aggregation pipeline?
+  These methods are required to generate intermediatory or results from the pipeline
+  
+Aggregates.match(FILTER)
+  Aggregates.sort(KEY)
+  Aggregates.skip(NUMBER)
+  Aggregates.limit(NUMBER)
+  
+  and use these using pipeline
+  
+  1. Add to the pipeline 
+  2. execute the pipeline using <COLLECTION_INSTANCE>.aggregate(pipeline)
+  
+------------------------
 
-
+Basic writes -
+  Document document = new Document("KEY", "VALUE");
+  
+  // Sets a particular order in the document
+  document.append("KEY2", "VALUE2");
+  // Replaces values if it exists, keeping the original order of fields
+  document.put("KEY3", "VALUE3");
+  
+  Note:
+    How insertOne ensures that document has been inserted into DB?
+      On failure it throws MongoWriteException
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 
 
