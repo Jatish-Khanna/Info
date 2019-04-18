@@ -263,6 +263,80 @@ MongoColelction<BeanClass> mongoCollection = mongoDatabase.getCollection("COLLEC
  Generics and Sub-documents are easier to maintain with POJO, instead of writing separate methods to traverse sub-documents
  
  
+-----------------------------
+
+Using Simple Aggregations -
+
+Bson someFilter = Filters.eq("KEY", "Value");
+Bson matchedDocuments = Aggregates.match(someFilter);
+
+List<Bson> pipeline = new ArrayList<>();
+// add the matchStage to the pipeline
+pipeline.add(matchedDocuments);
+
+// execute the aggregate() collection command.
+AggregateIterable<Document> getResultDocuments = <COLLECTION>.aggregate(pipeline);
+
+// Collect all the documents
+List<Document> finalList = new ArrayList<>();
+getResultDocuments.into(finalList);
+
+----------------------------------
+
+Aggregation Multiple Stages -
+
+
+Bson someFilter = Filters.eq("KEY", "Value");
+Bson matchedDocuments = Aggregates.match(someFilter);
+
+// Just another filter to flat the array
+Bson unwindDocuments = Aggregates.unwind("$someArray");
+
+
+/*Group operations are in place to do some sort of accumulation
+    operation.
+    Operations like $sum, $avg, $min, $max ... are good candidates to be
+    used along side group operations, and there is a java builder for that.
+    @see com.mongodb.client.model.Accumulators handles all accumulation 
+*/
+// use $sum accumulator to sum unwind documents
+BsonField sumAccumulator = Accumulators.sum("count", 1);
+
+// adding both group _id and accumulators
+Bson groupStage = Aggregates.group("$someArray", sumAccumulator);
+
+
+    // create the sort order using Sorts builder
+    Bson sortOrder = Sorts.descending("count");
+    // pass the sort order to the sort stage builder
+    Bson sortStage = Aggregates.sort(sortOrder);
+
+    pipeline.add(matchedDocuments);
+    pipeline.add(unwindDocuments);
+    pipeline.add(groupStage);
+    pipeline.add(sortStage);
+
+
+// execute the aggregate() collection command.
+AggregateIterable<Document> getResultDocuments = <COLLECTION>.aggregate(pipeline);
+
+// Collect all the documents
+List<Document> finalList = new ArrayList<>();
+getResultDocuments.into(finalList);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
