@@ -393,27 +393,100 @@ Basic writes -
     How insertOne ensures that document has been inserted into DB?
       On failure it throws MongoWriteException
   
+---------------------------------------  
+  
+  Dcoment document = new Document();
+  document.append("OLD_KEY", "NEW_VALUE");
+  
+  // replace the document with the found _id
+  <COLLECTION_INSTANCE>.replaceOne(eq("_id", "OBJECT_ID"), document);
+  
+  // In the above the complete document is replaced i.e. 
+  // Instead of updating the data for a particular field, other fields have been removed 
+  
+  updateOne:
+  
+  // update the document with the found _id, only specific keys not the complete document
+  // Using the set() operator
+  <COLLECTION_INSTANCE>.updateOne(eq("_id", "OBJECT_ID"), set(document));
+  
+  UpdateMany:
+  
+  // update multiple documents with the filter, only specific keys not the complete document
+  // Using the set() operator
+  <COLLECTION_INSTANCE>.updateMany(eq("KEY", "VALUE"), set("KEY_UPDATE_INSERT", "VAL"));
   
   
+  updateOne: works the same way
+  UpdateMany:
   
+  // update multiple documents with the filter, only specific matching filter
+  // Using the unset() operator
+  <COLLECTION_INSTANCE>.updateMany(eq("KEY", "VALUE"), unset("KEY_TO_UNSET"));
   
+  ------------------------------------
   
+  MongoDB Joins from different Collections-
+    from: The target Collection
+    let: the local joinfield
+    pipeline:
+    as: The name for the result
   
+   {
+     from: "COLLECTIONS",
+     let: { "id" : "$_id" },
+     pipeline: [
+       {
+         "$match" : {
+            "$expr" : {
+              "$eq" : [
+                "$local_id", "$$id"
+              ]
+            }
+         }
+       }
+     ],
+     as: "Join_NAME"
+   }
   
+  Description of Join above mentioned:
   
+  // The Collection which is Joining doesn't have access to the fields of Other Collection to be Joined with
+  // Unless these have been specified in "let:"
+  // like we declared variables "id" and assigned it $_id from Other Collection
+  // The variable can be Used in "pipeline:" section
+  // To use the declared variable from other collection use it with "$$" eg. $$id
+  // Fields from this collection will be used using "$"
   
+  // In the Pipeline
+  // Match operator and under that expr operator is used
+  // Eq operator to check local_id (local field) with the foriegn field($$id defined in let)
   
+   {
+     from: "COLLECTIONS",
+     let: { "id" : "$_id" },
+     pipeline: [
+       {
+         "$match" : {
+            "$expr" : {
+              "$eq" : [
+                "$local_id", "$$id"
+              ]
+            }
+         }
+       },
+       {
+         "$count" : "count"
+       }
+     ],
+     as: "Join_NAME"
+   }  
   
+  //Description of Join above mentioned:
+  // In addition to last Join,
+  // Pipeline is extended with Just to count the number of Documents Joined for each Document from Other Collection
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+ ---------------------------------------- 
   
   
   
