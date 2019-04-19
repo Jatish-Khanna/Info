@@ -501,13 +501,36 @@ Basic writes -
   // Get the deleted document back
   Document deletedDocument = <COLLECTION_INSTANCE>.findOneAndDelete("FILTER");
   
+  ------------------------
+  Different read Concerns in MongoDB?
   
+  1.  The default read concern in the MongoDB is "local" that means What ever the data is read from Primary node is considered good
+  2. Read Concern "Majority" allows more durable and consistent reads, the data replicated by Majority of nodes is returned
 
+---------------------------
 
+Bulk writes?
+  Batch the multiple write operations and send them in bulk to database by client
+  The execution of Bulk writes is Ordered of Operation mentioned
+  If One of write is failed while execution, will stop execution of rest of Batch [default behavior]
+  If One of write is failed, the behavior can be overriden that rest of Batch should continue
+  
+  // The bulkWrite sent by client to continue execution even if a single operation failed.
+  
+  db.<COLLECTION_NAME>.bulkWrite {
+  [
+    {updateOne : ...},
+    {updateOne : ...},
+    {updateOne : ...}
+  ],
+  { ordered: false}
+  }
 
-
-
-
+NOte: In a sharded collection, all the bulkWrite are expected to take a little longer
+ as write operation is f/wed to the designated shards
+ 
+ - Unodered bulk writes in Mongo reach in single Batch but has to be serialized each shard
+ - The write operation needs to be evaluated to continue or exit the operation for next batch
 
 
 
