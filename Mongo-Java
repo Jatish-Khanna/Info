@@ -532,6 +532,35 @@ NOte: In a sharded collection, all the bulkWrite are expected to take a little l
  - Unodered bulk writes in Mongo reach in single Batch but has to be serialized each shard
  - The write operation needs to be evaluated to continue or exit the operation for next batch
 
+-------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
