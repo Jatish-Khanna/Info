@@ -491,6 +491,8 @@ UI tag library of Spring ->
 
 @ModelAttribute -> maps the reverse the JSTL modelAttribute="" to the @ModelAttribute
 
+<form:errors path="modelName.instanceName" />
+
 ------------------------------
 
 IMplement Validations?
