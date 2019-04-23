@@ -615,6 +615,9 @@ Multiple types to produce-
 
 @Consumesor @RequestMapping(consumes=MediaType.Application_JSON_VALUE)
 
+
+@XMLRootElement - should be defined over returning bean
+
 ---------------------------
 
 ResponseEntity
