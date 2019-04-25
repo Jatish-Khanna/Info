@@ -534,17 +534,44 @@ NOte: In a sharded collection, all the bulkWrite are expected to take a little l
 
 -------------------------------
 
+Connection Pooling - With MongoDB
+  Default of 100 connections to share
+  To reuse the connection already connected
 
+A large influx of operations can be handled more quickly with a pool of existing connections.
+New operations can be serviced with pre-existing connections, 
+ so a new connection doesn't have to be created each time.
 
+-----------------------------
 
+Robust Applications -
+  wtimeout - must always be specified [esp. when WriteConcern is durable than w:1]
+  w:majority is good to have consistent data
+  serverSelectionTimeout errors should be handled
 
+-------------------------------
 
+Writes with Error handling - [resilient]
+ Concurrent System - mostly has Duplicate Key error [MongoWriteException]
+ Distributed Systems - deals with Network errors and Concurrency
 
+----------------------------------
 
-
-
-
-
+Principle of Least privilege -
+ Users with proper permissions
+ 
+------------------------------------
+Change Streams - 
+  It allows applications to access real-time data changes without the complexity of tailing oplog
+  
+  ChangeStreamInsertAndUpdate changeStream = new ChangeStreamInsertAndUpdate(COLLECTION_INSTANCE);
+  insertStreamThread = new Thread(changeStream);
+  
+  
+  for(ChangeStreamDocument<Document> document  : collectionsIntance.watch(bsonFilter)) {
+    
+  
+  }
 
 
 
