@@ -1,0 +1,41 @@
+That automates the deployment of application inside s/w containers
+
+1. Docker Registry
+2. Docker Host
+3. Docker Client
+4. Images
+
+Docker Commands
+docker pull
+docker serach
+docker run
+docker build
+docker ps
+docker ls
+
+Proxy:
+docker login <USER_NAME>
+
+
+Dockerfile:
+
+FROM <BASE_IMAGE_FROM_REGISTRY>
+COPY SOURCE DEST
+EXPOSE PORT_NUMBER
+CMD ["COMMAND", "PARAMETERS", ...]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
