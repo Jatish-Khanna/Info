@@ -82,7 +82,8 @@ Steps-
   Job job = (Job) context.getBean("jobBean");
   
 4) 
-
+JobExecution execution = jobLauncher.run(job, new JobParameters());
+System.out.println(execution.getStatus());
 
 
 
