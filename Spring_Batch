@@ -1,0 +1,99 @@
+Flexibility by configuring the Batch using XML
+Spring support large set of Readers and Writers - Flatfile, XML, JSON, MOngo...
+
+Scalability - Jobs in parallel, steps of Job in parallel, 
+Maintainability - by restarting from the failed state
+
+Batch Architecture ->
+  1) Application -> The code
+  2) Batch core -> Dependency to write Batch applications
+  3) Batch Architecture - Reader, Writer, Processor
+
+Batch Components in Spring -
+ 1) JOb reporsitory - 
+ 2) Job launcher - Launches the spring batch Job, with given options
+ 3) Job - a process that has to be executed, it contains multiple steps that will be executed to complete a Job
+ 4) Step  - an independent part of Job, a single work to be done 
+ 5) Item reader - A step to read an item
+ 6) Item Parser - A step to process an item
+ 7) Item Writer - A step to write an item
+
+---------------------------------
+A sample Job configuration in XML [default restartable = true]-
+ 
+ <job id="JOB_ID" restartable="false">
+  <step id="STEP_ID" next="step_2">
+  <step id="step_2">
+ </job> 
+
+---------------------------------
+Tasklet ->  a Tasklet is an interface that performs a single task within a Step . 
+             A typical use case for implementing a Tasklet is the setup up or cleaning of 
+             resources before or after the execution of a Step
+Chunk ->     Listof items
+
+ <tasklet>
+   <chunk reader="" write="" processor=""/>
+ </tasklet>
+
+---------------------------------
+<job-repository id="">
+  ...
+</job-repository>
+
+-------------------------------
+Beans to be present in Context.xml
+  1) jobRepository
+    dataSource
+    transactionManager
+    databaseType
+  2) tranactionManager
+  3) jobLauncher
+    jobRepository
+  4) dataSource
+  5) jobRepository
+
+------------------------------
+
+Job XML 
+
+<import resource="Context.xml"/>
+<bean id="itemProcessor" class="..." />
+<bean id="itemWriter" class="..." />
+<bean id="itemReader" class="..." />
+
+<job id="myFirstJob">
+  <step id="step1">
+    <tasklet>
+      <chunk reader="..." writer="..." processor="itemProcessor"/>
+    </tasklet>
+  </step>
+</job>
+
+-------------------------------
+Steps-
+1) Create application Context-
+  ApplicationContext context = new ClassPathXmlApplicationContext("...");
+  
+2) Job launcher
+  JobLauncher jobLauncher = (JobLauncher)context.getBean("jobLauncher");
+
+3) Create Job
+  Job job = (Job) context.getBean("jobBean");
+  
+4) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
