@@ -90,11 +90,114 @@ public class CustomSecutiryConfig extends WebSecurityConfigurerAdapted {
   }
 }
 
+-------------------------------------
+
+Example#2 with Java based configuration:
+The default Spring form login page will be presented to user
+
+public class CustomSecutiryConfig extends WebSecurityConfigurerAdapted {
 
 
+  @Autowired
+  protected void configureGlobal(AuthenricationManagerBuilder builder) throws Exception {
 
+    // {noop} - Spring doesn't allow plain text password, it should be encrypted
+    builder.inMemoryAuthentication()
+            .withUser("USER_NAME").password("{noop}PLAIN_TEXT_PASSWORD").roles("EMPLOYEE");
+    
+  }
 
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity.authorizeReqeusts()
+                .antMatchers("/**")
+                .hasAnyRoles("EMPLOYEE", "USER")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin();
+  }
+}
 
+-------------------------------------
+Example#3 Login authernication with username and password
+
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity.authorizeReqeusts()
+    // Permit all the request to /login and /images
+                .antMatchers("/images/**")
+                .permitAll()
+                .antMatchers("/login/**")
+                .permitAll()
+                .and()
+                .formLogin()
+                // The Form attribute/text box name - default username
+                .usernameParameter("username")
+                // The form text box name mapping - default password
+                .passwordParameter("password")
+                // Login screen
+                .loginProcessingUrl("/doLogin")
+                // Default URL if successful, true - always redirect the User to this URL
+                //alwaysUse - true if the defaultSuccesUrl should be used after authentication despite 
+                //            if a protected page had been previously visited
+                .defaultSuccessfulUrl("/index", true)
+                .failureUrl("/accessdenied")
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/accessdenied");
+  }
+
+------------------------------------
+
+Example#4 Using HttpBasic authentication
+
+@Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity.authorizeReqeusts()
+                .antMatchers("/**")
+                .hasAnyRoles("EMPLOYEE", "USER")
+                .anyRequest()
+                .authenticated()
+                .and()
+                // The basic authentication will be done
+                .httpBasic();
+  }
+
+-------------------------------------
+Example#5 Logout functionality
+
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity.authorizeReqeusts()
+    // Permit all the request to /login and /images
+                .antMatchers("/images/**")
+                .permitAll()
+                .antMatchers("/login/**")
+                .permitAll()
+                .and()
+                .formLogin()
+                // The Form attribute/text box name - default username
+                .usernameParameter("username")
+                // The form text box name mapping - default password
+                .passwordParameter("password")
+                // Login screen
+                .loginProcessingUrl("/doLogin")
+                // Default URL if successful, true - always redirect the User to this URL
+                //alwaysUse - true if the defaultSuccesUrl should be used after authentication despite 
+                //            if a protected page had been previously visited
+                .defaultSuccessfulUrl("/index", true)
+                .failureUrl("/accessdenied")
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/accessdenied")
+                
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessful("/login").permitAll();
+                
+  }
 
 
 
