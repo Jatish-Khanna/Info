@@ -1,0 +1,106 @@
+Spring-Security - is another module of Spring security
+
+Authentication - Process of verifying the user using credentials
+Authorization - restricting the access to resources
+
+The spring security can be integrated with any other Java application like JEE, Spring, 
+
+XML based config to enable security
+------------------------
+
+<filter>
+  <filter-name>
+    springSecurityFilterChain
+  </filter-name>
+  <filter-class>
+    org.springframework.web.filter.DelegatingFilterProxy
+  </filter-class>
+</filter>  
+  
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+</filter>
+  
+----OR---
+Java annotation based config
+--------------
+@EnableWebSecurity
+
+
+3. Spring boot starter security
+
+DelegatingFilterProxy will be applied on the application, over the dispatcher servlet. All the request will first be hanlded by 
+FilterProxy instead of DispatcherServlet
+
+------------------------------
+
+What are restrictions possible?
+ 
+ 1. AuthenticationManager - will handle Authenication process with the provided credentials
+      
+ 2. AuthenticationProvider - Details where the credentials are available, [source of Info.]
+    . In DB, in Memory, in AD
+ 3. UserDetailsService - details of user [instance]
+ 4. AuthorizationDecisionManager - The authenicated user is authorized to access the resources or not
+------------------------------
+For XML based configuration,
+
+<context-param><param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/security.xml</param-value>
+</context-param>
+
+<listner>
+   <listner-class>
+   
+   </listner-class>
+</listner>
+
+
+
+-----------------------------
+
+when using the XML based configuration - in security.xml file
+
+<http auto-config="true" access-denied="/accessdenied.jsp">
+  <!-- the order of intercept-url does matter, make sure specific scope should be configured first -->
+  <intercept-url pattern="/admin/**" access="ROLE_ADMIN" />  
+  <intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER" />
+</http>
+
+<authenication-manager>
+<!-- default in memory authentication provider i.e. DaoAuthenticationProvider -->
+  <authentication-provider>
+    <user-service>
+      <user name="" password="" authorities="ROLE_ADMIN" />
+    </user-service>
+  </authentication-provider>
+</authentication-manager>
+
+For Java based Configuration [replacement of security.xml]
+------------------------------
+
+public class CustomSecutiryConfig extends WebSecurityConfigurerAdapted {
+
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity.authorizeReqeust().permittAll();
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
