@@ -220,6 +220,53 @@ Example#6 - JDBC authentication
     
   }
 
+----------------------------------------
+Example#7 Session management
+
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+
+    httpSecurity.csrf().diable();
+
+    httpSecurity.sessionManagement()
+    // Second session will invalidate the first session per user
+                .maximumSessions(1)
+                .and()
+                .sessionAuthenticationErrorUrl("invalidsession.html")
+                .invalidSessionUrl("invalidsession.html");
+  
+  
+    httpSecurity.authorizeReqeusts()
+    // Permit all the request to /login and /images
+                .antMatchers("/images/**")
+                .permitAll()
+                .antMatchers("/login/**")
+                .permitAll()
+                .and()
+                  .formLogin()
+                  // The Form attribute/text box name - default username
+                  .usernameParameter("username")
+                  // The form text box name mapping - default password
+                  .passwordParameter("password")
+                  // Login screen
+                  .loginProcessingUrl("/doLogin")
+                  // Default URL if successful, true - always redirect the User to this URL
+                  //alwaysUse - true if the defaultSuccesUrl should be used after authentication despite 
+                  //            if a protected page had been previously visited
+                  .defaultSuccessfulUrl("/index", true)
+                  .failureUrl("/accessdenied")
+                  .permitAll()
+                .and()
+                  .exceptionHandling().accessDeniedPage("/accessdenied")
+                
+                .and()
+                  .logout()
+                  .logoutUrl("/logout")
+                  .logoutSuccessful("/login").permitAll();
+
+  }
+
+
 
 
 
