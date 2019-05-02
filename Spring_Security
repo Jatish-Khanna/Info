@@ -176,30 +176,49 @@ Example#5 Logout functionality
                 .antMatchers("/login/**")
                 .permitAll()
                 .and()
-                .formLogin()
-                // The Form attribute/text box name - default username
-                .usernameParameter("username")
-                // The form text box name mapping - default password
-                .passwordParameter("password")
-                // Login screen
-                .loginProcessingUrl("/doLogin")
-                // Default URL if successful, true - always redirect the User to this URL
-                //alwaysUse - true if the defaultSuccesUrl should be used after authentication despite 
-                //            if a protected page had been previously visited
-                .defaultSuccessfulUrl("/index", true)
-                .failureUrl("/accessdenied")
-                .permitAll()
+                  .formLogin()
+                  // The Form attribute/text box name - default username
+                  .usernameParameter("username")
+                  // The form text box name mapping - default password
+                  .passwordParameter("password")
+                  // Login screen
+                  .loginProcessingUrl("/doLogin")
+                  // Default URL if successful, true - always redirect the User to this URL
+                  //alwaysUse - true if the defaultSuccesUrl should be used after authentication despite 
+                  //            if a protected page had been previously visited
+                  .defaultSuccessfulUrl("/index", true)
+                  .failureUrl("/accessdenied")
+                  .permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/accessdenied")
+                  .exceptionHandling().accessDeniedPage("/accessdenied")
                 
                 .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessful("/login").permitAll();
-                
+                  .logout()
+                  .logoutUrl("/logout")
+                  .logoutSuccessful("/login").permitAll();
+
   }
 
+----------------------------------------
 
+Example#6 - JDBC authentication
+
+  @Autowired
+  DataSource dataSource;
+
+  @Autowired
+  protected void configureGlobal(AuthenricationManagerBuilder builder) throws Exception {
+
+    // {noop} - Spring doesn't allow plain text password, it should be encrypted
+    builder.jdbcAuthentication()
+            .dataSource(dataSource)
+            // The default implementation provided by Spring
+            // But below can also be used to customize it
+            .userByUsernameQuery("select username, password, enabled from users where username=?")
+            //Spring security adds the prefix "ROLE_" by default.
+            .authoritiesByUsernameQuery("select username, role from user_roles where username=?");
+    
+  }
 
 
 
