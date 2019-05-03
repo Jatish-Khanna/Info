@@ -512,7 +512,9 @@ Example#12 - Persistent based remember me service
   last_used
   
   ------------------------------------------------------
-  Expression based acces control
+  Expression based acces control - defines the access to business method level 
+    It is not like - URL level Roles based authentication
+    
   
   @EnableWebSecurity
   @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -532,9 +534,12 @@ Example#12 - Persistent based remember me service
     }
   }
   
+----------------------------------------------------------
+// Should be used at class level
+@EnableGlobalMethodSecurity (prePostEnabled = true) 
   
-  
-  
+// Should be used at method level  
+@PreAuthorize("hasRole('ROLE_USER')")  
   
   
   
