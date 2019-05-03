@@ -95,7 +95,7 @@ public class CustomSecutiryConfig extends WebSecurityConfigurerAdapted {
 Example#2 with Java based configuration:
 The default Spring form login page will be presented to user
 
-public class CustomSecutiryConfig extends WebSecurityConfigurerAdapted {
+public class CustomSecutiryConfig extends WebSecurityConfigurerAdapter {
 
 
   @Autowired
@@ -267,9 +267,282 @@ Example#7 Session management
   }
 
 
+----------------------------------------
+
+Example#8 - Using password encoder
+
+  @Autowired
+  DataSource dataSource;
+  
+  @Autowired
+  BcryptPasswordEncoder passwordEncoder
+
+  @Autowired
+  protected void configureGlobal(AuthenricationManagerBuilder builder) throws Exception {
+
+    // {noop} - Spring doesn't allow plain text password, it should be encrypted
+    builder.jdbcAuthentication()
+            .dataSource(dataSource)
+            // BCrypt Password Encoder
+            .passwordEncoder(passwordEncoder)
+            // The default implementation provided by Spring
+            // But below can also be used to customize it
+            .userByUsernameQuery("select username, password, enabled from users where username=?")
+            //Spring security adds the prefix "ROLE_" by default.
+            .authoritiesByUsernameQuery("select username, role from user_roles where username=?");
+    
+  }
 
 
+----------------------------------------
 
+Example#9 - Using HTTPs instead of HTTP
 
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
 
+    httpSecurity.csrf().diable();
 
+    httpSecurity.sessionManagement()
+    // Second session will invalidate the first session per user
+                .maximumSessions(1)
+                .and()
+                .sessionAuthenticationErrorUrl("invalidsession.html")
+                .invalidSessionUrl("invalidsession.html");
+                
+   // Should use HTTPs protocol             
+  httpSecurity.requiresChannel().anyRequest()
+              .requiresSecure();
+  
+  // HTTP port mapping
+  httpSecurity.portMapper().http(8080).mapsTo(8080);
+  
+    httpSecurity.authorizeReqeusts()
+    // Permit all the request to /login and /images
+                .antMatchers("/images/**")
+                .permitAll()
+                .antMatchers("/login/**")
+                .permitAll()
+                .and()
+                  .formLogin()
+                  // The Form attribute/text box name - default username
+                  .usernameParameter("username")
+                  // The form text box name mapping - default password
+                  .passwordParameter("password")
+                  // Login screen
+                  .loginProcessingUrl("/doLogin")
+                  // Default URL if successful, true - always redirect the User to this URL
+                  //alwaysUse - true if the defaultSuccesUrl should be used after authentication despite 
+                  //            if a protected page had been previously visited
+                  .defaultSuccessfulUrl("/index", true)
+                  .failureUrl("/accessdenied")
+                  .permitAll()
+                .and()
+                  .exceptionHandling().accessDeniedPage("/accessdenied")
+                
+                .and()
+                  .logout()
+                  .logoutUrl("/logout")
+                  .logoutSuccessful("/login").permitAll();
+
+  }
+
+For Spring Boot application-
+application.yml should have-
+
+server
+  ssl
+    key-store:classpath:keystore.jks
+    key-store-type:JKS
+    key-password:changeit
+    key-alias:tomcat
+
+Create Keystore using keytool
+  keytool -genkeypair -alias tomcat -keyalg RSA -keysize 2048 -keystore keystore.jks -validity 365
+
+Verify certificate
+  keytool -v -list 
+  
+  ----------------------------------
+  
+  Remember me Service - Helps to retain user access token information event the has closed the session
+  
+  1. Token based - Token will be stored in the Cookie
+  2. Persistent based - token to be stored in database
+  
+----------------------------------------
+
+Example#11 - Token based remember me service
+
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+
+    httpSecurity.csrf().diable();
+
+    httpSecurity.sessionManagement()
+    // Second session will invalidate the first session per user
+                .maximumSessions(1)
+                .and()
+                .sessionAuthenticationErrorUrl("invalidsession.html")
+                .invalidSessionUrl("invalidsession.html");
+                
+   // Should use HTTPs protocol             
+  httpSecurity.requiresChannel().anyRequest()
+              .requiresSecure();
+  
+  // HTTP port mapping
+  httpSecurity.portMapper().http(8080).mapsTo(8080);
+  
+    httpSecurity.authorizeReqeusts()
+    // Permit all the request to /login and /images
+                .antMatchers("/images/**")
+                .permitAll()
+                .antMatchers("/login/**")
+                .permitAll()
+                .and()
+                  .formLogin()
+                  // The Form attribute/text box name - default username
+                  .usernameParameter("username")
+                  // The form text box name mapping - default password
+                  .passwordParameter("password")
+                  // Login screen
+                  .loginProcessingUrl("/doLogin")
+                  // Default URL if successful, true - always redirect the User to this URL
+                  //alwaysUse - true if the defaultSuccesUrl should be used after authentication despite 
+                  //            if a protected page had been previously visited
+                  .defaultSuccessfulUrl("/index", true)
+                  .failureUrl("/accessdenied")
+                  .permitAll()
+                .and()
+                  .exceptionHandling().accessDeniedPage("/accessdenied")
+                
+                .and()
+                  .logout()
+                  .logoutUrl("/logout")
+                  .logoutSuccessful("/login").permitAll()
+                  
+                  // Token and remember me service
+                  .deleteCookies("JSESSIONID")
+                  .and()
+                  .rememberMe()
+                  // HTML element name and Cookie name
+                  .rememberMeParameter("remember-me")
+                  .key("unqueAndSecret")
+                  .tokenValiditySeconds(86400);
+
+  }
+  
+----------------------------------------
+
+Example#12 - Persistent based remember me service
+
+  @Autowired
+  PersistentTokenRepository tokenRepository;
+
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+
+    httpSecurity.csrf().diable();
+
+    httpSecurity.sessionManagement()
+    // Second session will invalidate the first session per user
+                .maximumSessions(1)
+                .and()
+                .sessionAuthenticationErrorUrl("invalidsession.html")
+                .invalidSessionUrl("invalidsession.html");
+                
+   // Should use HTTPs protocol             
+  httpSecurity.requiresChannel().anyRequest()
+              .requiresSecure();
+  
+  // HTTP port mapping
+  httpSecurity.portMapper().http(8080).mapsTo(8080);
+  
+    httpSecurity.authorizeReqeusts()
+    // Permit all the request to /login and /images
+                .antMatchers("/images/**")
+                .permitAll()
+                .antMatchers("/login/**")
+                .permitAll()
+                .and()
+                  .formLogin()
+                  // The Form attribute/text box name - default username
+                  .usernameParameter("username")
+                  // The form text box name mapping - default password
+                  .passwordParameter("password")
+                  // Login screen
+                  .loginProcessingUrl("/doLogin")
+                  // Default URL if successful, true - always redirect the User to this URL
+                  //alwaysUse - true if the defaultSuccesUrl should be used after authentication despite 
+                  //            if a protected page had been previously visited
+                  .defaultSuccessfulUrl("/index", true)
+                  .failureUrl("/accessdenied")
+                  .permitAll()
+                .and()
+                  .exceptionHandling().accessDeniedPage("/accessdenied")
+                
+                .and()
+                  .logout()
+                  .logoutUrl("/logout")
+                  .logoutSuccessful("/login").permitAll()
+                  
+                  // Persistent based remember me service
+                  .deleteCookies("JSESSIONID")
+                  .and()
+                  .rememberMe()
+                  // HTML element name and Cookie name
+                  .rememberMeParameter("remember-me")
+                  // Additional repository details
+                  .tokenRepository(tokenRepository)
+                  .tokenValiditySeconds(86400);
+
+  }
+  
+  1. It will Cookie submitted
+  2. Extract the expiration and Token value for the submitted series identifier
+  3. If token in the cookie and token for the series matches
+    . Also token is not expired
+  4. User will be logged in
+  5. token Value and last_used updated in the database for the series identifier
+  
+  Will store the information in "persistent_logins" table
+  user
+  token
+  series
+  last_used
+  
+  ------------------------------------------------------
+  Expression based acces control
+  
+  @EnableWebSecurity
+  @EnableGlobalMethodSecurity(securedEnabled = true)
+  
+  class CustomSecurity extends WebSecurityConfigurerAdapter {
+  
+  }
+  
+  
+  @RestController
+  class MyControler {
+  
+  @Secured("ROLE_ADMIN")
+    @PostMapping("/secured")
+    public String myMethodSecuredForRole() {
+      return "You have access";
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
