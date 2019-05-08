@@ -1,0 +1,33 @@
+Sonar Qube?
+  Code analysis tool,
+  open source code quality management tool to analyze 
+  Can be integrated with Maven, Ant, CI tools like Jenkins
+  Rule based defect identification
+  
+Components?
+ . A SonarQube Server
+ . SonarQube Database
+ . Sonar Qube plugins
+ . SonarQube scanners
+ 
+ Connect to external Database-
+   $SONAR_HOME/conf/sonar.properties
+  Least privilge - create tables, indices, and triggers
+  
+ Extensions -
+   $SONAR_HOME/extensions/plugins/*.jar
+   
+   
+ Sonar Scanner -> $SONAR_SCANNER_HOME/conf/sonar-scanner.properties define the SonarQube server to be connected to  
+   
+ 
+
+
+
+
+
+
+
+
+
+
