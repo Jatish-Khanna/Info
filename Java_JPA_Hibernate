@@ -80,3 +80,57 @@ SPing JPA data advantages and summary
   . @ready avaiable readOnly transaction scope and can be extended easily to Read/Write transactional
   . @Modifying(clearAutomatically = true) to support transactional API
   . Paging and Sorting operations have been provided
+
+======================
+
+Object Relational Impedence Mismatch? when using JDBC
+
+  Problem of Granularity - mismatch b/w Object and number of tables in DB
+  Problem of Subtype - Inheritance is not present in DB
+  Problem of Associations - Java represents has a relationship within Objects whereas RDBMS has concept of Foriegn Key 
+  Problem of Identity - The Comparison of Instances is done using equals method, whereas RDBMS uses Primary key
+  Problem of Navigation - Joins in RDBMS to get data for Object references and association whereas . operator in Java
+
+---------------------------
+
+Solution and Benefits?
+  ORM - Object relational Mapping
+  1. resolves ORM impedance mismatch
+  2. Lower level interation with database
+  3. ORM helps to get rid off SQL's
+  4. ORM is database independent - 
+  
+---------------------------
+
+JPA is a standard specification for ORM in Java, which resolves the issues of porting application within multiple ORMs
+i.e. ORM implements JPA specifications
+
+1. Classes - Tables
+2. Fields - Columns
+3. Instance - Record
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
