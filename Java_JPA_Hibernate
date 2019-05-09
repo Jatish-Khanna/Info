@@ -110,18 +110,91 @@ i.e. ORM implements JPA specifications
 3. Instance - Record
 
 
+----------------------------------
+
+@Table, @Entity, @Column, @Id, @Transient, @Temporal(covert date to compatible date type)
+
+----------------------------------
+
+Hibernate Configuration?
+
+1. Using XML - hibernate.cfg.xml
+  <hibernate-configuration>
+    <session-factory>
+      <property name=""></property>
+      ...
+      
+      <! -- class: attribute to be used if Configuration is done using - Annotations
+         resource: attribute to be used if Configuration is done using - *.hbm.xml -->
+      <mapping class="..." />
+    </session-factory>
+    
+  </hibernate-configuration>
+  
+  
+  Few properties to be defined -
+    hibernate.connection.driver_class = "com.mysql.jdbc.Driver"
+    hibernate.connection.url = "jdbc:mysql://localhost:3306/database"
+    hibernate.connection.username = "root"
+    hibernate.connection.password = "root"
+    hibernate.dialect = "org.hibernate.dialect.MySQL5Dialect"
+
+---------------------------------
+
+Load the Configuration using Java application ?
+  Configuration configuration = new Configuration.configure("hibernate.cfg.xml")
+
+// If the configuration file is present in classpath, it will be loaded automatically
 
 
+--------------------------------------
 
+Java based Configuration?
+  Configuration configuration = new Configuration();
+  
+    Few properties to be defined -
+    hibernate.connection.driver_class = "com.mysql.jdbc.Driver"
+    hibernate.connection.url = "jdbc:mysql://localhost:3306/database"
+    hibernate.connection.username = "root"
+    hibernate.connection.password = "root"
+    hibernate.dialect = "org.hibernate.dialect.MySQL5Dialect"
+  
+  configuration.setProperty("", "");
+  ...
+  
+  // Annotation based Entity classes
+  configuration.addAnnotatedClass(...class);
+  or
+  // Hibernate Mapping HBM defined using XMLs
+  configuration.addResource("Class.hbm.xml");
 
+-------------------------------------
 
+Hibernate ORM
+  1. SessionFactory
+    . A single thread session, transient Object
+    . Requires transaction API for implementing CRUD operations
+    
+  2. TransactionFactory
+    . A threaded Operation, as single unit of work
+    . A single session can make multiple transactions
+    
+    transaction.begin()
+    transaction.commit()
+    transaction.rollback()
+    
+  3. ConnectionProvider
+  
+  a) Session API
+  b) Transaction API
 
+-----------------------------------------
 
-
-
-
-
-
+How to create A SessionFactory?
+  1. StandardServiceRegistryBuilder -------> ServiceRegistry ----------------------->
+                                                                                      |-----> SessionFactory  
+  2. Load Hibernate Configuration (hibernate.cfg.xml) ------> Configuration --------->
+  
 
 
 
