@@ -309,14 +309,65 @@ Entity states -
       to be released at the end of the transaction. Also range-locks must be acquired 
       when a SELECT query uses a ranged WHERE clause, especially to avoid the phantom reads phenomenon.   
 
+   ----------------------------
    
+   Query the DB?
    
+    1. Retrieve by identifier
+      data retrieval can only be done using Primary Key
+      - get() or load() method
+      
+    2. Hibernate Native Query language (SQL Query API)
+        Using basic SQL query as a part of Hibernate framework()
+        
+        SQLQuery queryResult = session.createSQLQuery("...");
+        List<Object[]> listOfObjects = queryResult.list();
+        
+    
+    3. Hibernate Query language (Query API)
+      Using the hibernate query 
+      
+      Query query = session.createQuery("...");
+      List<Object[]> listOfObjects = query.list();
+    
+    4. Criteria API
+
+
+   5. Named Query - when application is using a query repeatedly, 
+   @NamedQuery(name ="", query = "")
+   The annotation to be used on the entity class, where @Entity annotation is present
    
+   @NamedQueries({
+    @NamedQuery(...),
+    @NamedQuery(...)
+   })
    
+   //Using named query
+   session.getNamedQuery("nameOfQuery");
    
-   
-   
-   
-   
-   
+-------------------------------------------------
+
+Aggregate Functions?
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    
