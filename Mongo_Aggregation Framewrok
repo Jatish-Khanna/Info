@@ -97,23 +97,177 @@ Note:
     ])
 
 
+-----------------------------
+
+3) $addFields :  similar to $project with a key difference
+  - It adds fields to the documents whereas with project we can selectively remove and retain fields
+  
+It only allow  to modify existing fields or add new fields in pipeline documents
+   db.<COLLECTION_NAME>.aggregate(
+    [
+     {
+      $addFields: {
+      // Here the value of subdocument will be reassigned/creating a new field
+        "newFieldFromSubFields" : "$field.subfield"
+      }
+     }
+    ])
+
+However, the operation performed is similar to $project but -
+  * It won't remove any fields from output
+ 
+ Note: In the above example - newFieldFromSubField will be one additional field in the document
+   - With $project, we would have got output with just two fields as _id and newFieldFromSubField
+  
+-------------------------------
+
+4) $geoNear - to perform geo queries with in the aggregation pipeline
+  ** geoNear must be the first stage in the pipeline
+  
+  - difference with $near is, $near cannot use any special indexes like $text
+  - The collection on which aggregation is performed must have one and only one geoIndex
+  
+
+   db.<COLLECTION_NAME>.aggregate(
+    [
+     {
+      $geoNear: {
+        {
+          near : { type : "Point", coordinates : [long, lat]},
+          distanceField : "returnColumnWithInRange",
+          // Specified true if the index is a 2D sphere else false
+          spherical : true
+        }
+      }
+     }
+    ])
+
+spherical	boolean	Determines how MongoDB calculates the distance between two points:
+limit	number	Optional. The maximum number of documents to return
+
+num	number	Optional. The num option provides the same function as the limit option. 
+                      Both define the maximum number of documents to return. 
+                      If both options are included, the num value overrides the limit value.
+
+maxDistance	number	Optional. The maximum distance from the center point that the documents 
+query	document	Optional. Limits the results to the documents that match the query.
+
+distanceMultiplier	number	Optional. The factor to multiply all distances returned by the query.
+uniqueDocs	boolean	Optional. If this value is true, the query returns a matching document once, 
+
+distanceField	string	The output field that contains the calculated distance
+includeLocs	string	Optional. This specifies the output field that identifies the location used to calculate the distance.
+
+minDistance	number	Optional. The minimum distance from the center point that the documents can be.
+key	string	Optional. Specify the geospatial indexed field to use when calculating the distance.
+
+Note: if Using 2D sphere the distance is returned in meters, 
+     if using legacy coordinates the distance is returned in radians
+
+--------------------------------------------
+
+Cusor like Stages -
+  a) sort
+  b) skip
+  c) limit
+  d) count
+
+** These stages have a equivalent in our query language as cursor method
+
+Example- 
+   db.<COLLECTION_NAME>.find(
+   {}, {_id: 0, col1 : 1}).pretty()
+
+above finds all the records and display only col1 in pretty print mode
+
+a) Count the documents - 
+
+db.<COLLECTION_NAME>.find(
+   {}, {_id: 0, col1 : 1}).count()
+
+b) skip documents - 
+
+db.<COLLECTION_NAME>.find(
+   {}, {_id: 0, col1 : 1}).skip(1).pretty()
+
+c) limit the elements -
 
 
+db.<COLLECTION_NAME>.find(
+   {}, {_id: 0, col1 : 1}).limit(1).pretty()
 
 
+d) Sort the documents -
+  - Default sort order for mongoDB is insertion_sort 
 
+db.<COLLECTION_NAME>.find(
+   {}, {_id: 0, col1 : 1}).skip(1).sort({col1 : -1}).pretty()
+  
+reverse order of col1 data
 
+ ****** The above methods are also available in the form of aggregation operators *******
+ 
+ $limit : { <integer> }
+ $skip : { <integer> } 
+ $count : { <Name of Column shows the count> } 
+ $sort : {<field to sort on : <integer and direction>>}
 
+Example - 
 
+ 
+   db.<COLLECTION_NAME>.aggregate(
+    [
+     {
+      $project: {
+      // Here the value of subdocument will be reassigned/creating a new field
+        _id: 0, "newFieldFromSubFields" : "$field.subfield"
+      }
+     }, {
+       $skip : 1
+     },
+     {
+      $limit : 5
+     },
+     {
+      $sort : { "newFieldFromSubField" : -1}
+     }
+    ])
 
+Note: $sort can take max of 100 MB of RAM 
+       Setting allowDiskUse: true, allows for larger sort
 
+-------------------------------------------
 
+4) $sample stage - a set of random documents will be selected from the collection
+  
+  a) Method-1:
+  
+  - if size if specified i.e. N
+  
+  where 
+   N <= 5% of the number of document in the Collection and,
+   100 <= Total number of documents in the source Collection and,
+   $sample is the first stage
 
+Then a pseudo-random cursor will be selected to fecth the required number of documents
 
+b) Method-2 :
+  All other conditionos - 
+  then in-memory random sort and select the number of documents required from the source collection
 
+Note: The sort has same restriction as of $sort aggregation operator
 
-
-
+Example
+   db.<COLLECTION_NAME>.aggregate(
+    [
+     {
+      $sample: {
+       {
+         size: 10
+       }
+      }
+     }
+    ])
 
 
 
