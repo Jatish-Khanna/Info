@@ -1,0 +1,134 @@
+Pipelines -
+  There are different stages, to filter and transform data
+  a) $match
+  b) $project
+  c) $group
+
+The data flows like packages on assembly line, passing from one stage to next stage
+Each pipeline can have many stages to filter and transform data
+
+
+Structure and Syntax -
+  db.<Collection_NAME>.aggregate([{STG_1, STG_2, STG_3 ... STG_N}], <OPTIONS>)
+  . Each pipeline can have as many stages as you like
+  . Multiple options can be provided, e.g. to use the explain plan of query
+
+E.g.
+  db.myCollection.(
+      [{
+      $match: {
+        ...
+      }
+      },{
+        $project: {
+          ...
+        }
+      }
+      ], {allowDiskUse: true})
+
+--------------------------
+
+  Different types of Operators Used in aggregation -
+   
+   Aggregation operators: $match and $project are the aggregation operators
+   Query Operators: $in and $gte ..
+  System Variable: started with $$ and followed by Uppercase letters, e.g. $$CURRENT
+  User variable: started with $$ and followed by lower letters, e.g. $$myVariable
+
+Note:
+  Some expression in aggregation pipeline can be used in certain stages
+  An aggregation pipeline is an array of Stages
+
+-----------------------------
+
+$match - stage to filter documents in mongo pipeline 
+
+  db.<COLLECTION_NAME>.aggregate(
+    [
+     {
+      $match: {
+        ...
+      }
+     }
+    ])
+
+Note:
+  $match can be used at any stage of the pipeline
+  it can be virtually followed by almost all other aggregation operators [few exceptions]
+  
+  If we want to use $text operator, $match stage must be the first stage in the pipeline
+  $match cannot be used with $where
+  $match doesn't have any mechanism for Projection but $find allows us.
+  $match cannot use both query operators and aggregation expresions
+  
+-------------------------------
+
+2) $project - project aggregation operator has wider functionality when compared to $find followed by projection functionality
+
+- Select the fields to be displayed
+- Select the fields to be removed
+- Drive new fields 
+- Reassign existing fields
+
+  db.<COLLECTION_NAME>.aggregate(
+    [
+     {
+      $project: {
+        ...
+      }
+     }
+    ])
+
+
+ . _id fields has to be explicitly removed in case of projection
+ * If any fields is explicitly requested to project all the Other fields will be removed from Output but _id field
+ * $project can be used as many times in the aggregation pipeline
+ 
+ Example of reassigning a value:
+ 
+   db.<COLLECTION_NAME>.aggregate(
+    [
+     {
+      $project: {
+      // Here the value of subdocument will be reassigned/creating a new field
+        _id: 0, "newFieldFromSubFields" : "$field.subfield"
+      }
+     }
+    ])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
