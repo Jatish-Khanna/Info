@@ -23,7 +23,7 @@ MongoDB performance - a mission critical infrastructure
    -----------------------------
    
   mongoDB is a distributed database - with a sharing cluster it can easily scale horizontally
-  Write COncer, Read Concern, Read preferences are taken into consideration when analyzing the performance of application
+  Write Concern, Read Concern, Read preferences are taken into consideration when analyzing the performance of application
   
   ----------------------------
   
@@ -91,6 +91,49 @@ Journal acts as safeguard againt data corruption, caused by unexpected failure.
  - From application perspective Journals can be enforced to synch data before ACK the write using "j: true"  in writeCONCERN
 
 -------------------------------------
+
+Types of Indexes ?
+ 1) Single Field index - the simplest of all types
+   * That captures just keys on single field
+   * The keys are only from One field
+   * Can find a single value for the Index
+   * can find a rangle of values
+   * Can use dot notation to index fields in subdocuments
+   * To find distinct value in a query
+ 
+ Step-1
+   db.collection.find({...}).explain("executionStats")
+    - Extra information about the query
+ *Analyze the Execution stats from the response
+
+ Step-2 
+  Create an index over the column searcher to retrieve data from the MongoDB collection
+  db.collection.createIndex({column1: 1})
+  // An index will be created by MongoDB over the Column
+  
+  Creating an Index means- 
+    * Pulling data of particular column from Each document in the database
+    * If the field is not present making a key/entry as NULL
+  
+  Step-3
+    Repeat step-1 and analyze the executionStats esp.
+    
+    nReturned - number of document returned by the search query
+    totalKeysExamined - number of Keys looked up by Query engine
+    totalDocsExamined - number of documents from the complete collection pulled
+    winningPlan.inputStage.stage - would be index scan (IXSCAN) instead of Collection scan (COLLSCAN)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
