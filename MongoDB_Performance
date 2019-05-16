@@ -123,8 +123,17 @@ Types of Indexes ?
     totalDocsExamined - number of documents from the complete collection pulled
     winningPlan.inputStage.stage - would be index scan (IXSCAN) instead of Collection scan (COLLSCAN)
 
-
-
+Imapct of Indexes on Sorted Data?
+  Sorting can be done -
+  a) In memory -
+    The stored documents are retrieved from the disk into RAM
+    An algorithm has been executed on the data to be sorted in Memroy
+      
+  b) Using index -
+    If Query is using an Index Scan [check executionStats], the documents retured are guranteed to be sorted by Index keys
+    
+    - No need to perform an Explicit sort
+    - 
 
 
 
