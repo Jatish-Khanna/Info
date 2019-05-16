@@ -1,0 +1,108 @@
+MongoDB performance - a mission critical infrastructure
+ It is a high performance DB, 
+  
+  - Memory - quintessential resource
+    It has storage engines that are very dependent on RAM for datamanagement operations
+     e.g. Aggreation Pipelines, Index traversing, Writes in RAM first, Query engine, Connections ...
+  
+  The more the RAM, the more performant MongoDB will be
+  
+  - CPU
+    * Concurreny Model, uses max CPU cores possible
+   E.g. Map reduce, Page compression, Aggregation operations, data calculation
+  
+  - I/O
+  All write and read operations are non-locking
+  Single document updates doesn't help with performance as it locks the document for underlined updates
+  
+  Data persistance is done on Disk, the faster the disks are - affects the performance of MongoDB ()
+   E.g HDD, EBS, SSD
+  
+  The best RAID architecture for MongoDB is - RAID 10, 
+    and RAID 0 [only for write operations]
+   -----------------------------
+   
+  mongoDB is a distributed database - with a sharing cluster it can easily scale horizontally
+  Write COncer, Read Concern, Read preferences are taken into consideration when analyzing the performance of application
+  
+  ----------------------------
+  
+  1) Indexes ?
+    To imporve the slow queries and responses from MongoDB by enhancing the Collection scan
+   
+   _id is automatically indexed by MongoDB
+   BTree are used to store the indexes
+    - Each new Insertion may not be an extra comparison in BTree
+   
+   Problem with Index - Index Overhead?
+     A new document or remove or changed, will have to change the BTrees
+   
+ -------------------------------
+ 
+ How Data is stored on a Disk in MongoDB ?
+   Database - A logical group of collections
+   Collection - operation units that group documents
+   Index - over the Collection
+   Document - Atomic unit of information
+   
+   
+   The File Structure - 
+     * For each Collection a separate file has been created
+     * For each Index a seperate files has been created by MongoDb
+     
+     _mdb_catalog.wt - Catalog of all the different Collections and indexes
+     
+  a) mongod --dbpath . --fork --logpath /var/log/mongo
+    - A simple mongo instance will be started with a DB files created in current directory
+    
+  b) mongod --dbpath . --fork --logpath /var/log/mongo --directoryperdb
+    An additional option --directoryperdb, creates a new directory for each database instance
+    
+    - Inserting a document will create a single collection file and index for the collection in DB directory
+  
+   Note: admin and local are default databases, created by MongoDB
+   
+  c) mongod --dbpath . --fork --logpath /var/log/mongo --directoryperdb --wiredTigerDirectoryForIndexes
+     A different organation, with an individual directory per Collection and a single directory for Indexes
+   
+ But Why you think is Important Creating such different Structures?
+   Quitessential answer would be, PERFORMANCE
+     - An I/O parallelization can be achieved by mounting the physical drives over servers
+      As only DS used are collections, and Indexes
+      
+    Positively impacting the performance, throughput of persistency layer
+    In addition to that, MongoDB allows the compression of disks 
+   
+   Note:
+     MongoDb writes data first to memory and then synchronized/writen to any persistency layer
+     The operation is triggered by two ways- 
+     
+     a) WriteConcern -  [User Side]
+       db.collection.insert({...}, {writeConcern :  {w:3} })
+     
+     b) Preodically internal process, i.e. Sync period
+   
+Journal acts as safeguard againt data corruption, caused by unexpected failure.
+ - The data stored in journal to recover the data
+ - To minimize the performance impact of Journal, it writes the document in grouped formats [Group flushes]
+ - All writes are atomic, to ensure consistency of Journal file
+       db.collection.insert({...}, {writeConcern :  {w:3, j:true} })
+ 
+ - From application perspective Journals can be enforced to synch data before ACK the write using "j: true"  in writeCONCERN
+
+-------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
