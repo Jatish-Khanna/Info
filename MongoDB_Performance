@@ -178,3 +178,57 @@ Sort Direction with Compound Indexes?
   The direction matters when creating compound Indexes
   - If the direction of Index is opposite to direction of sort for keys other than first, will perform in-memory sort
    As the data indexed is in reverse order
+
+--------------------------------------------------
+
+Multi-key Indexes?
+  - We can have nested documents like -
+   root : {
+    subdoc : [
+      {f1 : val1}.
+      {f1 : val2}
+    ]
+   }
+
+  db.collection.createIndex({root.subdoc.f1 : 1})
+
+ - We can also create index on the array
+  {
+   root : [val1, val2]
+   }
+
+db.collection.createIndex({root : 1})
+
+  Note: here index keys will be created on all the values of the array
+    Creating a compound index on Two fields of one which is an array will create a huge Cartesian product of both the arrays
+  
+  Creating an Index on parallel arrays will fail with the Exception as "CannotIndexParallelArrays"
+  
+  --------------------------------------
+  
+  Partial Indexes ?
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
