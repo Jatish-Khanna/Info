@@ -299,12 +299,82 @@ db.collection.createIndex({root : 1})
   textScore - to find the sorted query score for each matched token in ASC i.e. lowest match displayed first
   
 ----------------------------------------------
-
 Collations in MongoDB ?
+  Allows user to specify language specific rules for String comparison
+  Such as, Letter comparison, accent marks
+  
+  {
+   locale: <string>,
+   caseLevel: <boolean>,
+   caseFirst: <string>,
+   strength: <int>,
+   numericOrdering: <boolean>,
+   alternate: <string>,
+   maxVariable: <string>,
+   backwards: <boolean>
+}
+
+locale	string	The ICU locale. See Supported Languages and Locales for a list of supported locales.
+strength	integer	Optional. The level of comparison to perform.  
+
+caseLevel	boolean	Optional. Flag that determines whether to include case comparison at strength level 1 or 2.
+          If true, include case comparison; i.e.
+
+          When used with strength:1, collation compares base characters and case.
+          When used with strength:2, collation compares base characters, 
+          diacritics (and possible other secondary differences) and case.
+          If false, do not include case comparison at level 1 or 2. The default is false.  
   
   
-  
-  
-  
-  
-  
+
+caseFirst	string	Optional. A field that determines sort order of case differences during tertiary level comparisons.
+                   “upper”	Uppercase sorts before lowercase.
+                   “lower”	Lowercase sorts before uppercase.
+                   “off”	Default value. Similar to "lower" 
+                   
+numericOrdering	boolean	Optional. Flag that determines whether to compare numeric strings as numbers or as strings.
+
+                If true, compare as numbers; i.e. "10" is greater than "2".
+                If false, compare as strings; i.e. "10" is less than "2".                   
+
+alternate	string	Optional. Field that determines whether collation should consider
+                       whitespace and punctuation as base characters for purposes of comparison.                   
+                   
+maxVariable	string	Optional. Field that determines up to which characters are considered 
+                        ignorable when alternate: "shifted". Has no effect if alternate: "non-ignorable"                   
+                   
+backwards	boolean	Optional. Flag that determines whether strings with diacritics 
+                    sort from back of the string, such as with some French dictionary ordering.                   
+                   
+normalization	boolean	Optional. Flag that determines whether to check if text require normalization 
+                     and to perform normalization. Generally, majority of text 
+                     does not require this normalization processing.                   
+                   
+
+Note: We can define a collation for the collection, which means all queries and indexes 
+      in such collection will be using the associated collation
+                   
+Example of Collation on Collection:
+  db.createCollation(
+  {
+   "collection_name", {
+     collation : { locale : "en" } 
+   }
+  })
+
+Example of Collation on Index :
+
+  db.collection.createIndex({
+    field1 : 1
+  },
+  {
+    collation : {locale : "en"}
+  }
+  )
+                   
+Note: Index level collation has been overriden over the collection level collation defined                   
+      The query must match collation of the index defined
+      else, the created indexed won't be used
+    Example, how to define the collation for the query
+      db.collection.find({field1 : "value"}).collation({locale : "en"})
+                                             
