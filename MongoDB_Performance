@@ -378,3 +378,6 @@ Note: Index level collation has been overriden over the collection level collati
     Example, how to define the collation for the query
       db.collection.find({field1 : "value"}).collation({locale : "en"})
                                              
+You cannot specify multiple collations for an operation. 
+For example, you cannot specify different collations per field, 
+or if performing a find with a sort, you cannot use one collation for the find and another for the sort.
