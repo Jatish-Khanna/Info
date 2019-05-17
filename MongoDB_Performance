@@ -135,6 +135,62 @@ Imapct of Indexes on Sorted Data?
     - No need to perform an Explicit sort
     - 
 
+-------------------------------------------
+
+2) Compound Indexes?
+  A compound index is an index on Two or More fields
+  In MongoDB - indexes are BTrees, and ordering is flat
+  - Index keys are ordered list
+  
+ Index Prefixes?
+    For a Compound index the Order matters as a prefix
+    {col1 : 1,  col2 : 1, col3 : 1}
+    Where only possible prefixes are - 
+    {col1 : 1}
+    {col1 : 1, col2 : 1}
+
+If we're querying DB can use both Compound index and its prefix to serve the query
+but it won't use any indexes other than compound or it's prefixes
+
+Note: 
+  not even a subindex like {col1 : 1, col3 : 1} can be used, here only allowed index prefix is {col1}
+  Ordering of fields does matter when creating a compound index, 
+    if Order of keys in filter/find is different than used in compound index, no such index will be used
+    E.g. {col2 : 1, col1 : 1} is not allowed as prefix index
+
+Example - 
+ Looking for data only using col2 with the created compound index, won't utilize the specified compound index.
+ 
+-----------------------------------------------
+
+Sorting with Compound indexes ?
+   The keys specified in Compound index doesn't necessarly uses the index while looking/finding document
+    based on filter criteria specified
+    
+  The best thing to do is- create an index such where query search and sort can use the index/prefix of compound index
+  E.g.
+   find({col1 : "val", col2 : "val2"}).sort({col3 : 1})
+
+The above example makes a quality condition, as the order of filter and sort makes a quality index/prefix
+
+---------------------------------------------------
+Sort Direction with Compound Indexes?
+  The direction matters when creating compound Indexes
+  - If the direction of Index is opposite to direction of sort for keys other than first, will perform in-memory sort
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
