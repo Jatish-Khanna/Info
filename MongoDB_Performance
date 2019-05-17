@@ -207,24 +207,100 @@ db.collection.createIndex({root : 1})
   --------------------------------------
   
   Partial Indexes ?
+    To index a portion of documents in a collection
+    Index a subsetof document takes advantage of lower cost for storage and maintenance it
     
+    Example:
+    
+    root : {
+      f1: v1,
+      f2 : v2,
+      
+      subdocument: {
+        s1 : v3,
+        s2 : v4
+      }
+    }
+    
+  db.collection.createIndex( {
+    {f1 : 1},
+    
+    { partialFilterExpression : {s1 : {$gt : 5, $lt : 10}}}
+  })
   
+  // Compound index with f1 fiels and s1 with value in range 5 - 10 exclusive
+  // Partial indexes are useful for multi-key indexes such as indexing only few values in the array
   
+  Note: It is important to frame the query for Partial indexed in which 
+    Query must be guranteed to match a subset of the documents, specified by the filter expression of Index
+    The reason to above is, server could miss results in case matching documents are not indexed
+     
+     ** Shard Key cann't be the partial Index
+------------------------------
+  Sparse Indexes ? 
   
+   Both Partial and Sparse indexed cann't be used at same time
   
+    These are special type of partial key indexes,
+     sparse indexes where the field exists that we're indexing on
+     Rather than, creating an index key with NULL value
+     
+     This same can be done with the Partial indexes as
+     
+     db.collection.createIndex(
+       {f1 : 1},
+       {sparse : true}
+     )
+     
+  OR
   
+  Emulation of Sparse index with the Partial Index...
   
+    db.collection.createIndex(
+     {f1 : 1},
+     {partialFilterExpression : { f1 : {$exists : true }}}
+    )
+  Note: The Partial index gives you additional privlege of 
+    - Expressing the query and constraints better than sparse Index
+    - It helps you to verify the fields other than fields indexes on
   
+  ---------------------------------------
   
+  Text Indexes ?
+    The option to using the Regular Expression when searching through documents.
+    Regular expressions has performance disadvantages while searching a subtext/substring from MongoDB text field
+    
+    db.collection.createIndex({ f1 : "text"})
+    // Rather than passing the field as ASC or DESC, here index specifies the type to be "text"
+    
+   How to levrage the MongoDB text search features?
+     db.collection.find({$text {$search : "value"}})
+  This avoid colection scan where as this is similar to multi-key indexes
   
+  Note: Unicode considers " " and "-" as text delimiters, to make tokens out of full text string
+  // Default: Text-indexes are case insensitive, 
   
+  Note:
+   Text indexes delimit each word and "OR" each delimited word
+   
+   db.collection.find(
+   {
+     $text: {
+      $serach : "Token1 token2"
+     },
+     {
+      "calculatedDocumentScore" : {$meta : "textScore"}
+     }
+   }
+   )
   
+  calculateDocumentScore - the output field header
+  $meta - query operator
+  textScore - to find the sorted query score for each matched token in ASC i.e. lowest match displayed first
   
-  
-  
-  
-  
-  
+----------------------------------------------
+
+Collations in MongoDB ?
   
   
   
