@@ -401,16 +401,71 @@ Note:
  * Lookup will perform a strict equivality operation
  * as - will override if the name already exists in the document
 
+------------------------------------------------
 
+$graphLookup - 
+  Use cases : Reporting chain, routes, disease taxonmy, social networks, fraud detection
+  $graphLookup : {
+    from: 
+    startWith:
+    connectFromField:
+    connectToField:
+    as:
+    maxDepth:
+    depthField:
+    restrictSearchWithMatch:
+  }
+  
+  Modeling such datasets having relational capabilites can be done using-
+  1) Parent reference : E.g. in case of Employee hierarchy, a document pertains a field which references to its parent
+  {_id: 2, name :" ...", reports_to: 1}
+  {_id: 1, name :" ...", reports_to: 1}
+There is always a link b/w entities
 
+Note: Challege with above structure is-
+  To fetch complete hierarchy, all the documents must be iterated
+  Each time a new request to be initiated for different report_to value
+  
+   Aggregation operation like GraphLookup-
+    with the required arguments and depth control
+E.g.
+// This snipet gives you from Top to bottom employee hierarchy
+  $graphLookup : {
+    from : "EmployeeCollection",
+    startWith : "$_id",
+    connectFromField : "_id",
+    connectToField : "reports_to",
+    as : "EmployeeHierarchy"
+  }
 
+// TO get Employee Hierarchy from Lower level to Top level/root 
+  $graphLookup : {
+    from : "EmployeeCollection",
+    startWith : "$reports_to",
+    connectFromField : "reports_to",
+    connectToField : "_id",
+    as : "Employee Bosses"
+  }
 
+2) Reverse Referencing - 
+  Each document will have the information of all the direct reports instead of reference back to parent
+In this case how will the $graphLookup perform the navigation -
+  
+  $graphLookup : {
+    from : "EmployeeCollection",
+    startWith : "$directReports",
+    connectFromField : "directReports",
+    connectToField : "employeeName",
+    as : "EmployeeHierarchy"
+  }
 
-
-
-
-
-
+Note - using Cross lookup (not self join or lookup with a different collection)
+  It is good to use $allowDiskUse, as it may help with memory issues [max allowed upto 100MB per aggregation pipeline]
+  ** connectToField - indexing this field may help in retrieving the results with performance benefits
+  Sharding Collection is not possible with connectFromCollection.
+  $match - before $graphLookup should be relevant to this, to get better performance
+  
+-----------------------------------------
 
 
 
