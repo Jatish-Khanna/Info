@@ -467,6 +467,85 @@ Note - using Cross lookup (not self join or lookup with a different collection)
   
 -----------------------------------------
 
+Facets -
+  This is analytical capability that allows user to explore data by applying
+    - multiple filters and characterizations
+    
+  E.g. a user catalog - search a keyword on Linkedin
+    - The results can further be filtered by applying 
+     - Location, company, Relationship filters known as facets
+
+---------------------------------------------
+
+1) Simple Facets: 
+    Example -
+    $match : {
+      $text : {
+        $search : "keyword"
+      }
+    },
+    {
+    //This will create a facet by Field, on the list of results from previous stage in pipeline
+      $sortByCount :  $field1"
+    }
+// This will result in two fields
+ a) _id : with the value of field1 that all the documents have been grouped based on it
+ b) count : the number of documents that match the particular group filter
+
+-----------------------------------------------
+$bucket - 
+  
+  
+  Example : 
+  $bucket : {
+  // Groups document just like _id stage in $group
+    groupBy : <Expression>,
+    boundaries : [lower, ... upper],
+    default : <literal>
+    output : {
+      output1 : {<Accumulator>},
+      ...
+      
+    }
+  }
+
+Note: groupBy - we can only specify one value to match on. We can specify expression that evaluates to two field paths
+                but must resolve to one value
+      boundaries: lower to upper bound, 
+          * values specifies in boundaries must be of same type, with the exception being number values
+          * At least two boundaries
+          * Infinity can be used for unbounded [buckets]
+          * default - specified for less than the minimum value specified, or greater than
+                  * it must of same type as specified in boundaries
+          * Exception is thrown if the values is not present in range of boundaries, and default is not present
+            $switch could not find a matching branch for the input, no default value specified
+          
+ boundary labels with the count of document that match the expression
+output : it like an additional field in the $group stage,
+  to give fields any possible name and use accumulator expressions to calculate values
+  
+  Note: Count is the default accumulator for the bucket stage.
+    If any other output: is defined than count will have to be explicitly projected
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
