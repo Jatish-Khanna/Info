@@ -270,6 +270,136 @@ Example
     ])
 
 
+================================================
+
+2) $group stage - 
+    The key component of this stage is _id, all the expressions specified becomes the 
+     criteria to categorize and group document together
+     
+     Note: Grouping on One expression is fundamentally same as using "distinct" command on the documents
+     
+Example-
+  {
+    $group : {
+      _id : $number
+      // This count the documents each time a document matches the expression, a value of 1 be added to calculated value
+      newFieldCountDocuments : { $sum : 1}
+    }
+ }  
+  
+Example-#2
+  To create a new field to group elements based on the size of an array
+  
+  {
+    $group : {
+      _id : {
+        groupedOnArraySize : {
+          $cond : [{$isArray : "$field1"},{$size : "$field1"}, 0]
+        }
+      },
+      // New field to count elements grouped
+      newField : { $sum : 1}
+    }
+  }
+
+Example-#3
+  Group all the documents-
+  // Below expression is same as counting number of documents in the collection
+  
+  {
+    $group : {
+      _id : null,
+      count : { $sum : 1}
+    }
+  }
+
+Note: _id specifies, how the documents should be grouped on
+All accumulator expressions can be used on the group field
+Group can be used multiple times in the aggregation pipeline
+it is good to santize the data begore using the group expression
+
+============================================
+
+3) $project - 
+  The accumulator expression that are available in $project are-
+   $sum, $min, $max, $avg
+   $stdDevPop, $stdDevSam
+
+These expressions will not carry forward and operate across multiple documents
+
+Note: Use $unwind and $group accumulator expression to achive and use values across documents
+
+---------------------------------------
+
+*) $reduce operator
+  // to find the max value from the array
+  $reduce : {
+    input : "$array",
+    initialValue : -Infinity,
+    in : {
+    // $$value refers to the value from the accumulator
+    // Find the max value and store in accumulator - this iteration is done over an array
+      $cond : [{$gt : ["$$this.field1", "$$value"]}, "$$this.field1", "$$value"]
+    }
+  }
+
+or the easier way is-
+ 
+   { $max : "$array.field1"}
+
+------------------------------------------------
+
+$unwind - 
+  this unwinds an array field, creating a new document for each entry in the array as new field value
+  Note: the use case to this is- to group all the documents based on each entry in the array field
+  Example - Group all the movies based on the director field,
+    Understand the complexity as Each movie can have multiple directors
+    Unwind the array directors, and then group based on the name
+  
+  *) Short form of unwind
+   $unwind : "$array"
+   
+  *) Long form of unwind
+  $unwind : {
+  // The array to unwind
+    path : "",
+    // New field name that stores the array index
+    includeArrayIndex : "",
+    preserveNullAndEmptyArrays : <boolean>
+  }
+  
+  Note: using $unwind on large arrays and values may lead to performance issues
+  
+----------------------------------------------
+
+$first - to get the first document from the cursor
+
+  Example - 
+  $group : {
+    _id : "field1"
+    // Here a new field is created representing the first value after grouping multiple documents
+    newFiel : {$first : "$field2"}
+  }
+
+---------------------------------------------
+
+$lookup - 
+  A stage to combine information from two collections
+  It is effectivly a left outer join in SQL [all document from the left and matching documents from the right]
+  
+$lookup : {
+
+  from : <collection from which we want to lookup document>,
+  localField : <field from the input documents array/single value>,
+  foreignField : <field from the documents of "from" collection array/single value>,
+  as : <output array field>
+}
+
+Note: 
+ * From - collection cann't be shared and 
+ * must be from the same Database
+ * Lookup will perform a strict equivality operation
+ * as - will override if the name already exists in the document
 
 
 
