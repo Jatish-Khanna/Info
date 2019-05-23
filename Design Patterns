@@ -60,31 +60,10 @@ Factory Method -
   Defer class instantiation to child classes
   Example - A factory of molds, based on the mold the object will be made at runtime
   
+------------------------------------------
+
+Prototype - create new Objects by copying the prototype instance
+  Note: this is best used to save resources by copying, example an Database objects with small changes in other instances.
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Builder - separating the constuction of complex objects from its representation,
+    same construction process can create different representations.
