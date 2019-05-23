@@ -1,0 +1,81 @@
+A design pattern is a proven solution to a recurring problem
+
+----------------------------
+
+Design Principles -
+ 1) Encapsulate(private data members and public member variables) that varies - 
+ 2) Program to an interface, not an implementation - 
+ 3) Favor object composition over class inheritance -
+
+Types of Design patterns -
+
+ 1) Creational pattern -
+  Deals with the Object creation, and decouples the client from object instansiation
+  Abstract Factory, Builder, Factory Method, Prototype, Singleton
+  
+ 2) Structural pattern -
+  Deals with composition of Classes and objects to create larger structure
+  Adapter, Bridge, Composite, Decorator, Facade, Flywight, proxy
+  
+ 3) Behavioral pattern -
+  Chain of responsibility, command, Interpreter
+--------------------------------------
+
+1) Singleton pattern -
+  Ensure a class has only single instance,
+  issues- 
+    Cloneable (clone method), Serializable (readResolve method), Reflection (Enum)
+
+ a) Eager initialization
+ b) Lazy initialization
+ c) Null check in static method
+ d) Synchronized static method
+ e) Synchronized block
+ f) Synchronized block with double Null check
+ g) static block
+ h) enum
+  
+  if(object == null) {
+    synchronized(MyClass.class) {
+      if(object == null) {
+        ...
+      }
+    }
+  }
+  
+ g) With Enums
+ 
+ Rules: All constructors to be private
+        Instance variable to be private 
+        Instance variable to be static
+        Only static method gives access to single instance
+
+Cloneable - what if Super class has overriden clone method and doesn't override checked Exception, CloneNotSupportedException
+   then, throw - RuntimeException instead of CloneNotSupportedException
+
+
+---------------------------------------
+
+Factory Method - 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
