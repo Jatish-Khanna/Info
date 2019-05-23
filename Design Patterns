@@ -57,6 +57,15 @@ Cloneable - what if Super class has overriden clone method and doesn't override 
 ---------------------------------------
 
 Factory Method - 
+  Defer class instantiation to child classes
+  Example - A factory of molds, based on the mold the object will be made at runtime
+  
+  
+
+
+
+
+
 
 
 
