@@ -381,3 +381,85 @@ Note: Index level collation has been overriden over the collection level collati
 You cannot specify multiple collations for an operation. 
 For example, you cannot specify different collations per field, 
 or if performing a find with a sort, you cannot use one collation for the find and another for the sort.
+
+--------------------------------
+
+Buidling Indexes - 
+  1) Foreground Indexes - 
+    These are created by locking the request to the database, like offline index creation
+    These are fast when compared to background indexes
+  2) Background Indexes - 
+    These don't block operation,
+    These are slow, depends on the load (read/write)
+   Our index will fit into RAM
+
+ db.collection.createIndex({
+  ...
+ }, {"background" : true})
+
+// By default background is false
+
+------------------------------------
+
+MongoDB to check how the build process, or some operation is running using- 
+  db.currentOp() 
+Note: Each operation has a unique identified as opId
+
+ To kill any opeation that is suspected to be on hold or due to some other reason, 
+ db.killOp(<opId number>)
+
+---------------------------------------
+
+Query Plans - A series of stages that feed into one another,
+  Note: Each query can have multiple query plans
+
+How a query plan has been choosen ?
+  a) First looks at all the indexes available on the collection
+  b) Find an appropriate index that will satisfy the query (Candidate indexes)
+  c) Query optimizer gerate a query plan from all the Candidate Indexes - Empirical query planner in MongoDB
+    Empirical Query Planner executes each plan over a short period of time to identify the best performing plans
+  d)  A winning plan is choosen
+  e) mongoDb caches these plans based on the query patterns
+    Cache is evicted on Restart, Rebuilt Indexes, Threshold, create/drop indexes
+    
+--------------------------------------------
+Explain () - 
+   To analyze what happens when the query has been executed,
+   What would happen without query being executed
+    Executing the .explain() before the actual query, use case - for a server under tremendous load, to verify the query plan
+   
+- is query using Indexes, indexes to sort, indexes for projection
+- which part of plan is most expensive
+
+Default behavior - .explain("queryPlanner") - No query execution
+Other Options - 
+  .explain("executionStats") - Winning plan details
+  .explain("allPlansExecution") - All plans results
+
+Note: winningPlan and rejectedPlans - give the details of all the candidated plans using indexes
+
+-----------------------------------------------
+
+Sharing a DB in MongoDB-
+ // A shareded clusted
+  mlaunch init --single --sharded 2
+  
+  // Shard database
+  sh.enableSharing("databaseToBeSharded")
+  sh.shardedCollection("databaseToBeSharede", {...})
+  
+How to Check the data distribution on  a sharded clustur
+  - db.collection.getShardedDistribution()
+
+Note: A query issued to sharded clusture, may happen that Servers in clusture choose different plan to serve query
+ generally, due to less or more data
+
+in the explain("executionStats") - the last stage will be SHARD_MERGE
+
+
+
+
+
+
+
+
