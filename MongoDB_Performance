@@ -456,6 +456,44 @@ Note: A query issued to sharded clusture, may happen that Servers in clusture ch
 
 in the explain("executionStats") - the last stage will be SHARD_MERGE
 
+-------------------------------------------
+
+Forcing indexes with a hint() -
+ i.e. overriding the MongoDB's default selection with hint()
+  db.collection.find(
+    ...
+  ).hint( {
+    // Index to be used by giving the index shape or name of index
+    ...
+  })
+Note: It should be used when there are lot of indexes on the collection  
+-----------------------------------------
+
+Resource Allocation for Indexes -
+  Index helps optimize queries and imporves the performance of response
+  - Determine the index size
+  - Resource allocation
+  - Edge cases
+
+ db.stats() or db.collection.stats() - to determine the index size and other statestics of collection
+
+To find how much Index is in-memory and on disk?
+  db.collection.stats({indexDetails : true})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
