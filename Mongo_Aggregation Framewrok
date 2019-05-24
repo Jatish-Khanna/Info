@@ -527,26 +527,64 @@ output : it like an additional field in the $group stage,
   Note: Count is the default accumulator for the bucket stage.
     If any other output: is defined than count will have to be explicitly projected
 
+-----------------------------------------------
 
+Buckets : Group data by range of values, [brackets or boundaries]
+  Note: it is important that documents should have same datatype that are bucketed, else specify default.
 
+$bucket - 
+  $bucket : {
+    groupBy : <Expression>,
+    buckets : <Number>,
+    output : {
+      ...
+    },
+    granularity : <string>
+  }
 
+buckets - MongoDB will find the boundaries, specifiying the number of buckets to be distributed over
+granularity - Optional, to place bucket boundaries, along the given preferred number series
+   R5, R10, R20, R40, R80
+   E6, E12, E24, E48, E96, E192
+   1-2-5
+   PowersOf2
 
+$bucketAuto - similar to $bucket with buckets
 
+---------------------------------
 
+Multiple Facets - 
+  $facets : {
+  // For limited number of options
+    "NewFieldFacet" : [{"$sortByCount" : "Field1"}],
+    "NewFieldFacetBucket" : {
+      $bucket : [{
+        groupBy : "$Field2",
+        boundaries : [...],
+        default : "Other"
+      }
+    }],
+    "NewFieldFacetAutoBucket" : [{
+      $bucketAuto : {
+        groupBy : "$Field3",
+        buckets : 3,
+      }
+    }]
+  }
+  
+NOte: Within the same $facet aggregation operation, the output of One facet operation can't be used by other
 
+--------------------------------
+$sortByCount
+ This is equivalent to $group stage to count occurrences and then sorting in descending order
+ 
+ $group : {
+  _id : "$field1",
+  count : {$sum : 1}
+ },{
+  $sort : {count : -1}
+ }
 
+OR
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  $sortByCount : "$field1"
