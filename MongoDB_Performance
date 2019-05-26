@@ -480,24 +480,46 @@ Resource Allocation for Indexes -
 To find how much Index is in-memory and on disk?
   db.collection.stats({indexDetails : true})
 
+---------------------------------------------
 
+Types of Performance Benchmarking- 
+  
+ 1) Low Level benchmarking -
+   File I/O performance
+   Scheduler Performance
+   Memory allocation and transfer speed
+   Thread performance
+   Database server performance
+   Transaction isolation
+   ...
 
+Example - sysbench
 
+2) Database server Benchmarking -
+  Data set load
+  writes per second
+  Reads per second
+  Balanced workloads
+  Read/write ratio
+Example - YCSB, TCP benchmarks
 
+3) Distributed Database benchmarking -
+  Linearization
+  Serialization
+  Fault tolerant
+  
+  Example - HiBench, JEPSEN
 
+How It can be done -
+ 1) Public available test suits   
+ 2) Private testing
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Benchmarking Conditions -
+  Example - POCDriver
+  
+Benchmarking Anti-patterns - 
+  Database swap replace - example mapping RDBMS schema to MongoDB
+  Using mongoDB shell for write and read request
+  Using mongoImport to test write response
+  Local laptop to run test
+  Using mongoDB default parameters
