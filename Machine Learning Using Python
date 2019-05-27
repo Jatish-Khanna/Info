@@ -1,0 +1,45 @@
+Artificial Intelligence - 
+  the theory and development of computer systems able to perform tasks normally requiring human intelligence, 
+    such as visual perception, speech recognition, decision-making, and translation between languages.
+
+computer vision is concerned with the theory and technology for building 
+   artificial systems that obtain information from images or multi-dimensional data.
+
+Speech Recognition
+NLP
+Machine Learning
+Robotics
+Planning, Scheduling and Optimization
+
+Machine learning is the scientific study of algorithms and statistical models that 
+  computer systems use to effectively perform a specific task without using explicit instructions, 
+  relying on patterns and inference instead. 
+  It is seen as a subset of artificial intelligence
+
+Types of Machine Learning
+  1) Supervised and Semi-supervised
+   Supervised learning algorithms build a mathematical model of a set of data that contains both the inputs and the desired outputs
+  
+    Y(Output) - predicted values, dependent variables
+    X(input) - predictors, independent variables
+    
+    Example - Regression algo. 
+  
+  2) Unsupervised
+    Unsupervised learning algorithms take a set of data that contains only inputs, and find structure in the data, 
+    like grouping or clustering of data points. The algorithms therefore learn from test data that has not been labeled, 
+    classified or categorized. Instead of responding to feedback, unsupervised learning algorithms identify commonalities 
+    in the data and react based on the presence or absence of such commonalities in each new piece of data. 
+  
+  Example - Classification
+  
+  3) Reinforcement learning
+     Reinforcement learning is an area of machine learning concerned with how software agents 
+     ought to take actions in an environment so as to maximize some notion of cumulative reward.
+
+
+
+
+
+
+
