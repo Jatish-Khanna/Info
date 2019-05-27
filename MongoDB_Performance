@@ -523,3 +523,11 @@ Benchmarking Anti-patterns -
   Using mongoImport to test write response
   Local laptop to run test
   Using mongoDB default parameters
+
+
+Note: We can only use the Index for both filter(find) and sorting operation if the Keys 
+  in query Predicate are equivality conditions
+  
+  Example - db.collection.find({ field : "value" })
+  but Same index cann't be used for below query predicate
+  db.collection.find({field : {$gt : 10}})
