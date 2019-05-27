@@ -524,6 +524,9 @@ Benchmarking Anti-patterns -
   Local laptop to run test
   Using mongoDB default parameters
 
+----------------------------------------
+
+Best Indexes -
 
 Note: We can only use the Index for both filter(find) and sorting operation if the Keys 
   in query Predicate are equivality conditions
@@ -531,3 +534,27 @@ Note: We can only use the Index for both filter(find) and sorting operation if t
   Example - db.collection.find({ field : "value" })
   but Same index cann't be used for below query predicate
   db.collection.find({field : {$gt : 10}})
+
+
+So the Best indexes -
+ db.collection.find({
+ // Range
+  "field1" : {$gt : 10},
+  // Equality
+  field2: "value"
+ }).sort({
+  field3 : -1
+ })
+  
+  Best indexes seq.
+  db.collection.createIndex({
+  // Keys with equality condition in predicate
+   field2 : 1,
+   // Keys in the sort order
+   field3 : 1,
+   // Keys in Range predicate queries
+   field1 : 1
+  })
+  
+  The above gives the best performance, when compared to other Ordering of keys in index
+  
