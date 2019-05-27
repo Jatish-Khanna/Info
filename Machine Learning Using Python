@@ -38,8 +38,23 @@ Types of Machine Learning
      ought to take actions in an environment so as to maximize some notion of cumulative reward.
 
 
+Scatter Plot - a graph in which the values of two variables are plotted along two axes, 
+            the pattern of the resulting points revealing any correlation present.
 
+Regression 
+    Linear Regression is a machine learning algorithm based on supervised learning. It performs a regression task. 
+    Regression models a target prediction value based on independent variables. 
+    It is mostly used for finding out the relationship between variables and forecasting.
 
+ f(x) = b0 + b1x1 + e0
+  Regression coefficients - b0 and b1
+  x1 independent variables (predictors)
+  f(x) - y predicted value
+  e: error term
 
+When the number of features becomes large then 
+the closed form expression may become inefficient 
+because it involves computation of matrix inverse and matrix multiplication which is expensive. 
 
-
+In such scenarios where the number of features is large, 
+we may use Gradient Descent to estimate the coefficients based on least squares. 
