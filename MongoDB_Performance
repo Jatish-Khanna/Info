@@ -558,3 +558,17 @@ So the Best indexes -
   
   The above gives the best performance, when compared to other Ordering of keys in index
   
+------------------------------------
+
+Covered queries ?
+  Highly performent way to service the queries to our database
+  They are completely satified by Collection indexes, i.e. it wouldn't examine any other document than response
+  
+  Index covers queries only if-
+    all the fields in the query are part of Index
+    and All the fields are turned in the result
+       
+ Note: This doesn't cover if-
+   Indexed fields are arrays
+   Indexed fields are embedded documents
+   Index doesn't contain shard key
