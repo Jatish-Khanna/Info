@@ -572,3 +572,65 @@ Covered queries ?
    Indexed fields are arrays
    Indexed fields are embedded documents
    Index doesn't contain shard key
+
+----------------------------------------
+
+Regular Expression Performance in MongoDB - 
+  db.collection.createIndex({ field1 : "text" }) 
+  
+These indexes are used to support queried with $text operator
+db.collection.find({$text : {$search : "value"}})
+db.collection.find({field1 : /Regex/})
+With this the query engine will look the regex on the Index keys instead of all document list
+
+--------------------------------------------
+
+Insert Performance in MongoDB - 
+  Creating index will imporve the read performance of the application but
+    For each update/insert/delete operation, indexes need to be updated which decreases the performance
+
+ Write Concern - also impacts the performance of MongoDB operations
+  {w: <value>, j : <boolean>, wtimeout: <number>}
+w - Number of nodes in clusture where the data to be replicated, Example 1 - Primary, Majority - 2/3 nodes
+j - To wait for On disk journal (from main memory)
+wtimeout - to wait for ACK in millisec
+
+Examples- 
+{w: 1, j :false, wtimeout : 5000)
+{w : "majority", j : true}
+
+-------------------------------------------
+Datatype Implication - across same fields of documents in a collection i.e. flexible schema tradeoffs
+   A filter matching by Integer or floating point is not same as represented by String or Decimal type
+
+Sorting will also be affected by the fields with same name but different datatypes
+ Example - A document with a fields have both Numerical and String values
+   - All the fields with Numerical value be sorted first
+   - Followed by all the fields with strings
+i.e. MongoDB is grouping all the documents with the BSON datatype
+From -
+ MinKey(First) -> Null -> Numbers -> Symbol, String -> Object -> array -> BinData -> ObjectID ->
+      ObjectID --> Boolean -> Date --> timestamp -> Regular Expr -> MaxKey (Last)
+
+Note: - A Collation with numericOrdering : true will allow string to be sorted as numeric
+Example ->
+ "14" is smaller than "3" but with numericOrdering: true "3" will be smaller than "14" 
+   but still both will be represented as String and are differnt from actual Numeric bucket
+
+It is good to avoid data inconsistency issues,
+------------------------------------------
+
+Aggregation Queries - 
+ 1) Realtime Processing: Query performance is more important
+ 2) Batch processing: Aggregation through analytics, and query performance is less important
+
+Note: In the aggregation pipeline, once the server has encountered not using Indexes
+  All the following stages won't be using indexes any more
+But the Query optimizer tries to move those stages at front to take advantage of most of Indexes
+
+-------------------------
+Memory constraints -
+ Result are subjected to 16 MB single document limit
+ 100 MB per stage for each pipeline stage in aggregation (Hint: Use indexes to prevent memory footprint)
+ allowDisk:true -> last resort measure if requirements, but have performance implications [often used in Batch processing]
+  $graphLookup -> doesn't currently support allowDiskUsage:true
