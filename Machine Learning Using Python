@@ -58,3 +58,73 @@ because it involves computation of matrix inverse and matrix multiplication whic
 
 In such scenarios where the number of features is large, 
 we may use Gradient Descent to estimate the coefficients based on least squares. 
+
+----------------------------------------------
+
+How to calculate the Accuracy of Model- 
+
+R^2 - (in simple linear regression) : coefficient of determination.
+  This is used to determine, how accurate the regression is
+  R^ values lies b/w 0(in accurate) - 1(accurate)
+
+R-Sqaure (R^2) = Sum of squared regression / Total sum of square
+
+Sum of squred errors [SSE] = sum(YActual - YPredicted)^2
+
+Sum of squared regression [SSR] = sum(Ypred - Ymean)^2
+  the total sum of squared deviation of the predicted values from the population mean
+
+Total sum of square[SST] = SSR + SSE = sum(yActual - Ymean) ^ 2
+  
+-------------------------------------
+
+Multiple Linear regression - When we have more than one predictor variable
+  For example:
+    The volume of a tree trunk might be dependent on its height and girth. 
+    The price of a house might be dependent on the number of bedrooms, the built-up area of the plot, the age of the house etc.
+    The height of a child might be dependent on age, weight, heights of the parents etc.
+
+y = b0 + b1x1 + b2x2 ... bnxn + E (epsilon)
+
+---------------------------------------
+MultiCollinearity
+  In a multiple regression model where two or more predictor variables are involved, 
+  it is possible that one predictor can be linearly predicted from the others, with a substantial degree of accuracy. 
+  In such a situation, the predictors are said to be highly correlated.
+  In statistics, this phenomenon is called multicollinearity, or in other words collinearity
+
+Assumptions of Linear Regression -
+  There should be no MultiCollinearity between independent variables
+  The variables are suggested to be linearly dependent if the correlation values are close to 1. 
+  Multicollinearity - impacts erratic results in the accuracy  
+  
+VIF - Variance Inflation factor
+  variance inflation factor(VIF) to determine if the predictor variables are independent of each other.
+  It is used to measure Multocollinearity. 
+  If VIF is between 5 - 10 the variables are said to be multi collinear
+  
+  1 / (1 - Ri ^ 2)
+
+Adjusted R^2 (R-Sqaure) - 
+  Using the least squares method we try to establish a best fit linear regression model with minimum error. 
+  For a linear regression model every additional predictor variable tends to minimize the error of the model.
+  As a result the R2 value will never decrease for any number of additional predictor variables being included in the model.
+  
+use of an additional statistic known as adjusted R2 is suggested. 
+The adjusted R2 takes into account the number of predictor variables included in the regression model.
+
+Ra^2 = 1 - ((SSE/ (n-k-1))/ (SST / (n - 1)))
+
+whereas 
+
+R^2 = 1 - (SSE)/ (SST)
+
+Where n is the number of observations and k is the number of number of predictor variables in the model. 
+
+--------------------------------------------
+
+Feature Engineering - Cleaning the data, transforming the data, data distribution, ...
+  To select the predictor variables that impacts the performance, accuracy of a Machine Learning model
+
+Continuous variable: e.g. Speed, temprature
+Categorical variables: Marital Status, Education
