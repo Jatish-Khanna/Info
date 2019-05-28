@@ -588,3 +588,69 @@ $sortByCount
 OR
 
   $sortByCount : "$field1"
+
+-----------------------------------
+
+$redact - To protect inforomation from the unauthorized access
+ {$redact : <expression>}
+  <expression> - it can be any expression or combination of expression but must descend to one of mentioned values-
+    $$DESCEND - Retain the field at the current document level and evaluates the next level down
+              
+    $$PRUNE - Remove (will exlude all fields at the current document level, without further inspection)
+    $$KEEP - Retain (will retain all fields at the current document level, without further inspection)
+
+Example: 
+  {
+    $redact : {
+      $cond : [{$in : ["SomeValue", $arrayField]}, "$$DESCEND", "$$PRUNE"]
+    }
+  }
+The above solution is to return document and embedded document until "SomeValue" is present in $arrayField
+  arrayField : ["SomeValue",...],
+  subDocument : {
+    arrayField : ["SomeValueNotPresent", ...]
+  }
+  ...
+
+The output of above $redact aggregation operation won't return subDocument, $$PRUNE will purge the document
+whereas SomeValue is present at upper level, the $$DESCEND will be true
+
+Note: If $$DESCEND looks for array in subdocument and is not present, the query is likely to return error
+  It is must to have fields in all the subdocument when using $$DESCEND or must be handled
+
+-----------------------------------------------
+
+$out - stage, must be the last. It will create the new collection in the same database as the source collection
+  ** It can't be used within the $facet
+  ** Any existing collection with the same name will be overwritten
+  ** Indexes will be retained on the new created collection
+  ** If the aggregation pipeline errors, it will not create or overwrite it
+  
+ {$out : "output_collection" }
+
+------------------------------------------------
+
+Views - 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
