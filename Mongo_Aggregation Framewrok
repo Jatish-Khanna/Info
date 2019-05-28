@@ -631,26 +631,55 @@ $out - stage, must be the last. It will create the new collection in the same da
 ------------------------------------------------
 
 Views - 
+  Views allows to create horizontal and vertical slices of our collection
+  1) vertical slice - is performed using the aggregation operation $project
+    Those aggregation operation which change the shape of document being returned
+    i.e. Selecting fields or Modifying schema of document to present 
+    
+    Example -
+    {
+      $project : {
+        _id : 0,
+        ...
+      }
+    }
 
+  2) Horizontal slicing - Is performed using the Match stages, i.e. selecting only a subset of documents 
+     from collection based on criteria
+     Example -
+     {
+      $match : {
+        field1 : value
+      }
+     }
+Note: Horizontal slicing affects the number of documents returned not the shape of documents
 
+How to create a view?
+  a) db.createView(<view>, <source_collection>, <aggregation_pipeline>, <collation>)
+  b) db.createCollection(<name>, <options>)
 
+db.system.views.find() -> get all the views defined for the database, these are stored in system collection
 
+Restrictions -
+  *) No write operations using views 
+  *) No Index operations (create, update)
+  *) No renaming (only drop or creating a view is possible)
+  *) Collation restrictions
+  *) find() opearation with projection operators are not permitted
+    $, $elemMatch, $slice, $meta
+    
+  *) No mapReduce
+  *) No $text
+  *) No $geoNear
 
+Note: View Definitions are public, avoid sensitive data fields
 
+--------------------------------------------
+Aggregation Performance on a sharded clusture -
+   Note: $out, $facet, $lookup, $graphLookup - for mentioned aggreagation operation the merging of document will only happen
+                                            on the PRIMARY node, 
+                                            but for other aggregation operation, the activity will be done on Random shard
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Pipeline Optimizations -
+  Use $map, $reduce, and $filter expression before thinking of $unwind
+  This usually applies when a grouping is required within the document, not among documents
