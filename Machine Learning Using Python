@@ -198,19 +198,40 @@ More advanced version of Confusion matrix is "Classification Report"
   
   d) Support -
 
+   
+------------------------------------
 
+Decision Tree (Classification Algorithm) -
+  A decision tree is a tree-like structure in which:
+    the root node and each internal node represent a "test" on an attribute of an instance in the dataset
+    the outcome of each test is represented by the corresponding branches
+    the node that does not branch further is called a leaf node and represents the class labels*
 
+A set of rules have been given which are executed on input to identify the result
+The historical data has been split based on the highest percentage that reflects/impacts the decision
+At the leaf node, the result should be distinct for node and its subnode
+i.e.
+A subset which contains instances belonging to only one class label is called a pure (homogeneous) subset. 
+The predictor attribute on which the dataset is split to obtain the maximum number of pure subsets is called the best attribute
 
+Note: Above is recusrrive, all but identified attributes will be revalued for each subtree
+This is known as Gini Index calculation
 
+----------------------------------------
 
+kNN - K- Nearest Neighbors
+ k-Nearest Neighbors (kNN) is a non-parametric learning algorithm used for classification.
+to determine the class label of a new data point (instance/tuple) by 
+  comparing it with existing data points (instances/tuples), that are closest to it.
 
+How it works?
+  kNN algorithm identifies the nearest neighbors based on Euclidean distance* - a commonly used distance metric. 
 
+Note: Euclidean distance is used as a distance metric when the data tuple comprises of numeric attributes. 
+     Distance metrics such as Hamming distance can be used when the data tuple comprises of categorical attributes.
+     
+Important - all the numeric attributes of the tuples can be normalized before they are used for computing the Euclidean distance. 
+  Example - One attribute ranges from 0-50 and other predictor/attribute ranges from 10000-50000
+    Where Eucledian distance will be highly influenced bigger ranges.
 
-
-
-
-
-
-
-
-
+After Normalization, the values of both the attributes may range from 0 - 1   
