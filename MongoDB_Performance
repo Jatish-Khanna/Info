@@ -634,3 +634,99 @@ Memory constraints -
  100 MB per stage for each pipeline stage in aggregation (Hint: Use indexes to prevent memory footprint)
  allowDisk:true -> last resort measure if requirements, but have performance implications [often used in Batch processing]
   $graphLookup -> doesn't currently support allowDiskUsage:true
+
+--------------------------------------------------
+
+Distributed System - 
+ Latency to be considered
+ Data is distributed or shareded across nodes
+ Read and Write implication on the cluster nodes
+ 
+ 
+  a) Replica Cluster
+    Provides high availability
+    Offloading ventral consistency data to secondaries 
+    Privilge PRIMARY for operation workloads
+    Specific workload with Target indexes on Secondary nodes
+    
+  b) Shard Cluster - to allow horizontal availability of the data
+    They can also be considered as Replica Set of other nodes in cluster
+    Note:  Most important things is the Shard Key
+
+Types of Reads perfomed in MongoS (Mongo DB server) - 
+  a) Scatter-Gather - Ping all the nodes of the shard cluster for the information corresponding to query
+  
+    - The performance suffers to ask every node on the cluster
+    - Performance also suffers to combine the result from nodes
+  
+  b) Routed Queries - A single shard node/small number of shard nodes is responsible for the information to be returned
+  
+  - Shard Key is important that distributes the data across nodes in the cluster
+
+-------------------------------
+Write Performance with Distributed or Shared Cluster
+  Creating a Shard Key-
+   sh.shardCollection("db.collection", {shardKey : 1})
+
+Note: Default Chunk size for a sharded cluster is 64MB
+
+---------------------------------
+Factors that determine the Shard Key -
+  Cardinality - Number of distinct value for a given Shard Key (High Cardinality is best) 
+    This defines the maximum number of chunks that can exists in our cluster
+    
+  Frequency - Even distribution is better (If certain value comes often than the other, it impacts the even load)
+    - Hot shard to be looked up
+    - Jumbo Chunks (which have same lower and Upper bound as a shard Key) E.g. All the person details in NewYork city
+    - Jumbo chunks reduces the effectiveness of horizontal scaling
+    - A good compound shard key can evenly distribute the data across shard
+    
+  Rate of change - How values change of time
+    - Avoid monotonically increasing or decresing values in the shard key
+    - Example ObjectID in mongoDb is monotonically increasing
+    - It is good to have hashed sharding which evenly distributes over set of nodes in cluster
+   - At the End of Compound shard key can use the Monotonically Incresing or decreasing which increases the cardinality
+
+Note: With the Sharded Cluster, an Ordered bulk write is an issue because, It will wait for previous operation to complete
+   whereas Unordered bulk write has no issues
+
+--------------------------------------
+
+Replica Sets nodes with Different Indexes -
+  The use case where secondary nodes has specific indexes like [which gives benefits]-
+    a) Specific analytics on Secondary nodes
+    b) Reporting on delayed consistency data
+    c) Text Search
+
+Important Points to Consider for such Secondary nodes with specific Indexes 
+  These nodes should not become the PRIMARY indexes
+  - These should be configured as PRIORITY = 0 
+  OR - Hidden nodes
+  OR - Delayed Secondary 
+As these nodes should not replace when PRIMARY node goes down, it may impact performance due to additional indexes
+
+Can you code it?
+ rs.initiate(
+ {
+   "_id" : "DB_NAME",
+   "members":  [
+     {"_id" : 0, host: "127.0.0.1:27000" },
+     {"_id" : 1, host: "127.0.0.1:27000" },
+     {"_id" : 2, host: "127.0.0.1:27000", "priority" : "0" }
+   ]
+  })
+
+rs.isMaster() ---> Ouput the configuration setup of the database
+
+
+
+
+
+
+
+
+
+
+
+
+
