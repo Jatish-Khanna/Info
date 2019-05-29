@@ -717,16 +717,32 @@ Can you code it?
   })
 
 rs.isMaster() ---> Ouput the configuration setup of the database
+rs.status() ---> To check the replica set status 
+-----------------------------------
+ 
+ Connect to some DB from the MongoShell
+   db = connect("hostname:port/db")
+   db.setSlaveOk() ---> To enable reads from Secondary, else MongoDB doesn't allow to read from the secondary nodes
+  
+ Shutdown Server ->
+   use admin
+   db.shutdownServer();
 
+-------------------------------------
 
+MongoDB read preferences - 
+  1) Reading from PRIMARY - 
+  // The read is PRIMARY and is by DEFAULT
+    db.collection.find().readPref("primary")
+Other values -
+  primaryPreferred, secondary, secondaryPreferred, nearest
 
-
-
-
-
-
-
-
-
-
-
+  Reading from Secondary, chances are of not upto date copy of data, due to eventual consistency
+  
+  Use Cases - when reading from Secondaries - 
+   a) offloading work - such as Analytics/reporting (for long running queries, typical batch operations)
+   b) Local reads when we have geographical distributed datasets - nearest will improve the latency 
+   
+   Bad Idea why not Secondaries - 
+     - They are for High availability not for performance improvements
+     - In a sharded cluster, it is bad idea to read from secondaries 
