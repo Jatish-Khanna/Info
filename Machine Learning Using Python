@@ -128,3 +128,89 @@ Feature Engineering - Cleaning the data, transforming the data, data distributio
 
 Continuous variable: e.g. Speed, temprature
 Categorical variables: Marital Status, Education
+
+---------------------------------------------
+Typical process involved in Machine learning -
+
+1. Historical data:
+2) Feature Engineering - PCA
+3) Split data - Train and Test
+4) Train the Model using train data - (Model gives accuracy or R^2 value)
+5) Validate the model using test data 
+6) Deploy in production
+
+---------------------------------------------
+
+Note: main of regression is to have lower error (verified using different methods like RMSE, R^2)
+
+Root Mean Squared Error [RMSE]-
+  Sqaure root of Mean squared error  
+High RMSE : Model performance on train and test data is poor - Under fit model
+Low RMSE and High R^2 : Model is good but High RMSE (poor for test data) - Over fitting
+ 
+---------------------------------------------
+
+Classification -
+   2 kinds of predictions - a category (e.g. human/non-human in case of the self-driven cars) and a quantity
+   predicting a quantity, the models built are referred to as regression models
+   when predicting a category, the models built are referred to as classification models. 
+
+task of prediction of classes of new instances is termed as classification. 
+algorithms namely Logistic Regression, Decision Trees, k- Nearest Neighbors (kNN) and Support Vector Machines (SVM), Neural Networks.
+
+historical data to a general model, known as the classifier. 
+This classifier can be arrived at by analyzing patterns in the historical data, so as to classify new instances.
+
+--------------------------------------
+Difference b/w Linear Regression and Classification is-
+  In Linear regression, the target variable is continuos Example time,
+  In Classification, the output of the model is Categorical Example, True, False [0,1], [X,y,z...]
+
+-------------------------------------
+
+Confustion Matrix - to descrive the performance of a classification model also called as a classifier
+                    on a set of data for which true values are known
+  
+                       Predicted
+                Bad                   Good
+              
+      Bad   True positive [TP]          False Positive [FP] - Type#1 Error
+Actual
+      Good   False Negative [FN]         True Negative [TN] 
+              [Type-2 Error]      
+Accuracy = ( True Positive + True Negative ) / Total Predictions
+
+More advanced version of Confusion matrix is "Classification Report"
+  It includes,
+  a) Precision - (Number of prediction correctly predicted) / (Total number of predictions as Class A) i.e. 
+     TP / (TP + FP)
+  
+  b) Recal - The recall for a class A indicates how good the model is in fetching/retrieving instances of class A
+          i.e. (Number of instances correctly predicted as class A) / (Number of instances actually class A) 
+          = TP / (TP + FN)
+          
+  c) F-Score - 
+  To evaluate a model with a single metric based on precision and recall, 
+  we can use the F-Score. This metric is the harmonic mean of precision and recall
+  and can indicate how good the model is in classifying instances of a particular class. It is defined as follows
+  
+   = 2 * (precision(A) * recall (A)) / precision(A) + recall(A)
+  
+  d) Support -
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
