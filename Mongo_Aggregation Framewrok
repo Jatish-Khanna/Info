@@ -475,6 +475,8 @@ Facets -
     - The results can further be filtered by applying 
      - Location, company, Relationship filters known as facets
 
+Note: 
+can not nest a $facet stage as a sub-pipeline.
 ---------------------------------------------
 
 1) Simple Facets: 
