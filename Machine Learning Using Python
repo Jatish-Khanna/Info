@@ -235,3 +235,50 @@ Important - all the numeric attributes of the tuples can be normalized before th
     Where Eucledian distance will be highly influenced bigger ranges.
 
 After Normalization, the values of both the attributes may range from 0 - 1   
+
+Note: When k approaches N -> the model becomes underfit and has performance implications
+  k = 1 the model is overfit
+
+---------------------------------------------
+
+Cross Validation for HyperTuning-
+  1. The train data is divided into K subsets
+  2. For K times repeat the below steps
+   a) Choose K-1 at random subsets of K subsets
+   b) Validate with the remanining one
+   c) Track the result
+  3. Compare the K results
+  
+Ensemble Method - instead of using single algorithm for prediction, we use multiple learning algorithms in order to imporve accuracy
+  Instead of using a single decision tree, 
+    we can use multiple decision tree models that are combined in a way to fit the training data.
+
+Two commonly used ensemble methods are Bagging and Boosting.
+
+Bagging - 
+  multiple models are trained using the same algorithm with a subset of training data selected (with replacement) to train each model.
+  The results are aggregated using voting or simple aggregation methods such as averaging.
+  
+  Example - Random Forest
+   by building multiple trees is that it can evaluate which features are important. 
+  
+Boosting -   
+    emphasize training data that were wrongly predicted in previous iterations.
+  The key idea is to make the model stronger. 
+  The model is trained such that initially each training data has equal weight 
+  but after each iteration, the data that is wrongly classified will have its weight increased. 
+  This will force the model to focus on those hard data and make the model stronger. 
+  AdaBoost is one of the well known boosting techniques. 
+  
+  ----------------------------------------------
+  =============================================
+  Unsupervised Algorithm
+  
+  ---------------------------------------
+  Clustering - 
+    The aim of clustering is to bring similar records together 
+    and make sure that the members of different clusters are significantly different from each other.
+  
+  widely used clustering algorithm is the K-means algorithm. The K-means algorithm works on numerical data 
+  and uses Euclidean distance to identify which data points are close to one another.
+  
