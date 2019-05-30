@@ -683,3 +683,7 @@ Aggregation Performance on a sharded clusture -
 Pipeline Optimizations -
   Use $map, $reduce, and $filter expression before thinking of $unwind
   This usually applies when a grouping is required within the document, not among documents
+
+-------------------------------------------
+
+Note: $indexStats must be the first stage in a pipeline and may not be used within a $facet
