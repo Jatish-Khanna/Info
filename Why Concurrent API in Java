@@ -1,0 +1,16 @@
+1) Most of the Collections API - are not thread safe, using with multiple threads can lead to data inconsistency
+2) The avaiable Concurrent DS like Vector, HashTable, synchronizedMap, synchronizedSet, synchronizedList doesn't give good performance
+  The performance issues are due to waiting time, as only single thread can access the underlined DS
+  
+ 3) Only single thread can modify the Collection, trying to access by other thread when first thread is iterating gives-
+   ConcurrentModificationException
+   
+   New API - concurrent package -
+   1) All the underlined DS are thread safe
+   2) Have better performance than legacy concurrent API - due to locking mechanism
+   3) Concurrent Modification is allowed in the underlined DS
+   
+   Examples- 
+     ConcurrentHashMap
+     CopyOnWriteArrayList
+     CopyOnWriteArraySet
