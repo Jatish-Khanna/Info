@@ -48,7 +48,8 @@
   *) Hetrogenous Objects are allowed
   *) implements Serializable, Clonable, RandomAccess Interfaces
   *) ConcurrentModification is allowed and it does fail safe (No ConcurrentModificationException)
-  *) Iterator of ArrayList supports remove operation whereas CopyOnWriteArrayList will throw RuntimeException
+*) Iterator of ArrayList supports remove operation whereas CopyOnWriteArrayList will throw UnsupportedOperationException
+         RuntimeException
   
  Note: CopyOnWriteArrayList works best when more number of ReadOperation than updates
 
