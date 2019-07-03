@@ -14,3 +14,22 @@
      ConcurrentHashMap
      CopyOnWriteArrayList
      CopyOnWriteArraySet
+
+
+1) ConcurrentMap extends Map -
+   *) putIfAbset() - add the entry only if the specified key is not present in the undelined collection
+   *) remove(key, value) - remove the entry from the collection only if the key with specified value is present
+   *) replace(key, oldValue, newValue) - replace the value for the specified key only if the key and value matches
+   
+2) ConcurrentHashMap implements ConcurrentMap-
+  *) Undelined DS for this collections is HashTable
+  *) Concurrent reads are possible from this DS
+  *) Restricted concurrent write are allowed to concurrent hashmap
+  *) Number of concurrent write depends on - ConcurrencyLevel default = 16 
+  *) Underlined DS is HashTable so null keys and values are not allowed
+  *) While one thread is writing other threads can modify the ConcurrentHashMap, it doesn't throw 
+     ConcurrentModificationException
+     
+   Note: ConcurrencyLevel = HashMap capacity and defines the bucket locking definition(SegmentLock)
+   ConcurrencyLeve < HashMap capacity then more number of buckets are handled by single lock
+   ConcurrencyLevel > HashMap Capacity then more threads can lock particular bucket
