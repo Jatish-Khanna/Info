@@ -33,3 +33,36 @@
    Note: ConcurrencyLevel = HashMap capacity and defines the bucket locking definition(SegmentLock)
    ConcurrencyLeve < HashMap capacity then more number of buckets are handled by single lock
    ConcurrencyLevel > HashMap Capacity then more threads can lock particular bucket
+
+
+2) CopyOnWriteArrayList = 
+  A thread safe version of ArrayList
+  A clone of Underlined ArrayList will be created for every update operation
+  After undefined time, both the list will be synchronized handled by JVM 
+  
+  *) No effect of thread for Read operation
+  *) The concurrent DS is expensive as for every write operation a new clone will be created
+  *) Insertion order is preserved
+  *) Duplicates are allowed
+  *) null insertion is possible
+  *) Hetrogenous Objects are allowed
+  *) implements Serializable, Clonable, RandomAccess Interfaces
+  *) ConcurrentModification is allowed and it does fail safe (No ConcurrentModificationException)
+  *) Iterator of ArrayList supports remove operation whereas CopyOnWriteArrayList will throw RuntimeException
+  
+ Note: CopyOnWriteArrayList works best when more number of ReadOperation than updates
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
