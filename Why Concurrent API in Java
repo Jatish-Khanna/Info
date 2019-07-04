@@ -53,7 +53,10 @@
   
  Note: CopyOnWriteArrayList works best when more number of ReadOperation than updates
 
-
+  Methods:
+    *) addIfAbsent() - The element will be added only if the list doesn't have the element
+    *) addAllAbset(Collection) - only absent elements will be added to the List
+    
 
 
 
