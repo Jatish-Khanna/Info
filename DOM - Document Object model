@@ -94,11 +94,14 @@ HTML:
 Note: If recurrsive document appending
 Uncaught DOMException: Failed to execute 'appendChild' on 'Node': The new child element contains the parent.
 
-15. 
+15. Make the entire document editable:
+    document.designMode = "on";
 
+16. normalizeDocument() method removes empty Text nodes, and joins adjacent Text nodes.
 
+17. querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
 
-
+18. querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s)
 
 
 
