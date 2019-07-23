@@ -80,6 +80,36 @@ HTML:
 </ul>
 
 
+12. Create a <?> element:
+  var buttonElement = document.createElement("BUTTON"); // Element created will be passed as parameter
+  Use: 
+    innerText or innerHTML properties of the element object to modify the contents
+
+13. createEvent() method creates an event object.
+   The event can be of any legal event type, and must be initialized before use.
+
+14. Create a text node:
+  var t = document.createTextNode("Hello World");
+
+Note: If recurrsive document appending
+Uncaught DOMException: Failed to execute 'appendChild' on 'Node': The new child element contains the parent.
+
+15. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
