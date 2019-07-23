@@ -1,0 +1,87 @@
+The activeElement property returns the currently focused element in the document.
+  var x = document.activeElement
+  
+  
+2. The document.addEventListener() method attaches an event handler to the document.
+
+document.addEventListner("click", function() {
+  document.getElementById("test").innerHTML = "My test content";
+});
+
+document.addEventListener("click", function(){
+  document.getElementById("demo").innerHTML = "Hello World";
+});
+
+Note: document.removeEventListener() method to remove an event handler
+
+3.  The adoptNode() method adopts a node from another document.
+  All child nodes (descendants), if any, of the adopted node, are also adopted.
+  The original node (and its child nodes, if any) is removed from the other document.
+  
+  var node = document.adoptNode(document.getElementById("test"));
+  
+  Note: 
+     document.importNode() or element.cloneNode() - to copy the node, without removing it.
+     
+ 4. anchors collection returns a collection of all <a> elements in the document that have a name attribute.
+   document.anchors - return collection of anchors from document
+   
+ 5. applets collection returns a collection of all <applet> elements in the document.
+   document.applets
+   
+ 6. Get the baseURI of the document:
+    var x = document.baseURI;
+  
+7. Get the cookies associated with the current document:
+    var x = document.cookie; // Get the Cookie property
+    
+    Set the cookie property:
+    document.cookie = "cook1=val1;cook2=val2"
+
+8. Display the character encoding for this document:
+    var x = document.characterSet;
+
+9. Create a class attribute, with the value "democlass", and insert it to an <h1> element:
+
+    var element = document.getElementById("onlytext");   // Get the element
+    var attribute = document.createAttribute("class_name");       // Create a "class_name" attribute
+    attribute.value = "domclass";                           // Set the value of the class attribute
+    element.setAttributeNode(attribute);                          // Add the class attribute to element
+
+10.  Create a comment node, and insert it to the HTML document:
+
+    var c = document.createComment("My personal comments");
+    document.body.appendChild(c);
+
+11. createDocumentFragment() method creates an imaginary Node object, with all the properties and methods of the Node object.
+The createDocumentFragment() method is used to -
+  get document or part of document 
+  change, 
+  add, or 
+  delete, 
+  insert it back to your document.
+
+createFragmentedDocument:
+var element  = document.getElementById('ul'); // assuming ul exists
+var fragment = document.createDocumentFragment();
+var browsers = ['Firefox', 'Chrome', 'Opera', 
+    'Safari', 'Internet Explorer'];
+
+browsers.forEach(function(browser) {
+    var li = document.createElement('li');
+    li.textContent = browser;
+    fragment.appendChild(li);
+});
+
+element.appendChild(fragment);
+
+HTML:
+<ul id="ul">
+</ul>
+
+
+
+
+
+
+
