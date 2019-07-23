@@ -1,0 +1,58 @@
+
+
+<html>
+<body>
+
+<div id="demo">
+<h2>The XMLHttpRequest Object</h2>
+<button type="button" onclick="loadDoc()">Change Content</button>
+</div>
+
+<script>
+// Creates a new XMLHttpRequest object
+  var xmlRequest = new XMLHttpRequest();
+  
+  // onreadystatechange - a function to be called when the readyState property changes
+  
+  xmlRequest.onreadystatechange = function() {
+  
+  // this.status - Returns the status-number of a request
+    if(this.readyState == 4 && this.status == 200) {
+    // reponseText - 	Returns the response data as a string
+      document.getElementById("h1").innerHTML = this.responseText;
+    }
+  };
+  
+  // To send a request to a server, we use the open() and send() 
+  xmlRequest.open("GET", "file", true);
+  xmlRequest.send();
+  
+  
+  this.readyState -
+      0: request not initialized 
+      1: server connection established
+      2: request received 
+      3: processing request 
+      4: request finished and response is ready
+      
+      
+  GET or POST - used in open()
+  
+    A cached file is not an option (update a file or database on the server).
+    Sending a large amount of data to the server (POST has no size limitations).
+    Sending user input (which can contain unknown characters), POST is more robust and secure than GET.
+    
+ GET - Request parameter
+   xhttp.open("GET", "demo_get.asp?t=" + Math.random(), true);
+  
+POST - 
+  xhttp.open("POST", "ajax_test.asp", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("fname=Henry&lname=Ford");
+ 
+  
+  
+  
+  
+  
+  
