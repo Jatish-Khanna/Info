@@ -22,6 +22,20 @@ Good things-
   . Keys are used for indexing optimize faster reads 
   
   
+Here are some of the differences between B and B+ tree that I've come across:
+
+In a B tree, search keys and data are stored in internal or leaf nodes. But in B+-tree, data is stored only in leaf nodes.
+Searching any data in a B+ tree is very easy because all data are found in leaf nodes. In a B tree, data cannot be found in leaf nodes.
+In a B tree, data may be found in leaf nodes or internal nodes. Deletion of internal nodes is very complicated. 
+In a B+ tree, data is only found in leaf nodes. 
+
+Deletion of leaf nodes is very easy as it can be directly deleted.
+
+Insertion in B tree is more complicated than B+ tree.
+
+B+ trees store redundant search key but B tree has no redundant value.
+In a B+ tree, leaf nodes data are ordered as a sequential linked list but in B tree the leaf node cannot be stored using a linked list.
+Many database systems' implementations prefer the structural simplicity of a B+ tree.
 
 
 
