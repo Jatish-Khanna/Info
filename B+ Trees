@@ -1,0 +1,41 @@
+B+ trees is an extension of B trees. It allows efficient operations-
+  - Insertion
+  - Deletion
+  - Search 
+  
+The records are stored at leaf nodes
+The keys are stored as internal nodes
+
+  How search is efficient -
+    All leaf nodes are linked together as single LinkedList, that makes search more efficient
+    
+  Note: B+ trees can store large datasets which may not fit into PRIMARY memory
+    Redundant search keys can be present in B+ trees
+    Deletion in B+ tree is easy compared to B trees where data nodes are only stored at leaf
+ 
+These are optimized as to store -- 
+  Keys in the main memory and records in the secondary storage
+  
+Good things- 
+  . Height of tree remain balanced
+  . B+ trees allows data access sequentionally (all leafs are linked as single List) and direct access
+  . Keys are used for indexing optimize faster reads 
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
