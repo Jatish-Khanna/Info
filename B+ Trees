@@ -38,10 +38,70 @@ In a B+ tree, leaf nodes data are ordered as a sequential linked list but in B t
 Many database systems' implementations prefer the structural simplicity of a B+ tree.
 
 
+HDD internal storage?
+  1. A HDD has multiple disks rotating and persist data for future use
+  2. A disk has multple tracks which are circular in nature
+  3. A disk has multiple sector - represents an area 
+  
+  4. The intersection areas of tracks and sector represents block in the disk
+   These blocks can be accessed using (trackNo, sectorNo)
+   We assume a general block size is 512 bytes
+   
+ 5. Reading/writing on the disks has been in terms of blocks
+ 6. Each byte in the block has own address i.e. offset 
+ (trackNo, sectorNo, offset) -> represents each byte on a disk from a particular BLOCK.
+ 
+ Organizing the data in the main memory i.e. directly used by the application program is called as DATA Structures
+ Organizing the data on the disk efficiently for easy access - DBMS
 
-
-
-
+How Indexes help out? ---------> These are called dense indexes
+  A reverse index is built for each key and respective record pointer represents the (trackNo, blockNo, offset) on disk
+  The index size will be small, it optimizes the searched 
+   - by not looking in all the blocks where data is stored
+   - by only looking idexes and accessing the record pointer to block on disk
+   
+Multi-level Index? ----------> These are called sparse indexes
+  If the index size is also growing with the larger data set.
+  Decide what multi-level index will represent
+  
+  E.g. Each multi-level index will store the reference to block of records which represent block on disk,
+  
+  
+The above discussion give idea to M-Way search tree-
+  E.g. Binary search tree is an example of M-way search tree where M = 2
+  
+  Total Number of children = m
+  Total Number of keys possible = m-1
+  
+  There can be 3-Way, 4-way... m-way search tree where m = number of children a particular node may have
+    
+ What is the problem with M-way search tree->
+   The insertion process doesn't have any guidelines i.e. inserting n nodes in M-way search tree 
+     may become skewed and all other operations will become O(N)
+      
+ B - Trees?
+   The guide lines provided to insert, delete data in trees for M-way search trees
+   So, B-Trees are M-way search trees with some rules
+   
+ 1) Every node should be half-full i.e.
+   ceil(m/2) -> every node keys
+ 2) Root can have minimum 2 children i.e. One key
+ 3) All leaf must be at the same level
+ 4) The creation process for B-Tree is bottom up
+ 
+ A B-tree with m=4 means (It can have 4 Children and 3 Keys for a node)
+ 
+ Note: B-Tree are like multi-level indexes whereas
+   . Each node will have a child pointer
+   . Each node will have a RECORD pointer
+   
+ B+ Tree -
+   . All the non-leaf node will not hold RECORD pointer [Makes a sparse index]
+   . All the missing keys can be redundant in children
+   . There will be a sequentional link b/w all the child [Makes a Dense index]
+   
+   
+   
 
 
 
