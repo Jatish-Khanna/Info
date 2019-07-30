@@ -1,0 +1,33 @@
+The multiple request-response cycles between client and server were consuming both time and network bandwidth.
+Javascript is sufficing the requirements of Users by handling events and requests at client side
+
+  = Improves the network utilization b/w client and servers
+  = Dynamic HTML using Javascript
+  = Validate Forms and handle the events at the clientn side
+  = To create interactive webpages by manipulating DOM API
+  
+  JavaScript is an interpreted language. The browser interprets the JavaScript code embedded inside the web page, 
+  executes it and displays the output. 
+  It is not compiled to any other form to be executed.
+
+Data types in Javascript-
+primitives
+  . number
+  . string
+  . boolean
+ 
+  . undefined
+  . null 
+  
+  non-primitive
+   . object
+
+boolean -
+  true (non-zero number, string, true)
+  false(0, -0, "", NaN, undefined, null)
+
+
+
+
+
+
