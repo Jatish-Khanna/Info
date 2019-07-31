@@ -1,0 +1,7 @@
+
+@RestControllerAdvice is just a syntactic sugar for @ControllerAdvice + @ResponseBody, you can look here.
+
+Is it we should always use @RestControllerAdvice for rest services and @ControllerAdvice MVC?
+
+Again, as mentioned above, 
+@ControllerAdvice can be used even for REST web services as well, but you need to additionally use @ResponseBody.
