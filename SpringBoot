@@ -5,3 +5,57 @@ Is it we should always use @RestControllerAdvice for rest services and @Controll
 
 Again, as mentioned above, 
 @ControllerAdvice can be used even for REST web services as well, but you need to additionally use @ResponseBody.
+
+
+
+@RestControllerAdvice is just a syntactic sugar for @ControllerAdvice + @ResponseBody, you can look here.
+
+Is it we should always use @RestControllerAdvice for rest services and @ControllerAdvice MVC?
+
+Again, as mentioned above, 
+@ControllerAdvice can be used even for REST web services as well, but you need to additionally use @ResponseBody.
+
+
+https://www.baeldung.com/spring-rest-template-error-handling
+
+Implementing a ResponseErrorHandler
+And so, a class that implements ResponseErrorHandler will read the HTTP status from the response and either:
+
+Throw an exception that is meaningful to our application
+Simply ignore the HTTP status and let the response flow continue without interruption
+We need to inject the ResponseErrorHandler implementation into the RestTemplate instance.
+
+Hence, we use the RestTemplateBuilder to build the template and replace the DefaultResponseErrorHandler in the response flow.
+
+So let’s first implement our RestTemplateResponseErrorHandler:
+
+@Component
+public class RestTemplateResponseErrorHandler 
+  implements ResponseErrorHandler {
+ 
+    @Override
+    public boolean hasError(ClientHttpResponse httpResponse) 
+      throws IOException {
+ 
+        return (
+          httpResponse.getStatusCode().series() == CLIENT_ERROR 
+          || httpResponse.getStatusCode().series() == SERVER_ERROR);
+    }
+ 
+    @Override
+    public void handleError(ClientHttpResponse httpResponse) 
+      throws IOException {
+ 
+        if (httpResponse.getStatusCode()
+          .series() == HttpStatus.Series.SERVER_ERROR) {
+            // handle SERVER_ERROR
+        } else if (httpResponse.getStatusCode()
+          .series() == HttpStatus.Series.CLIENT_ERROR) {
+            // handle CLIENT_ERROR
+            if (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new NotFoundException();
+            }
+        }
+    }
+}
+Next, we build the RestTemplate instance using the RestTemplateBuilder to introduce our RestTemplateResponseErrorHandler:
