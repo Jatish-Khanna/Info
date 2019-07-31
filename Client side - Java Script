@@ -26,8 +26,55 @@ boolean -
   true (non-zero number, string, true)
   false(0, -0, "", NaN, undefined, null)
 
+typeof is an operator in JavaScript.
+dynamic data binding:
+ JavaScript is a loosely-typed language. The type of data assigned to a variable is decided at runtime. 
+
+Deferred mode of Javascript execution-
+  1) Javascript functions: These are 
+    Userdefined functions
+    Builtin functions
+    
+    
+    Syntax of Functions-
+      function name(aguments) {
+        // Function body
+        // return statement
+      }
+    
+    Return value for Javascript function is optional. 
+    // Function implictly return "undefined" if no explicit return statement is present
+
+Calling a Javascript function:
+   functionName(arguments...);
+
+Example- 
+  function sayHello(name) {
+    console.log("Hello...!" + name); 
+  }
+In JavaScript it is perfectly normal to have functions inside functions. 
+The function within another function body, is called as nested function or Closures
 
 
+Note: The nested function is private to the container function and cannot be invoked from outside the container function.
 
+Example:
+  function parent(name) {
+    var msg = "Hi! I'm parent " + name;
+    
+    return function (cName) {
+      var msgChild = "I'm child of parent:  " + cName + " " + msg;
+      return msgChild;
+    }
+    //return msg;
+  }
+  
+  var add = (function () {
+  var counter = 0;
+  return function () {counter += 1; return counter}
+})(); // Self invoking anonymous parent function
 
+// Calling child function
+add();
 
+A closure is a function having access to the parent scope, even after the parent function has closed.
