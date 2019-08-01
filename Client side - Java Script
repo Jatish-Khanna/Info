@@ -78,3 +78,95 @@ Example:
 add();
 
 A closure is a function having access to the parent scope, even after the parent function has closed.
+
+Javascript variable and Scope-
+  1) Local variable - Defined inside a function (accessibility is from within the function in which they are defined)
+  2) Global variable - Outside the Javascript functions are defined under global scope
+  3) Nested variable - Variables defined in function which is nested function or closure
+
+  Example: 
+   // global scope - start
+     var a = 10;
+   // global scope - end
+   
+   function myFunction() {
+     // local scope - start
+      ....
+      return function() {
+        // nested scope of the variables
+      }
+   }
+
+Note: variables undeclared and used will throw Uncaught ReferenceError.
+  declare local variable without the use of keyword 'var', it takes global scope.
+
+when lines of code within the function try accessing a variable declared both locally and globally, 
+the local variable will shadow the global variable.
+
+
+***************Javascript Hoisting**************************
+  All but FEW(exception cases will be marked later)  variables and function declarations wherever present in the code 
+    moved to TOP and get declared
+  - Scope GLOBAL: they are available for all purpose use and moved to top
+  - Scope Function/Local - they are available at the TOP of function
+  
+ Note: Only DECLARATIONS not INITIALIZATIONS are hoisted to the top
+ 
+ Example:1
+   Instead of throwing ReferenceError
+   
+   console.log(variable_1);
+   var variable_1;
+   
+// Output: undefined
+ As undefined is the default value
+
+Example:2 
+  with Initialization
+    
+    console.log(variable_1);
+    var variable_1 = 'Hi';
+
+// Output: Undefined
+ Only declaration is hoisted but initialization. So, the default value is logged as result.
+ 
+ 
+ ------------------Similarly Function Hoisting
+ 
+   callingMyFunction(); // Here function is not declared and defined
+   
+   // Output: Uncaught ReferenceError
+   
+ Example:1
+   callingMyFunction();
+   
+   function callingMyFunction() {
+     // Function body ...
+     ...
+   }
+ 
+ This function declaration will be hoisted to the top
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
