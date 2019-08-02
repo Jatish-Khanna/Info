@@ -1,0 +1,8 @@
+Prometheus
+Prometheus is an open-source monitoring system that was originally built by SoundCloud. It consists of the following core components -
+
+A data scraper that pulls metrics data over HTTP periodically at a configured interval.
+
+A time-series database to store all the metrics data.
+
+A simple user interface where you can visualize, query, and monitor all the metrics.
