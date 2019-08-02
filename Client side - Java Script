@@ -154,11 +154,38 @@ Example:2
  
  Event handlers are associated with DOM elements
  
+ ---------------------------------------
+ 
+ Javascript Objects can be created in ways - 
+   Object literals  - This is when Object is initialized as JSON either empty or Key/Value pairs
+     Example -
+       var myCar = { "name" : "Jatish Khanna", 
+                       functionKeyName: function(param1) {
+                         return "I'm function";
+                       }
+                   };
+   
+     The function defined in the Object is Object behaviour whereas other key/value pairs are Object state
+   
+   Constructor - 
  
  
+ Accessing state and Behaniour of Objects:
+   1) Using dot operator - 
+     Getting state/Behavior -
+       console.log(objectName.key);
+       
+     Setting S/B
+       objectName.key = 'value';
+       
+   2) Using Bracket operator
  
- 
- 
+     Getting state/Behavior -
+       console.log(objectName["key"]);
+       
+     Setting S/B
+       objectName["key"] = 'value';
+       
  
  
  
