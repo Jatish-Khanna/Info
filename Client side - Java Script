@@ -147,9 +147,12 @@ Example:2
  
  This function declaration will be hoisted to the top
  
+ --------------------------------------
  
+ JavaScript code is delayed or deferred till some event occurs,
+ the execution is called as deferred mode execution. This makes JavaScript an action-oriented language.
  
- 
+ Event handlers are associated with DOM elements
  
  
  
