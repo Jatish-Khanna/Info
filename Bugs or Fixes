@@ -1,0 +1,3 @@
+Unknown Error At line:1 eclipse - pom.xml - 
+   change the property <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+   https://stackoverflow.com/questions/56142369/why-am-i-getting-unknown-error-in-line-1-of-pom-xml
