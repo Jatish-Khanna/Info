@@ -214,7 +214,71 @@ Using Function constructor -
   // Calling methods in the function
   myObject.method1(...);
 
+---------------------------
 
+var myDateObject = new Date();
+
+console.log(myDateObject.getYear());
+getDay(), getHours(), getMonth(), getTime(), getMilliseconds() and same setter methdos
+
+			document.getElementById('b1').innerHTML="Date: "+dateObject2.getDate();
+			document.getElementById('b2').innerHTML="Day: "+dateObject2.getDay();
+			document.getElementById('b3').innerHTML="Month: "+dateObject2.getMonth();		
+			document.getElementById('b4').innerHTML="Year: "+dateObject2.getFullYear();
+			document.getElementById('b5').innerHTML="Hours: "+dateObject2.getHours();
+			document.getElementById('b6').innerHTML="Minutes: "+dateObject2.getMinutes();
+			document.getElementById('b7').innerHTML="Seconds: "+dateObject2.getSeconds();
+
+--------------------------
+
+Javascript Regular Expressions-
+
+  1) using RegExp constructor
+    var pattern = new RegEx("pattern", modifiers);
+  
+  2) as a literal value by enclosing within forward slash (/)
+    var pattern = /"pattern"/modifiers
+
+modifiers -
+  g - global match
+  m - multi line match
+  i - ignore case
+  
+  pattern.test(string) // to verify if provided string Match the RegEx pattern
+  string.search("pattern") or string.replace("pattern", "replacement")
+ 
+--------------------------------
+
+Associative arrays in Javascript-
+If index is a string, the array is referred as an associative array. 
+These arrays have indexes as keys that store value with any valid JavaScript data type.
+
+var myArray = new Array();
+myArray["name"] = "Jatish Khanna";
+myArray["Id"] = 1;
+
+-----------------------------------
+Dense Arrays
+
+JavaScript arrays are allowed to contain elements of different types. Such an array is called as dense array. 
+  var myArray = [10, "Jatish", 11, "Hello"];
+
+to get the length of an Array using -
+  myArray.length -> gives number of elements present in the array
+  push() Adds new element at last position in an array
+  pop() Removes last element from given array
+  splice() Adds new elements at specified position in an array
+     Syntax: splice(x,y,z)
+     x=index for new item
+      y=number of items to be removed, starting from index next to index of new item
+      z=item to be added
+
+
+  concat() Joins two or more arrays and returns joined array.
+  forEach() Iterates over array to access each indexed element inside an array.
+     myArray.forEach( function( currentItem, index){
+        console.log(" Array has " + currentItem +" at index: " + index);
+      })
 
 
 
