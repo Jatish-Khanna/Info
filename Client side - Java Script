@@ -187,14 +187,32 @@ Example:2
        objectName["key"] = 'value';
        
  
+ ---------------------------------------
  
+ To create all objects with similar/fixed prototype use Function Constructor-
+    Function constructor is like regular functions but it is invoked using 'new' keyword.
  
+function Prototype(param1, param2) {
+  this.param1 = param1;
+  this.param2 = param2;
+  // Similar fields for function
+  ...
+  
+  this.method1 = function(param) {
+    ...
+  }
+  // Similar nested methods to Function construtor
+  ...
+}
 
+this Keyword - It points to an object which owns the code in current context.
 
-
-
-
-
+Using Function constructor - 
+  var myObject = new Prototype(...);
+  // Accessing the function properties
+  myObject.param1;
+  // Calling methods in the function
+  myObject.method1(...);
 
 
 
