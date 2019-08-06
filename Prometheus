@@ -6,3 +6,8 @@ A data scraper that pulls metrics data over HTTP periodically at a configured in
 A time-series database to store all the metrics data.
 
 A simple user interface where you can visualize, query, and monitor all the metrics.
+
+
+Prometheus is a full monitoring and trending system that includes built-in and 
+     active scraping, storing, querying, graphing, and alerting based on time series data.
+It has knowledge about what the world should look like (which endpoints should exist, what time series patterns
