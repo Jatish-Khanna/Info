@@ -280,5 +280,74 @@ to get the length of an Array using -
         console.log(" Array has " + currentItem +" at index: " + index);
       })
 
+--------------------------------------
+
+JSON - Javascript Object Notation a light weight information interchange format over the n/w 
+   var myJson = { "cusomterName" : "Jatish", "custId" : 1 ... }
+   
+   This is similar to the literal notation in the Javascript but there is Key difference:
+     Note: For Javascript Objects Keys shouldn't be present in Quotes whereas Json mandataes the keys to be in quotes
+     
+     The quotes can be single or double quotes
+     
+     Json :
+       { "customerName" : "Jatish" }
+       
+     JS literal Object
+       { cutomerName : "Jatish" }
+       
+Important functions to map Json and Javascript Objects -
+  1) parse()  - that converts string information and parse to Json Object
+    JSON.parse("{'customerName' : 'Jatish'}");
+    
+  2) stringify() - Return JSON string respective to the Object
+    JSON.stringify(myJsObject);
+
+      <script>
+				        var dataJSON = {
+                        "customers":   [
+                            {"firstName":"Jatish", "lastName":"Khanna"}
+                        ]};
+                        
+                        
+                        document.write('JSON string: '+JSON.stringify(dataJSON)+'<br><br>');
+
+                        var stringJSON = '{"firstName":"Jatish", "lastName":"Khanna"}';
+                        var parsedJson = JSON.parse(stringJSON);
+                        
+                        document.write('JSON string: '+JSON.stringify(JSON.parse(stringJSON))+'<br><br>');
+                        document.write('JSON string: '+parsedJson["firstName"]+'<br><br>');
+	 </script>
+
+Example#2
+
+function User(name) {
+	this.name = name;
+
+}
+function stringifyUser() {
+	with(document) {
+		var userObj = new User(getElementById('username').value);
+		getElementById('message').innerHTML = JSON.stringify(userObj);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
