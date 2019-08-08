@@ -332,11 +332,25 @@ function stringifyUser() {
 	}
 }
 
+------------------------------------------
 
+Dynamic updation of HTML pages can be done using - BOM(Browser Object model)
+The BOM model splits the browser into parts and each parts is referred as distinct Object
 
+BOM has hierarchy of multiple Object.
+  1) Parent Object for all the BOM elements is window
+  
+  window
+  |- history
+  |- navigator
+  |- document
+  |- location
 
-
-
+Document Object - that represents a loaded webpage on the browser.
+  In Document Object all the HTML elements are represented as Tree.
+  1) document is the parent of all the innernodes and child in tree
+  2) inner nodes and child represent HTML element
+  3) Each HTML element can have one/more attributes
 
 
 
