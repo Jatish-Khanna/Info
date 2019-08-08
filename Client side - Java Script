@@ -396,9 +396,30 @@ More about BOM -
    sessionStorage - Allows access to objects that are only stored for current session
      sessionStorage.setItem("key", "value");
 
+Well known Window methods -
+  alert(), prompt(), confirm(),setInterval(), setTimeout()
+  open(), close()
 
+----------------------------
 
+window.history -
+  the requirement is to deal with browsing history of user
+  1) Programatic navigation to the URLs
+  
+  length - the number of elements in the history objects
+  back() - loads previous URL from history
+  forward() - loads next URL from the history
+  go() - Loads previous URL present at given number from the history Object
+  
+--------------------------
 
+window.navigator -
+  to describe the request or browser source
+  
+  appName - browser name
+  appVersion - the Operating system version and Browser version details
+  platform - Nameof the Operating system
+  userAgent - provides the userAgent details for browser
 
 
 
