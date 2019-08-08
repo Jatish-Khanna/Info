@@ -356,8 +356,8 @@ Document Object - that represents a loaded webpage on the browser.
 
 Accessing element in each DOM -
   - getElementById - find an element(S) with given ID
-  - getElementByTag - find an element(S) with HTML element name as Tag name e.g. h1, p, a
-  - getElementByClassName - find an element(S) with given class name attribute
+  - getElementsByTagName - find an element(S) with HTML element name as Tag name e.g. h1, p, a
+  - getElementsByClassName - find an element(S) with given class name attribute
   - querySelector - find the first element with the matched CSS query selector
   - querySelectorAll - find all elements with the matched CSS query selector
 
