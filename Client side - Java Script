@@ -410,6 +410,7 @@ window.history -
   back() - loads previous URL from history
   forward() - loads next URL from the history
   go() - Loads previous URL present at given number from the history Object
+    negative value repserent previous and positive value represent forward
   
 --------------------------
 
@@ -431,11 +432,33 @@ window.location -
   port - port number from the URL
   pathname - the file or path from the URL
   
+-------------------------
 
+DOM tree hirarchy - (These objects are from DOM not BOM)
+  parentNode - get parent node of current element 
+  childNodes - 
+  firstChild -
+  lastChild
+  nextSibling -
+  previousSibling
+  
+  parentElement
+  firstElementChild
+  lastElementChild
+  nextElementSibling
+  previousElementSibling
 
+Note: The difference is One specifies the Element Object and other specifies Node
+  Nodes represent - Element, text, attribute
+  Element represents - Only Elements
 
-
-
+Methods:
+  createElement() - provided the element tag
+  createTextNode() - Content at runtime and this can be attached to any node that can hold content
+  
+  appendChild() - append child to element
+  removeChild() - removes elements from the DOM tree, provide the element Object
+  
 
 
 
