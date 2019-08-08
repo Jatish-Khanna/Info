@@ -421,8 +421,16 @@ window.navigator -
   platform - Nameof the Operating system
   userAgent - provides the userAgent details for browser
 
+-------------------
 
-
+window.location - 
+  To programatically access the browser resource, or refresh the resource
+  
+  href - complete URL
+  hostname - hostname part of URL
+  port - port number from the URL
+  pathname - the file or path from the URL
+  
 
 
 
