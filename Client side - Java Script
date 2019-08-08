@@ -352,6 +352,38 @@ Document Object - that represents a loaded webpage on the browser.
   2) inner nodes and child represent HTML element
   3) Each HTML element can have one/more attributes
 
+-------------------------------
+
+Accessing element in each DOM -
+  - getElementById - find an element(S) with given ID
+  - getElementByTag - find an element(S) with HTML element name as Tag name e.g. h1, p, a
+  - getElementByClassName - find an element(S) with given class name attribute
+  - querySelector - find the first element with the matched CSS query selector
+  - querySelectorAll - find all elements with the matched CSS query selector
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
