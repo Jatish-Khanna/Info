@@ -374,8 +374,27 @@ Other Properties -
   attributes[] - to find that particular attribute
   setAttribute("name", "value") - to change the attribute represented by particular HTML element
 
+-----------------------------------
 
-
+More about BOM - 
+  1) Navigate to different webpage
+  2) Close the browser window
+  3) Store some data related to webpage e.g. history
+  
+  The BOM provides an Object that represents an Entire browser window, it also allows us to access and manipulate 
+  the window properties
+  window - parent Object all the Objects
+  
+  Properties-
+   innerHeight - height of content area
+   innerWidth - width of content area
+   outerHeight - it includes height of window + tool bars and scroll bars
+   outerWidth - it includes width of window +  tool bars and scrollbars
+   
+   localStorage - that stores the Object without any expiration date
+     localStorage.setItem("key", "value");
+   sessionStorage - Allows access to objects that are only stored for current session
+     sessionStorage.setItem("key", "value");
 
 
 
