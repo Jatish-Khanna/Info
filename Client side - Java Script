@@ -486,19 +486,15 @@ function remove() {
 </script>
 
 
+-------------------------------
 
+Event Listeners -
+  document.getElement...<event> = function() {... }
+  
+  document.getElement...addEventListener("<event>", function() {... }, <true/false> );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+On event created by user, a browser Object (event) has been associated with particular event
+  Properties of Event Object:
+    target - the element that initiated the event
+    type - type of event that has taken place 	
+   
