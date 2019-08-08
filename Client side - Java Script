@@ -361,7 +361,18 @@ Accessing element in each DOM -
   - querySelector - find the first element with the matched CSS query selector
   - querySelectorAll - find all elements with the matched CSS query selector
 
+------------------------
 
+Properties of Document Object -
+  document.body - body HTML element
+  document.forms - represents all the HTML forms
+  document.head - represents the head element of HTML
+  document.images - represents all the images under HTML
+  
+Other Properties -
+  innerHTML - to access the contents of HTML element
+  attributes[] - to find that particular attribute
+  setAttribute("name", "value") - to change the attribute represented by particular HTML element
 
 
 
