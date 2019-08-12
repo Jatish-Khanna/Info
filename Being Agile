@@ -1,0 +1,58 @@
+PSI - potentially shippable increment
+Agile is 
+  - Iterative delivery
+  - Incremental delivery
+  
+Vertical sclicing is important
+
+--------------- Roles ---------------------
+
+Scrum Master-
+  - process owners
+  - problem solver [impediments]
+  - protector [from external disturbance]
+Dev teams
+PO
+
+-------------- Artifacts --------------------
+Product backlog - high level requiements (it is versioned documents) 
+   PO owns the documents
+
+Sprint backlog - subset of product backlog, that should target what to develop in current sprint
+  - Spring backlog is not versioned
+  - it is divided into multiple tasks that would be completed in each sprint
+  
+PSI - potentially shippable increment
+
+--------------- Ceremonies -----------------
+Sprint planning meeting - The input should be product backlog[a backlog should be priortized]
+  PO, Dev teams, Scrum master
+  Output: Sprint backlog
+  Scrum master is responsible timelines
+  Time duration: 4 hours in two week sprint
+  
+Review meeting - Demo with the PO and customer
+  2 hours 
+  PO, Dev team, scrum master
+  Dev team will give the demo
+  All the reviews will be added to Product backlog
+
+Retrospective meeting - To update the processes, improvements
+  2 hours 
+  only this has a MoM
+  PO, Scrum master, Dev teams
+
+Product backlog grooming - Details, repriortize 
+  - Input : product backlog grooming
+  Sprinting a head sessions
+  Furnish the Product backlog
+
+Daily scrum meeting - daily update meeting
+  15 minutes standup
+  What did we do?
+  What is planned?
+  What are impediments?
+  Scrum master and Dev team are required
+  PO are optional
+  
+ 
