@@ -56,3 +56,56 @@ Daily scrum meeting - daily update meeting
   PO are optional
   
  
+Sprint#0-
+  Vision of the product
+  Creation of product backlog and priortization   | User story workshop
+  Estimation of user stories                      | User story workshop
+  
+  Release date computation
+  Agile orientation
+  Base architecture
+  High level infrastructure and enviroment setup
+  PoC and framework for application development and testing
+  
+  Sprint 1...n
+  
+** User stories came from eXtreme Programming
+  
+1)  Format: 
+  As a <TYPE_OF_USER>, I want <GOALS> so that <REASON>
+  
+  Example:
+  As an Admin, I want to the page access to be restricted based on role, so that 
+  only authenticated user
+  
+2) Acceptance criteria:
+   ...
+
+INVEST - Independent Negotiable Valuable Estimable Small Testable
+
+Priortization Of U.S. - [1-n with 1 being the highest priority]
+  - Feature urgency [Owners PO]
+   a) MoSCoW - Must to Have, Should have, Could have, Won't have features
+  - Business Values
+  - Risks involved - [H,M,L] -> 
+  - Dependency
+
+********************************  
+  
+Estimation of U.S.
+  Baseline depends on the team members
+  In sprint0 - baseline is decided
+  
+  - Quantum of Work
+  - Risks, uncertanities involved
+  - Experience?
+
+  a) Fibbonacci series (considers the complexity for bigger stories)
+
+? - Clarity required
+INFINITE - Epics
+
+Planning Poker activity - to come to consensus for estimation
+
+
+
