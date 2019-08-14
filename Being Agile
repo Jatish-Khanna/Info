@@ -87,7 +87,7 @@ Priortization Of U.S. - [1-n with 1 being the highest priority]
   - Feature urgency [Owners PO]
    a) MoSCoW - Must to Have, Should have, Could have, Won't have features
   - Business Values
-  - Risks involved - [H,M,L] -> 
+  - Risks involved - [H,M,L] -> Depends on Risk (Priority can be high for High risk or low risk activities)
   - Dependency
 
 ********************************  
@@ -108,4 +108,63 @@ INFINITE - Epics
 Planning Poker activity - to come to consensus for estimation
 
 
+-------------------------------
+What impacts the computation of Sprint duration?
+  - 
+  
+Velocity - Story points completed in a sprint
+  Story points shouldn't change but velocity will increase with exp.
+  
+Guess velocity during sprint0 
+  - Prior exp. 
+  - Historical data
+  
+---------------------------------
+
+Calculate Release date-
+  Guessed velocity - 10 velocity
+  Product backlog =  100
+  Sprint length - 2 week
+  
+  Release date -
+     Est. sprints required = 100/10 = 10 sprints
+	 
+	 Total weeks = 10 sprints * 2 weeks per sprint = 20 weeks
+	 
+	 10% of Total weeks - Uncertanity - 2 weeks
+	 15% of Total weeks - Rework and improvements - 3 weeks
+     1 Hardening sprint - 2 weeks or 1 sprint     - 2 weeks
+	 
+	 Total = 27 weeks (the actual release date for this project)
+
+---------------------
+
+Estimation statistics  -
+
+  a) Release burn down:
+     Story points on Y-axis and Number of Sprints on X-axis
+     
+	 Idea burn down chart is available in sprint0
+     whereas, the actual burn down is created in sprints
+	 
+  b) Sprint burn down:
+     Total hours of efforts remaining Y-axis and days on X-axis 
+     
+	 Why hours and not story points on Y-axis - 
+	    because DoD says story is complete only when all taks associated to story are complete
+		The graph would be a step graph.
+  
+  c) Sprint burn up chart:
+	Total hours of efforts spent Y-axis and days on X-axis 
+	
+  
+  Sprint0 - Capacity planned, Priority User stories, total story points to burn down?
+  
+  
+======================
+
+Issue with Agile or Scaled scrum-
+  
+Distributed Scrum - teams is not co-located, but face to face conversation
+Staggled sprinting - 
 
