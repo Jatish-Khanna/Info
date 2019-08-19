@@ -1,4 +1,6 @@
 Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
+
+LRU and LFU (Least Frequently Used)  is actually only one of the supported eviction methods till now@Redis 4.0
  
 It supports multiple datastructures to store data-
   strings, 
