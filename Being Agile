@@ -168,3 +168,26 @@ Issue with Agile or Scaled scrum-
 Distributed Scrum - teams is not co-located, but face to face conversation
 Staggled sprinting - 
 
+-----------------------
+
+
+Squad:
+  The basic unit of development at Spotify is the Squad. 
+
+  A squad is similar to scrum team – self-organized and cross functional
+  Each squad is a vertical team focusing on one goal so that they become experts
+  Like Scrum, squads have end to end responsibility
+  They can choose there on agile framework like Scrum, Kanban...
+  
+Tribe:
+  Is a collection of squads
+  Tribe work in similar areas like infrastructure, feature development
+  It will have its own leader 
+  
+Chapter:
+  Group of people with simillar skill set e.g. Developer, Tester
+  Chapter lead handles the people of same chapter
+  
+Guild:
+  A group of people with simillar skills across tribes
+  E.g. Developer guild, tester guild, enterprise architect guild
