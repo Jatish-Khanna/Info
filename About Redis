@@ -14,12 +14,15 @@ It supports multiple datastructures to store data-
  
 Redis features:
   replication
+  Automatic failover
   Lua scripting
-  LRU eviction, 
+  LRU eviction [Keys with a limited time-to-live], 
   transactions
+  publiser/subscriber - message broker
   different levels of on-disk persistence,
   high availability via Redis Sentinel
   automatic partitioning with Redis Cluster
+
 
 Redis supports atomic operations:
   append to a String, 
@@ -27,6 +30,7 @@ Redis supports atomic operations:
   pushing an element to a list
   Set intersection, union and difference
   member with highest ranking in a sorted set
+  
   
   
  Note:  full durability, and in these cases Redis was not a viable option. 
@@ -55,9 +59,36 @@ How it writes AOF while writing -
   4) When child completed with temporary file, parent appends the data from buffer to temporary file
   5) File get renamed as new AOF
  
+Redis Persistence can be optionally disabled to levrage feature-rich, networked, in-memory cache
     
+Redis Replication [client writes, keys expired or evicted, any other action changing the master dataset] - file redis.conf
+  Very fast non-blocking first synchronization,
+  auto-reconnection with partial resynchronization on net split
+  very simple to use and configure leader follower (master-slave) replication
+  A master can have multiple slaves
+  All slaves will receive replication stream from the master
+  Redis replication is non-blocking on the master side
+  scalability, in order to have multiple slaves for read-only queries
+  Diskless replication ( repl-diskless-sync)
     
+ Replication Scenarios -
+   a) well-connected, the master keeps the slave updated by sending a stream of commands to the slave
+   b) slave reconnects and attempts to proceed with a partial resynchronization
+   c) Failed partial resynchronization: 
+                               master needs to create a snapshot of all its data, 
+                               send it to the slave,
+                               continue sending the stream of commands to slave
+ 
+  Note: masters with persistence turned off configured to auto restart are dangerous
+    1. Node A is a master, and Node B, C are slaves in-sync replicas
+    2. Node A crashes and restarts with empty data set
+    3. Node B,C recieves with command to detroy copies from Node A
     
-    
-    
-    
+ The above issue is also possible with the sentinel or in a Redis clusture because restart may go undetected in Clusture
+ 
+ So, auto restart of instances should be disabled.
+ 
+Redis replication deals with expires on keys
+  Slaves don't expire keys, instead they wait for masters to expire the keys
+  Slaves use logical clock in order to report that a key does not exist  for read operations in case of slaves as read replicas
+  
