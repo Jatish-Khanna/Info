@@ -91,4 +91,7 @@ Redis Replication [client writes, keys expired or evicted, any other action chan
 Redis replication deals with expires on keys
   Slaves don't expire keys, instead they wait for masters to expire the keys
   Slaves use logical clock in order to report that a key does not exist  for read operations in case of slaves as read replicas
-  
+
+
+NOte: When Docker, or other types of containers using port forwarding, or Network Address Translation is used, 
+      Redis replication needs some extra care
