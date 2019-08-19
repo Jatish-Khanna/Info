@@ -1,0 +1,63 @@
+Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
+ 
+It supports multiple datastructures to store data-
+  strings, 
+ hashes, 
+ lists, 
+ sets, 
+ sorted sets with range queries
+ bitmaps, 
+ hyperLogLogs (O(log) at the cost of obtaining only an approximation of the cardinality.), 
+ geospatial indexes with radius queries,  
+ streams
+ 
+ 
+Redis features:
+  replication
+  Lua scripting
+  LRU eviction, 
+  transactions
+  different levels of on-disk persistence,
+  high availability via Redis Sentinel
+  automatic partitioning with Redis Cluster
+
+Redis supports atomic operations:
+  append to a String, 
+  increment value in hash, 
+  pushing an element to a list
+  Set intersection, union and difference
+  member with highest ranking in a sorted set
+  
+  
+ Note:  full durability, and in these cases Redis was not a viable option. 
+  but the above can be achived with AOF - (appendonlyfile).
+  
+  How durable is the append only file?
+    Configure Redis to fsync data on disk
+    a) appendfsync always - Very very slow, very safe
+    b) appendfsync everysec (recommended and default) - lose 1 second of data if there is a disaster
+    c) appendfsync no - The faster and less safe method. Normally, flush data every 30 seconds or depends on OS kernel
+    
+    
+How Redis handles AOF failures?    
+while writing the AOF file, or that the volume where the AOF file is stored is store was full    
+    - AOF still contains consistent data representing a point-in-time version of dataset
+  ** latest version of Redis, will work like interpreter and load the file until proper data is found [default], 
+    can be changed to fail-fast instead of fail-safe
+    
+ It also provides - redis-check-aof utility to find the difference
+ 
+How it writes AOF while writing -
+
+  1) Forks, we have parent and child
+  2) Child start with new AOF in a temporary file
+  3) Parent accumulates all the new changes in memory buffer and appends changes in the old append only file
+  4) When child completed with temporary file, parent appends the data from buffer to temporary file
+  5) File get renamed as new AOF
+ 
+    
+    
+    
+    
+    
+    
