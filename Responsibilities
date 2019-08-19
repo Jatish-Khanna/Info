@@ -19,3 +19,13 @@ Continuous Integration has reformed how companies look at
 
 Agile does not recommend lot of analysis and research rather focuses on inspect-and-adapt process
 It emphasizes more on creating POC (Proof of Concept)
+
+
+1) Sprint planning
+2) Design build and Unit test
+3) Code integration
+4) Functional and regression test
+5) Intermediate reviews by client
+6) User demo
+7) Retrospective
+---------------------------Plan (10%), Develop(55%), Coordinate(25%), Support(10%)-------------------
