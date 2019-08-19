@@ -95,3 +95,10 @@ Redis replication deals with expires on keys
 
 NOte: When Docker, or other types of containers using port forwarding, or Network Address Translation is used, 
       Redis replication needs some extra care
+
+incrementing the value of a key with INCR, pushing a new value into a list with LPUSH, or 
+altering the field value of a hash with HSET are all operations that will leave the timeout untouched.
+
+
+Keys expiring information is stored as absolute Unix timestamps
+For expires to work well, the computer time must be taken stable
