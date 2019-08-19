@@ -1,6 +1,11 @@
 Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
 
 LRU and LFU (Least Frequently Used)  is actually only one of the supported eviction methods till now@Redis 4.0
+
+while the application is running, and monitor the number of cache misses to reconfigure the cache eviction policy at runtime
+
+Widely prefferred : allkeys-lru: evict keys by trying to remove the less recently used (LRU) keys first, 
+                     in order to make space for the new data added.
  
 It supports multiple datastructures to store data-
   strings, 
