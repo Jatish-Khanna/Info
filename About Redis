@@ -109,3 +109,17 @@ altering the field value of a hash with HSET are all operations that will leave 
 
 Keys expiring information is stored as absolute Unix timestamps
 For expires to work well, the computer time must be taken stable
+
+
+Why in-memory DBs are preferred over traditional malloc/free?
+  malloc/free functions are the most common method for allocating and releasing memory. 
+
+ Issues with malloc/free-
+  1) developers, malloc and free will easily cause memory leakage; 
+  2) the frequent calls in highly concurrent systems makes it difficult to recycle and reuse memory fragments, 
+           reducing the memory utilization; and poor performance
+   3) the system calls has an overhead 
+   
+Therefore, to improve the memory management efficiency and utilization community memory management solutions will help out. 
+
+E.g. Redis and MemcacheD adoptmemory management mechanisms to support this
