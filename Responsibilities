@@ -1,0 +1,11 @@
+Architecture Envisioning
+ Iteration Modeling
+ Model Storming
+ Test First Design
+ Code Refactoring
+ Continuous Integration
+
+Architecture envisioning happens during the initiation phase of Agile development. 
+The iteration modeling can be done at the beginning of the Sprint as part of Sprint planning to finalize the strategy for the Sprint. 
+Similarly, model storming can be done with the team members for providing the solution approach just before the development. 
+Also, code refactoring can be done to make the application scalable to incorporate new requirements.
