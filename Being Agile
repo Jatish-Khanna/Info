@@ -199,3 +199,6 @@ Guild:
   Continuous Delivery, Team is ready to do frequent deployments, the decision will be business driven. 
   Continuous Delivery is a prerequisite for Continuous Deployment.
   Only difference, Continuos Delivery has a manual actions before production deployment whereas deployment is end to end automated
+  
+  Unit Test(Auto)->Integration Test(Auto)->Deliver to Staging(Auto)->Acceptance test(Auto)->(Manual/Auto)->Deploy to production
+  											(Auto)post prod<-|
