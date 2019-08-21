@@ -32,3 +32,8 @@ It emphasizes more on creating POC (Proof of Concept)
 
 Clean code that works’. 
 TDD helps to design and develop the code in a predictable way by writing only code just enough to make the test cases pass.
+
+
+Unit Test should be written as Standard (No exceptions)
+ 80% Line coverage/85% branch Coverage (On new code/No exceptions)
+
