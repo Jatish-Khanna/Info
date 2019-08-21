@@ -1,0 +1,10 @@
+CMS - Code management System
+  1) Centralized(SVN) -
+  2) Distributed (Git) -
+    Local commit feature is avaiable, no n/w interation
+	Low n/w cycles as multiple commits can be pushed at once
+	No locking is required for files
+	Lower number of merge conflicts as compared to centralized SVC(source version control)
+	
+	
+	
