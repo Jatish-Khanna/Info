@@ -29,3 +29,6 @@ It emphasizes more on creating POC (Proof of Concept)
 6) User demo
 7) Retrospective
 ---------------------------Plan (10%), Develop(55%), Coordinate(25%), Support(10%)-------------------
+
+Clean code that works’. 
+TDD helps to design and develop the code in a predictable way by writing only code just enough to make the test cases pass.
