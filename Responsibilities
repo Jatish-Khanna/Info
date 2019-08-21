@@ -37,3 +37,24 @@ TDD helps to design and develop the code in a predictable way by writing only co
 Unit Test should be written as Standard (No exceptions)
  80% Line coverage/85% branch Coverage (On new code/No exceptions)
 
+
+Hudson Server Used as a CI server
+
+ANT
+For automation using Ant scripts Checkstyle To check adherence to coding standards
+
+Findbugs
+Static code analysis tool. This is used to detect wide range of problems 
+by analyzing the Java byte code 
+
+PMD It scans the source code and further looks for 
+potential problems, possible bugs, unused code, complicated expressions and duplicate code
+
+Jdepend
+Java package dependency analyzer which generates design quality metrics 
+
+Cobertura Code coverage tool. 
+It is used for Java code coverage analysis
+
+Junit
+Java’s unit testing framework
