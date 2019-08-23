@@ -11,8 +11,10 @@ Speed is utmost important
 Data reliability isn't important or data loss is bearable
 Persistant is not important, 
 Message size are not huge
+Master-slave replication
 
 Use kafka: (IoT, distributed producers/consumer, parallelism, )
 Data reliability is important, and messages can be retrieved even after consumption
 Speed is not a big concern
 Message size is huge
+Async replication
