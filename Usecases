@@ -3,3 +3,16 @@
  
  On the other hand,
  Kafka is a high throughput distributed queue which is built for storing a large amount of data for longer periods of time.
+
+Use Redis: (E.g. Slack IRC - where real-time sending is important)
+
+Fire and forget system, the messages ingressed are delivered to consumers instantly
+Speed is utmost important
+Data reliability isn't important or data loss is bearable
+Persistant is not important, 
+Message size are not huge
+
+Use kafka: (IoT, distributed producers/consumer, parallelism, )
+Data reliability is important, and messages can be retrieved even after consumption
+Speed is not a big concern
+Message size is huge
