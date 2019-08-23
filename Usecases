@@ -1,0 +1,5 @@
+ 
+ Redis’ in-memory database is an almost perfect fit for use-cases where short-lived messages and persistence aren’t required. 
+ 
+ On the other hand,
+ Kafka is a high throughput distributed queue which is built for storing a large amount of data for longer periods of time.
