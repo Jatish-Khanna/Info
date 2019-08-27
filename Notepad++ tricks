@@ -1,0 +1,8 @@
+\u - Replace the following character with Upper case
+\U - Replace all the following characters with upper case
+\l - Replace the following character with lower case
+\L - Replace all the following characters with Lower caser
+
+Example - Convert all the Intance variable to respective Model Mapper
+Search - (.)(.*)
+Replace - user.set\u\1\2\(userModel.get\u\1\2\(\)\)
