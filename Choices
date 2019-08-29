@@ -1,0 +1,21 @@
+Logstash vs Elastic search
+
+What about queueing and back-pressure?
+When sending data to Elasticsearch, whether it is directly or via an ingest pipeline, 
+every client needs to be able to handle the case when Elasticsearch is not able to keep up or accept more data
+ This is what we refer to as applying back-pressure
+ If the data nodes are not able to accept data, the ingest node will stop accepting data as well
+
+
+Architectures where there is no queueing mechanism built into the processing pipeline, 
+either at the source or along the way, have the potential to suffer from data loss in the case 
+Elasticsearch is not reachable or able to accept data for an extended period
+ This includes Beats that are not able to store and read data from file 
+ as well as other processes able to write directly to Elasticsearch, eg
+ syslog-ng
+
+
+Logstash is able to queue data on disk using its persistent queues feature, 
+allowing Logstash to  provide at-least once delivery guarantees and buffer data locally through ingestion spikes
+ Logstash also supports integration with a number of different types of message queues, 
+ which allows a wide variety of deployment patterns to be supported
