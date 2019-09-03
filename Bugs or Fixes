@@ -49,3 +49,26 @@ This is the metadata that’s passed back to clients.
 
 Kafka brokers communicate between themselves, usually on the internal network (e.g. Docker network, AWS VPC, etc). 
 To define which listener to use, specify KAFKA_INTER_BROKER_LISTENER_NAME
+
+
+---------------------------------------
+
+Kafka when hosted on Windows is working fine, with same docker configuration when hosted on linux Message-viewer failed to show messages
+
+Issue:
+  ws://<Host>:9021/ws/2.0/<>/consumer?topic=featured_user_event_topic -> From the n/w call http to ws upgrade failed
+Error:
+  An unknown error has occurred. Check the connection settings
+
+RCA: The upgrade request from HTTP to WebSocket will fail with error 
+  Error during WebSocket handshake: Unexpected response code: 503
+
+Solution:
+  Microsoft/kafka-proxy-ws another service accepting the websocket connection
+
+
+
+
+
+
+
