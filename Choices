@@ -19,3 +19,18 @@ Logstash is able to queue data on disk using its persistent queues feature,
 allowing Logstash to  provide at-least once delivery guarantees and buffer data locally through ingestion spikes
  Logstash also supports integration with a number of different types of message queues, 
  which allows a wide variety of deployment patterns to be supported
+
+
+---------------------------------
+Redis datastructure? Why HashOperations over HashSet and KeyValue
+  - Key/ value datastructure doesn't allow to perform operation, it treats data as String
+  - HashSet: Store each, pair as individual Key/Value for particular model. So, GETALL is expensive operation
+  - Hash: It collates the data as single Object, 
+          It also allows to perform atomic operation on each data for the same Object
+          
+---------------------------------
+Why Choose Redis Over Memcached?
+
+----------------------------------
+
+
