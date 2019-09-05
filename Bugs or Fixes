@@ -66,6 +66,24 @@ RCA: The upgrade request from HTTP to WebSocket will fail with error
 Solution:
   Microsoft/kafka-proxy-ws another service accepting the websocket connection
 
+------------------------------------------------
+
+Linux server not accepting the input traffic Using public-IP but working using loopback address (localhost, 127.0.0.1)
+
+Issue:  Application was not able to service incoming request using public IP
+Error: No
+RCA: The traffic has been rejected by Linux server firewall and all the packets were rejected or DROPPED
+
+Solution:
+  Note: The user must be sudo or root to perform the action
+  iptables -L INPUT // List all the rules
+  iptables -L INPUT --line-numbers // List only incoming rules
+  iptables -I INPUT -p tcp --dport <10331> -j ACCEPT // Insert the rule to the beginning of the list
+
+  iptables -L INPUT --line-numbers // Verify the traffic is accepted
+  
+
+
 
 
 
