@@ -32,5 +32,15 @@ Redis datastructure? Why HashOperations over HashSet and KeyValue
 Why Choose Redis Over Memcached?
 
 ----------------------------------
+The project architecture type and the application architecture decisions
+  
+---------------------------------
+How the Domain model should look like and what to send to interfacing applications?
+
+--------------------------------
+Introduced a Deadletter topic mechanism
+
+
+
 
 
