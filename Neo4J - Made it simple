@@ -1,0 +1,9 @@
+
+CREATE (U1:User {id: 1, name:'Jatish'})
+CREATE (C1:Course {id: 1, title:'CSE'})
+CREATE (C2:Course {id: 2, title:'Algorithms'})
+CREATE
+  (C1)-[:ENROLLED]->(U1),
+  (C2)-[:ENROLLED]->(U1)
+  
+ MATCH(n) DETACH DELETE n
