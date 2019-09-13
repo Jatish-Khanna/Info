@@ -1,0 +1,14 @@
+SOAP: Simple Object Access Protocol
+ It uses XML message to communicate between service provider and client
+ - Web Service Description Language(WSDL) - an XML format defines interface syntactically 
+ A formal contract defines the inteface of offered webservice has to be established
+ The WSDL describes operation, binding, message and the location of the webservice
+ 
+ The design should handle complex NFRs like security, logging
+ 
+ ** The WSDL must be parsed to read, so it is slow
+ ** The XML is heavy when compared to other structures for DTO like JSON
+ 
+ REST:
+   
+ 
