@@ -1,0 +1,3 @@
+DefaultAnnotationHandlerMapping -> Default annotation mapper to find appropriate handler for the request
+AnnotationConfigWebApplicationContext ->  Beans defined in such contexts configure the servlet and define MVC objects
+                                      like controllers and view resolvers.
