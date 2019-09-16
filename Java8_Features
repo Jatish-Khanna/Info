@@ -256,6 +256,6 @@ Default Method rules:
   2. Then it checks for child interface instead of the top interface in the hierarchy
   3. For ambigous implementation of default interface from two different interfaces, then class must implements its own
     and should call explicitly the required extension.
-   
+    <INTERFACE_NAME>.super.<METHOD_NAME>();   
    
    
