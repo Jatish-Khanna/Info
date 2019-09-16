@@ -248,3 +248,14 @@ Difference B/w Interface with Default method and Abstract class?
   Lamda Use
    SAM interface provision to be used as Lamda expression
    Abstract class cannot be used as Lamda expression
+   
+   
+===========================================
+Default Method rules:
+  1. All class or super class definition wins over the default implementation
+  2. Then it checks for child interface instead of the top interface in the hierarchy
+  3. For ambigous implementation of default interface from two different interfaces, then class must implements its own
+    and should call explicitly the required extension.
+   
+   
+   
