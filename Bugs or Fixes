@@ -93,10 +93,21 @@ java.nio.BufferUnderflowException
 	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:185)
 	at org.
 
-Solution: Check if the bootstrap-servers defined in application.yml/properties are reachable
-  If the server is reachable over the defined port, but that is not being Kafka Zookeeper
+RCA: Check if the bootstrap-servers defined in application.yml/properties are reachable
+  If the server is reachable over the defined port, but that is not being Kafka broker
   - It will fail with the above error
 
-
+Solution: Either change the host:port combination in the application.yml/properties or 
+        Start the Kafka instance at the specific port from which host is sending reply
+	
+	Mostly, It would have been issue while shutting down the previous instance of application.
+	
+	// Find the PID bound with process
+	netstat /ano | find "9092"
+	// Find the process using the port
+	tasklist /fi "pid eq 14492"
+	
+	
+            
 
 
