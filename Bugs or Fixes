@@ -83,9 +83,17 @@ Solution:
   iptables -L INPUT --line-numbers // Verify the traffic is accepted
   
 
+----------------------------------------------------
 
 
+org.springframework.context.ApplicationContextException: 
+Failed to start bean 'org.springframework.kafka.config.internalKafkaListenerEndpointRegistry';
+nested exception is org.apache.kafka.common.protocol.types.SchemaException: Error reading field 'correlation_id': 
+java.nio.BufferUnderflowException
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:185)
+	at org.
 
+Solution: Check if the bootstrap-servers defined in application.yml/properties are reachable
 
 
 
