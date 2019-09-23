@@ -75,10 +75,10 @@ JVM -
       * The module descriptor file that specifies behaviour and accessibility
       
       - A unique name of the module (which can only be used by other modules to access it)
-      - A list of other modules it requires
-      - List of packages that it exports to other modules
-      - A list of services it uses
-      - a list of service implementation it provides
+      - A list of other modules it requires - (requires)
+      - List of packages that it exports to other modules - (exports)
+      - A list of services it uses - (uses)
+      - a list of service implementation it provides - (with)
       
       
       
