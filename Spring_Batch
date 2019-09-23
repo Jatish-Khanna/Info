@@ -85,7 +85,9 @@ Steps-
 JobExecution execution = jobLauncher.run(job, new JobParameters());
 System.out.println(execution.getStatus());
 
+--------------------------------
 
+Job -> Step -> Task
 
 
 
