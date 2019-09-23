@@ -14,9 +14,9 @@ Batch Components in Spring -
  2) Job launcher - Launches the spring batch Job, with given options
  3) Job - a process that has to be executed, it contains multiple steps that will be executed to complete a Job
  4) Step  - an independent part of Job, a single work to be done 
- 5) Item reader - A step to read an item
- 6) Item Parser - A step to process an item
- 7) Item Writer - A step to write an item
+ 5) Item reader - A step to read an item (Mandatory)
+ 6) Item Parser - A step to process an item (Optional)
+ 7) Item Writer - A step to write an item (Mandatory)
 
 ---------------------------------
 A sample Job configuration in XML [default restartable = true]-
