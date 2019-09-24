@@ -1,2 +1,2 @@
 
-Collections.shuffle(collection); > To shuffle the elements of collection
+Collections.shuffle(List<?>); > To shuffle the elements of collection
