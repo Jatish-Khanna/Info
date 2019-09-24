@@ -89,7 +89,8 @@ System.out.println(execution.getStatus());
 
 Job -> Step -> Task
 
-
+CompositeItemProcessor -> when we have a series of Processing logic defined for particular class
+  delegates: attribute receives a list of beans through which record will be processed
 
 
 
