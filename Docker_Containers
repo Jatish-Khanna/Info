@@ -31,9 +31,18 @@ Remove all the stopped containers:
 docker rm $(docker ps -a -q)
 
 
+docker secret ls
+docker secret inspect <secret_name>
+echo "VALUE" | docker create <secret_name> -
 
-
-
+docker compose 
+  environment:
+    - VARIABLE=DOCKER-SECRET-><secret_name>
+  secrets:
+    - <secret_name>
+secrets:
+  <secret_name>:
+    external: true
 
 
 
