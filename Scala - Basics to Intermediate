@@ -29,7 +29,9 @@ Scala type inference mechanism using which compiler can deduce data type from th
    numbers are immutable, the object it is referring to (e.g. an array), is mutable.
 
  ** <object>.getClass() method we can use to know the type/class of an object
- 
+
+void =======> Unit (Scala)
+
  object FirstObject {
 
   def main(args: Array[String]): Unit = {
@@ -112,3 +114,11 @@ var arrayBuf = new ArrayBuffer[Int]
  
  val newArr=new Array[Int](3)
         /* Use newArr to store the last three elements  */
+
+=====================================
+
+val myArr = Array(2, 3, 4, 5, 6)
+myArr.update(2, 9)  // Update the element value at index 2
+  println(myArr.mkString("\n"))
+  
+  
