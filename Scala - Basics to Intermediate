@@ -39,3 +39,14 @@ Scala type inference mechanism using which compiler can deduce data type from th
       println(result.getClass())
      }
 }
+
+=====================
+
+  def main(args: Array[String]): Unit = {
+    	val str 
+      var s1
+     }
+
+error: '=' expected but   val s1
+error: '=' expected but }
+
