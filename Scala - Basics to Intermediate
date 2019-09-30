@@ -1,0 +1,29 @@
+Scala is a high level general purpose multi-paradigm programming language
+  - Typesafe JVM language [Statically typed language]
+  - Functional + Object Oriented Programming (Pure - No concept of primitive data types in scala)
+  - The program is converted to byte code and can be executed on JVM
+  - sbt an Open source build tool for scala
+  - Better for concurrent programming due to immutable Objects
+  
+Packaging and availability -
+  - Extract zip
+  - Install MSI
+  - Use the modern IDEs
+  
+Binaries -
+  . scalac >> Compiles and converts .scala to .class files
+  . scala >> Interpreter to execute the scala program
+  
+Scala also supports REPL - Read Evaluate Print Loop
+
+
+Scala type inference mechanism using which compiler can deduce data type from the given expression.
+ var sum: Int = 1 and var sum: 1 [represents same]
+ 
+ Scala represents everything as Objects, so the Operators are prepresented as method calls to Objects
+   1 + 9 =>>>>  In Scala (1).+(9)
+   
+   Primary Datatypes -
+   Int, Float, Double, String, Unit, Any...
+   
+   numbers are immutable, the object it is referring to (e.g. an array), is mutable.
