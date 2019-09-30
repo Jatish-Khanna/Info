@@ -50,3 +50,21 @@ Scala type inference mechanism using which compiler can deduce data type from th
 error: '=' expected but   val s1
 error: '=' expected but }
 
+======================
+
+     val id = 1
+    	val name = "Jatish"
+    	val result = id + name
+      println(result.getClass())
+      
+      // Output - java.lang.String
+      
+      val result1: Int = id + name
+      println(result.getClass())
+      
+      Runtime Exception
+file.scala:6: error: type mismatch;
+found : String
+required: Int
+val result: Int = empid + name
+^
