@@ -68,3 +68,47 @@ found : String
 required: Int
 val result: Int = empid + name
 ^
+===============================
+
+val result = "99".isInstanceOf[String]!="99".isInstanceOf[Int]
+    	print(result + " " + result.getClass)
+      // Output - true boolean
+
+==========================
+
+val a: Null = null
+    println(a.getClass)
+    // NullPoointerException
+    
+=================
+
+var num: Int = 1
+    num = "One"
+    println(num)
+    
+  // file.scala:5: error: type mismatch;
+  
+================
+
+var status: Boolean = _     // here underscore is used to assign a default value to the variable
+
+==============
+
+Arrays:
+  val numbers = Array[Int](1, 2, 3, 4, 5, 6, 7, 8, 9, 10) 
+  
+  Arrays have a fixed size which is set at the time of their creation. 
+  For dynamic sized array, ArrayBuffer can be used.
+
+var arrayBuf = new ArrayBuffer[Int]
+ arrayBuf += 1                         // Appending element
+ arrayBuf.append(2, 3, 4)   
+ 
+ 
+ // Removing duplicate elements from the array using distinct
+        val arrDistinct = array.distinct
+ // reverse order using reverse method
+ val arrRev = array.reverse
+ 
+ val newArr=new Array[Int](3)
+        /* Use newArr to store the last three elements  */
