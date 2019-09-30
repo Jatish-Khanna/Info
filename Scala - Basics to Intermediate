@@ -121,4 +121,14 @@ val myArr = Array(2, 3, 4, 5, 6)
 myArr.update(2, 9)  // Update the element value at index 2
   println(myArr.mkString("\n"))
   
-  
+  =======================
+  var n = 5
+for (i <- 1 to 5) {
+  while (n != 0) {
+    n -= 1;
+    for (j <- 5 to 1 by -1) {
+      if (j + 5 == 9 && n - 3 == 1)
+        println(i, j, n)
+    }
+  }
+}
