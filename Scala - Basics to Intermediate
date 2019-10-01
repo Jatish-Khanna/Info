@@ -132,3 +132,17 @@ for (i <- 1 to 5) {
     }
   }
 }
+===========================
+
+object StringSplit {
+  def main(args: Array[String]): Unit = {
+    var str = "Wow my scala string functions"
+    val strSplit = str.split(" ")                     // Splitting str using " " (space) as a separator
+    var strRev = Array[String]()
+    
+    for (word <- strSplit) {
+      strRev = strRev:+(word.reverse)                 // Reversing each word and storing in the array
+    }
+    println(strRev.mkString(" "))                     // Creating a string from the array elements using the given separator
+  }
+}
