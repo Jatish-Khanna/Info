@@ -107,7 +107,24 @@ Solution: Either change the host:port combination in the application.yml/propert
 	// Find the process using the port
 	tasklist /fi "pid eq 14492"
 	
-	
+============================================
+
+BROKER Failed:
+
+kafka.zookeeper.ZooKeeperClientTimeoutException: Timed out waiting for connection while in state: CONNECTING
+        at kafka.zookeeper.ZooKeeperClient.$anonfun$waitUntilConnected$3(ZooKeeperClient.scala:258)
+        at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+        at kafka.utils.CoreUtils$.inLock(CoreUtils.scala:253)
+        at kafka.zookeeper.ZooKeeperClient.waitUntilConnected(ZooKeeperClient.scala:254)
+        at kafka.zookeeper.ZooKeeperClient.<init>(ZooKeeperClient.scala:112)
+        at kafka.zk.KafkaZkClient$.apply(KafkaZkClient.scala:1826)
+        at kafka.server.KafkaServer.createZkClient$1(KafkaServer.scala:364)
+        at kafka.server.KafkaServer.initZkClient(KafkaServer.scala:387)
+        at kafka.server.KafkaServer.startup(KafkaServer.scala:207)
+        at io.confluent.support.metrics.SupportedServerStartable.startup(SupportedServerStartable.java:114)
+        at io.confluent.support.metrics.SupportedKafka.main(SupportedKafka.java:66)
+
             
 
-
+Solution
+      KAFKA_ZOOKEEPER_CONNECTION_TIMEOUT_MS: 16000
