@@ -1,0 +1,13 @@
+Eclipse:
+  Pattern not found in file
+  
+  (?s)\A((?!YourText).)*\Z
+  
+  \A - Start of the input
+  ^ - Start of the line
+  \Z End of the input
+  $ - End of the line
+  \< - Start of the word
+  \>  - End of the word
+  \b - Boundary - Start or end of the Word
+  \B - Non start or end of the word
