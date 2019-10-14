@@ -1,0 +1,18 @@
+
+
+Install and manage K8s application using Helm
+
+Helm has 2 Components :
+Tiller : 
+  is the in-cluster component of Helm. It interacts directly with the Kubernetes API server to 
+    install, 
+    upgrade, 
+    query, and 
+    remove Kubernetes resources. 
+It also stores the objects that represent releases.
+
+Helm client:
+  stores information in a local directory is in the $HOME/.helm directory.
+  
+Charts: Information to create K8s resources in the cluster
+  Charts contain a Chart.yaml file as well as templates, default values (values.yaml), and dependencies.
