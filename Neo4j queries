@@ -1,0 +1,14 @@
+
+
+Recommendation Query->
+  A Customer as customer whose cookieId is XXXX
+  It has a relationship PURCHASED with the Product
+  
+  Also, there are other Customers as otherCustomer who also purchase the PURCHASED the product
+  The otherCustomer has same score as customer
+  
+  Find all the products that are not purchased by the actual customer who are simillar to otherCustomer with matching score?
+
+MATCH (customer:Customer {cookieId:"XXXX"})-[purchase:PURCHASED]->(product:Product)
+   <-[:PURCHASED]-(otherCustomer:Customer {score:customer.score}) WITH collect(product) as productList, 
+   otherCustomer MATCH(otherCustomer)-[otherPurchase]-(otherProduct) WHERE NOT otherProduct IN productList RETURN otherProduct;
