@@ -186,7 +186,9 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   
-
+==================================
+How to pull an image from the enterprise docker repository?
+  docker pull registry.blaze.io/<namespace>/<image_name>:version
 
 
 
