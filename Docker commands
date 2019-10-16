@@ -1,0 +1,5 @@
+
+docker save <image_name> > <image_name>.tar
+docker load < <image_name>.tar
+
+docker tag <image_name> <new_image_name>
