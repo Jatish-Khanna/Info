@@ -1,0 +1,6 @@
+
+
+
+Connect to Hive using beeline
+
+!connect jdbc:hive2://<HOST_NAME>:10000/default;principal=hive/_HOST@PRINCIPLE;saslQop=auth;ssl=true;
