@@ -206,6 +206,11 @@ Solution:
   
  jdbc:hive2://<HOSTNAME>:10000/default;principal=hive/_HOST@PRINCIPLE_DOMAIN;saslQop=auth;ssl=true;
 
+OR 
+
+!connect jdbc:hive2://<HOSTNAME>:10000/default;principal=hive/<HOSTNAME>@PRINCIPLE_DOMAIN;saslQop=auth;ssl=true;
+
+
 Note: saslQop=auth;ssl=true; have been added to resolve the issue
 
 
