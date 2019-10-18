@@ -210,6 +210,9 @@ OR
 
 !connect jdbc:hive2://<HOSTNAME>:10000/default;principal=hive/<HOSTNAME>@PRINCIPLE_DOMAIN;saslQop=auth;ssl=true;
 
+OR Using LDAP
+
+!connect jdbc:hive2://<HOSTNAME>:10000/default;user=<LDAP_USER>;password=<LDAP_PASSWORD>;saslQop=auth;ssl=true;
 
 Note: saslQop=auth;ssl=true; have been added to resolve the issue
 
