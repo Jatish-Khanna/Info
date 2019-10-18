@@ -190,10 +190,23 @@ services:
 How to pull an image from the enterprise docker repository?
   docker pull registry.blaze.io/<namespace>/<image_name>:version
 
+============================
 
+Hive conncetion failure when Using Kerberos Ticket?
 
+Unknown HS2 problem when communicating with Thrift server.
+Error: Could not open client transport with JDBC Uri: 
+jdbc:hive2://<HOSTNAME>:10000/default;principal=hive/_HOST@PRINCIPLE_DOMAIN;: Invalid status 21 (state=08S01,code=0)
 
+Command Used - 
+!connect jdbc:hive2://<HOSTNAME>:10000/default;principal=hive/_HOST@PRINCIPLE_DOMAIN;
 
+Solution:
+  Add missing parameters defines URL:
+  
+ jdbc:hive2://<HOSTNAME>:10000/default;principal=hive/_HOST@PRINCIPLE_DOMAIN;saslQop=auth;ssl=true;
+
+Note: saslQop=auth;ssl=true; have been added to resolve the issue
 
 
 
