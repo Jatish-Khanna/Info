@@ -69,7 +69,8 @@ Docker-compose
      it supports docker swarm and docker stacks
      
   
-  
+  Note: Each service can be attached to multiple n/ws example - DBs can be attached to backend n/w whereas Webapps to frontend
+    but Backend API should be attached to both front and backend networks
   
   
   
