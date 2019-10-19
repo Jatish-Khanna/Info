@@ -7,7 +7,9 @@ What containers brings to Us?
   5) Software virtualization over h/w virtualization
   6) Isolation 
   7) Easy scalability and orchestration
-   
+  
+  Upgrades with Zero downtime, Sequentionally, pause, resume, rollback.
+  
   Container Orchestration Engine - K8s?
     To automate deploy, scale and manage containerized applications on group of servers
     
@@ -57,6 +59,79 @@ Worker nodes:
  b) Kube proxy - Distrubted n/w manager across all the nodes, pods, containers. 
  c) Runtime container 
  d) Pod - Each POD contain one or more container.
+
+=============================================
+
+Deployments::
+  a) Replicas (Scale in or Out) - defaults:1 - atleast one Pod is running at single point in time.
+  b) Upgrade - 
+  c) Rollback - 
+  d) Scale Up or Down - 
+  e) Pause and resume - 
+
+Types:
+  1. Recreate - Downtime is allowed, when switcting from V1 to V2
+  2. Rolling  update[Default] - Incremental, change to all the Pods
+  3. Canary - Gradual shift from V1 to V2
+  4. Blue/Green - Both the version are deployed and a traffic switch is done at the LB level.
+  
+  Sample manifest file:
+  
+   apiVersion: api/v1
+   kind: Deployment
+   metadata:
+     name: redis
+     label:
+       app: redis
+   spec:
+     replicas: 3
+     selector:
+       matchLabels:
+         app: redis  
+     
+     template:
+       metadata:
+         labels:
+           app: redis
+
+      spec:
+        containers:
+          - name: redis
+            image: redis:latest
+            ports:
+              - containerPort: 6379
+
+===========================
+
+kubectl create -f redis-deploy.yml
+kubectl get deploy // get deplyment
+kubectl get rs  // Get replica ser
+kubectl get po  // Get pods
+kubectl describe deploy redis
+
+1) Using kubectl
+kubectl set image deploy redis redis-container=redis:5.0.6 --record // Upgrade with --record to track history
+2) Edit deployment file
+kubectl edit deploy redis
+
+kubectl rollout status deployment/redis
+kubectl get deploy // get deplyment
+
+kubectl rollout history deployment/redis
+
+Rollback:
+kubectl rollout undo deployment/redis
+kubectl rollout status deployment/redis
+
+
+Scale up or Down:
+  kubectl scale deployment redis --replicas=5
+  
+  kubectl scale deployment redis --replicas=3
+
+Delete deployment:
+kubectl delete -f redis.yml
+
 
 
 
