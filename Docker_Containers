@@ -106,5 +106,12 @@ Docker-compose
     
     -- Processes running inside the container are the processes running on the host
     
-         
+======================================
+
+cgroups:
+  Control groups to restricts the amount of h/w groups allocated to each container
+  e.g.
+  docker run --cpus=.5 ubuntu // 50% CPU
+             --memory=100m      // 100 Mb memory max
+             
 
