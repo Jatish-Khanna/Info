@@ -3,3 +3,12 @@ docker save <image_name> > <image_name>.tar
 docker load < <image_name>.tar
 
 docker tag <image_name> <new_image_name>
+
+
+docker run --mount type=bind;source=/data/neo4j;target=/data/neo4j (this is the new way of mouting filesystem on Docker)
+
+Storage driver:
+  AUFS, Overlay, Overlay2, DeviceMapper, ZFS ...
+  It depends on the Host OS which storage driver will be used by Docker
+  
+  
