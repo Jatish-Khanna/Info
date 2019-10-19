@@ -65,6 +65,8 @@ Docker-compose
      depends_on feature to define the sequence of application startup
      
   3) Version 3:
+     version: 2 + other features i.e. version: 3
+     it supports docker swarm and docker stacks
      
   
   
