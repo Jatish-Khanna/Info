@@ -89,8 +89,22 @@ Docker-compose
     docker image tag my-app localhost:5000/my-app   // Create a new tag for image 
     docker push localhost:5000/my-app
     
+  =================================
+  How to user remote docker?
+  
+  docker CLI --------> Docker REST --------------> Docker deamon
+  
+  docker -H=hostname.com:2375 run redis
+  
+  ================================
+  
+  Namespaces in the docker provides the docker isolation b/w the processes
+    Used for : Process ID, netowrking, interprocess commincation, mounts, unix time sharing
     
-  
-  
+    E.g. A linux boot will start PID:1 which start the child processes
+    and each process has a unique process ID
+    
+    -- Processes running inside the container are the processes running on the host
+    
          
 
