@@ -118,6 +118,8 @@ cgroups:
 ====================================
 
 Docker swarm:
+To create number of instance of the service on the Swarm cluster
+ // It should be started on the docker Manger not on the worker
   docker service create --replicas=10 redis
   
   - Networking
@@ -139,3 +141,27 @@ docker swarm init --advertise-addr HOSTNAME_OR_IP
 
 docker swarm join --token SWMTKN-1-XXXX  HOSTNAME_OR_IP:2377
 
+==========================================
+
+Basic Kubernetes:
+  kubeclt run --replicas=10 redis
+  kubectl scale --replicas=12 redis
+  
+  POD autoscaler and Cluster autoscalare based on the policies
+  Rolling upgrade on the replicas
+  Only upgrading %age of PODS to utilize A/B testing
+  
+  
+  Kubernetes uses Docker host to start the service or instance of the application. There are other alternatives to Docker
+  
+  Master controls the orchestration on the Worker nodes
+  API server - to access using any device
+  etcd server - Distributed reliable key/value store to persist metadata and logs
+  kubelet - agent on each node on in the cluster
+  container runtime - Engine like Docker
+  Controller - To bring up or down, overall brain of K8s
+  Scheduler - Distributing work across worker
+  
+  
+  kubectl -> a runtime client
+  
