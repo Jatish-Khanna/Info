@@ -51,5 +51,30 @@ Docker compose is best suited if all the services to be started on single Host,
     1) Docker swarm
     2) K8s - Kubernetes
 
+==================================
 
+Docker-compose
+  1) Version:1 
+     No support for networking other than "Brigde n/w" and use links to enable communcation b/w the components
+     No support for depends_on i.e. application sequence to start with
+     
+  2) Version:2
+     All the services should be declared in service: section
+     version: 2 must be specified at the top of file
+     A dedicated n/w for all the services and then attach all the services to this single n/w to enable networking support     
+     depends_on feature to define the sequence of application startup
+     
+  3) Version 3:
+     
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+         
 
