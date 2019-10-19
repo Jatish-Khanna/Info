@@ -72,7 +72,9 @@ Docker-compose
   Note: Each service can be attached to multiple n/ws example - DBs can be attached to backend n/w whereas Webapps to frontend
     but Backend API should be attached to both front and backend networks
   
-  
+ ==================================
+ 
+ docker pull redis is equivalent to docker pull redis/redis where redis is the Useraccount/repository of the docker registry
   
   
   
