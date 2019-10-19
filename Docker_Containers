@@ -76,9 +76,20 @@ Docker-compose
  
  docker pull redis is equivalent to docker pull redis/redis where redis is the Useraccount/repository of the docker registry
   
+  Private registry:
+    docker login registry.my.org
+    
+    docker pull registry.my.org/repository/image
   
+  ================================
   
-  
+  Setup a docker registry:
+    docker run -p 5000:5000 -name=registry registry:2
+    
+    docker image tag my-app localhost:5000/my-app   // Create a new tag for image 
+    docker push localhost:5000/my-app
+    
+    
   
   
          
