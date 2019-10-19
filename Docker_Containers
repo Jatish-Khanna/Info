@@ -115,3 +115,27 @@ cgroups:
              --memory=100m      // 100 Mb memory max
              
 
+====================================
+
+Docker swarm:
+  docker service create --replicas=10 redis
+  
+  - Networking
+  - Load management
+  - Reliability
+  - Fault tolerance
+  - Storage sharing
+  - COnfiguration mgmt.
+  - Security within cluster
+  - High availability
+
+Other options Mesos or Kubernetes (for Production grade)
+
+Multiple docker m/cs to form a cluster
+  Roles: Swarm manager,  worker nodes
+
+
+docker swarm init --advertise-addr HOSTNAME_OR_IP
+
+docker swarm join --token SWMTKN-1-XXXX  HOSTNAME_OR_IP:2377
+
