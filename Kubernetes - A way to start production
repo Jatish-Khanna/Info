@@ -1,1 +1,20 @@
 
+What containers brings to Us?
+  1) Protability
+  2) High boot up time 
+  3) Lower resource requirements when compared to VM
+  4) Easy deployment 
+  5) Software virtualization over h/w virtualization
+  6) Isolation 
+  7) Easy scalability and orchestration
+  
+  Container Orchestration Engine - K8s?
+    To automate deploy, scale and manage containerized applications on group of servers
+    
+      Fault tolerant 
+      Availabililty 
+      Scalability - in, out, up and down
+      Clustering
+      Scheduling
+      Loadbalancing
+      Deployment and rollout or canary
