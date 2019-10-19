@@ -44,9 +44,12 @@ secrets:
   <secret_name>:
     external: true
 
+====================================
 
-
-
+Docker compose is best suited if all the services to be started on single Host, 
+  For Cluster or services to start as distributed application stack ->
+    1) Docker swarm
+    2) K8s - Kubernetes
 
 
 
