@@ -46,11 +46,17 @@ Master:
     a) Node controller
     b) Duplication controller
     c) Service account and Endpoint controller
-    d) End point controlelr
+    d) End point controller
   
   4) etcd - Key/Value database to store the metadata and runtime state of cluster
 
 
+Worker nodes:
+ An VMs or physical server that runs the container on runtime environment E.g. Docker or Rocket[RKT]
+ a) Kubelet Agent - node agent to monitor PODS and makesure they are healthy. To restart the nodes
+ b) Kube proxy - Distrubted n/w manager across all the nodes, pods, containers. 
+ c) Runtime container 
+ d) Pod - Each POD contain one or more container.
 
 
 
