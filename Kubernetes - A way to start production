@@ -308,3 +308,15 @@ metadata:
   
 spec:
   to define the container configuration for a pod
+
+
+Create and Deploy the pod using manifest
+  kubectl create -f redis-manifest.yml
+  kubectl get pod -l dev  # all the pods with label dev
+  kubectl get pod -o wide|yaml|json
+  
+Details of the pod
+ 
+  kubectl describe <pod_name>
+  
+  
