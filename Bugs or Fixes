@@ -204,15 +204,49 @@ Command Used -
 Solution:
   Add missing parameters defines URL:
   
- jdbc:hive2://<HOSTNAME>:10000/default;principal=hive/_HOST@PRINCIPLE_DOMAIN;saslQop=auth;ssl=true;
+  [beeline]
+ !connect jdbc:hive2://<HOSTNAME>:10000/default;principal=hive/_HOST@PRINCIPLE_DOMAIN;saslQop=auth;ssl=true;
 
-OR 
+OR [beeline]
 
 !connect jdbc:hive2://<HOSTNAME>:10000/default;principal=hive/<HOSTNAME>@PRINCIPLE_DOMAIN;saslQop=auth;ssl=true;
 
-OR Using LDAP
+OR Using LDAP [beeline]
 
 !connect jdbc:hive2://<HOSTNAME>:10000/default;user=<LDAP_USER>;password=<LDAP_PASSWORD>;saslQop=auth;ssl=true;
+
+OR [Spring boot + JDBC + Hive]
+
+  private static String driverName = "org.apache.hive.jdbc.HiveDriver";
+
+		Connection con = DriverManager.getConnection(
+				"jdbc:hive2://<HOSTNAME>:10000/default;saslQop=auth;ssl=true;",
+				"<USER_NAME>", "<PASSWORD>");
+				
+The trust store has been imported into JRE Keytool
+
+	# To check the content of the keystore, we can use keytool again:
+	keytool -list -v -keystore mytruststore.jks
+
+	#Export Self signed certificate into .cer file
+	keytool -exportcert -alias <ALIAS_FROM_ABOVE_COMMAND> -keystore mytruststore.jks -file mycertificate.cer
+
+	# (Run As Administrator- to open CMD.exe)
+	# Install self-signed certificate into Java JDK CA Certificate key store path
+	# to avoid giving certificate path in the client program.
+	keytool -import -alias <ALIAS_FROM_ABOVE_COMMAND> -keystore "%JAVA_HOME%\jre\lib\security\cacerts" -file mycertificate.cer
+
+	# List certificates stored in JDK Key store which you have just now imported into JDK Security path.
+	keytool -list -keystore "%JAVA_HOME%\jre\lib\security\cacerts
+				
+
+OR [Spring Boot + JDBC + Hive + Truststore]
+
+		Connection con = DriverManager.getConnection(
+				"jdbc:hive2://<HOSTNAME>:10000/default;saslQop=auth;ssl=true;sslTrustStore=C://certs//squirrel//truststore.jks;trustStorePassword=<TRUST_STORE_PASSWORD>;",
+				"<USER_NAME>", "<PASSWORD>");
+		Statement stmt = con.createStatement();
+
 
 Note: saslQop=auth;ssl=true; have been added to resolve the issue
 
