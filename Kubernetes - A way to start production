@@ -348,3 +348,13 @@ spec:
        - containerPort: 6376
  
  # labels and selectors are used to map Pods to replica set
+
+=========================
+
+Scale in and Out app instance:
+  kubectl scale rc <name_of the_rc_controller> --replicas=5
+
+
+
+
+
