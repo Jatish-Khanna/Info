@@ -132,6 +132,21 @@ Scale up or Down:
 Delete deployment:
 kubectl delete -f redis.yml
 
+==========================================================
+
+Handson:
+
+Minikube -> A utility to test Kubernetes as standalone system. Which includes K8s master and Worker nodes
+Kubeadm -> A utility to setup K8s cluster in realtime. 
+
+
+
+
+
+
+
+
+
 
 
 
