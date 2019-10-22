@@ -264,8 +264,47 @@ kubectl -
 
 kubeadm token CREATE --print-join-command  # to print the join command for the worker node.
 
+==================================
+
+Lifecycle of a POD:
+  Manifest at Masternode -> Pending [] -> Creating Pod -> Running -> succeeded/Failed 
+
+Note: The pods are replaced with new Pods
+
+======================
+
+Pod Config or Manifest file?
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <name_of_object-here-pod>
+  labels:
+    app: test
+    mode: dev
+
+spec:
+  containers:
+    - name: <name_of_object-here-pod>
+      image: redis:latest
 
 
 
 
+====================
 
+apiVersion: #define the version number which Kubernetes version Object belogs to
+  Kind is mapped with Version of manifest file
+
+  v1: Pod, ReplicationController, Service
+  apps/v1: ReplicaSet, Deployment, DaemonSet
+  batch/v1:  Job
+
+
+metadata:
+  labels: help to filter out the pods when executing command
+  
+  
+spec:
+  to define the container configuration for a pod
