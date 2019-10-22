@@ -238,15 +238,31 @@ as root:
  
   kubectl run kubebootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1  --port=8080
 
+==========================================
 
+kubeadm init [flag]   // to initialize master
+kubeadm join --token [] --discovery-token-ca-cert-hash [] // to initialize the worker node
+ kubeadm token [CREATE|DELETE|LIST|GENERATE]
+ kubeadm version
+ kubeadm upgrade plan [version] [flags]  // upgrade the Kubernetes cluster
 
+=================================
 
+Kubernetes cluster imporve performance - 
+  
+  swapoff -a
+  setenforce 0 OR sed -i 's/enforcing/disabled/g' /etc/selinux/config
+  
+  ## reboot all nodes
+  systemctl start docker 
+  systemctl enable docker
+  systemctl status docker
+  
+kubeadm - 
+kubelet -
+kubectl - 
 
-
-
-
-
-
+kubeadm token CREATE --print-join-command  # to print the join command for the worker node.
 
 
 
