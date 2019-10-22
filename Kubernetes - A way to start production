@@ -139,6 +139,85 @@ Handson:
 Minikube -> A utility to test Kubernetes as standalone system. Which includes K8s master and Worker nodes
 Kubeadm -> A utility to setup K8s cluster in realtime. 
 
+  E.g. 
+  
+  1. Initialize the cluster master node
+   kubeadm init --apiserver-advertise-address $(hostname -i)
+
+kubectl -> Manage the K8s cluster from the command line. Pods, deployments and services
+  
+Commands:
+ create , get
+ describe, delete,
+ exec, logs
+ edit, run
+ apply, scale
+ 
+ Types:
+ Type -    abbrevation
+   pod(s) - po
+   deployment(s) - deploy
+   replicaset(s) - rs
+   replicacontroller(s) - rc
+   deamonset(s) - ds
+   namespace(s) - ns
+   persistvolume(s) - pv
+   persistvolumentclaim(s) - pvc
+   job(s) - --
+   cronjob(s) - --
+ 
+ kubectl [command] [TYPE] [NAME] [flags]
+
+Examples:
+  kubectl CREATE -f my-stack.yml[json] # the manifest file can be in JSON or YML format
+  
+  kubectl CREATE -f <directory> # to read all the files from the directory
+
+=====================
+Display resource-
+
+  kubectl get po/pods/pod <name_of_pod>
+  kubectl get po/pods/pod <name_of_pod> -o wide # to get wide output with the worker node details
+  kubectl get po,deploy         # to display multiple resource types
+
+=========================
+Kubectl describe - complete description, state, events of resource 
+
+  kubectl describe po <pod_name>
+  kubectl describe nodes <node_name>
+
+========================
+kubectl delete - to delete the resources
+
+  kubectl delete -f pod.yml # delete resource created by manifest file
+  kubectl delete pods,services -l name=<label_name>      # delete pods and services with label
+  kubectl delete pods --all            # to delete all the resources of type=pod
+=========================
+kubectl exec - to interact with the container
+
+  kubectl exec <pod_name> date  # to exec date utility with pod
+  kubectl exec <pod_name> -c <container_name> date    # to interact with specific container in a single pod
+
+  kubectl exec -it <pod_name> /bin/bash  
+===============================
+
+kubectl logs --- print logs of container in a pod
+
+  kubectl logs <pod_name>
+  kubectl logs <pod_name> -f
+
+=================================
+
+
+
+
+
+
+
+
+
+
+
 
 
 
