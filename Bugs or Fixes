@@ -215,7 +215,7 @@ OR Using LDAP [beeline]
 
 !connect jdbc:hive2://<HOSTNAME>:10000/default;user=<LDAP_USER>;password=<LDAP_PASSWORD>;saslQop=auth;ssl=true;
 
-OR [Spring boot + JDBC + Hive]
+OR [Spring boot + JDBC + Hive + LDAP for username and password]
 
   private static String driverName = "org.apache.hive.jdbc.HiveDriver";
 
@@ -240,7 +240,7 @@ The trust store has been imported into JRE Keytool
 	keytool -list -keystore "%JAVA_HOME%\jre\lib\security\cacerts
 				
 
-OR [Spring Boot + JDBC + Hive + Truststore]
+OR [Spring Boot + JDBC + Hive + Truststore + LDAP for username and password]
 
 		Connection con = DriverManager.getConnection(
 				"jdbc:hive2://<HOSTNAME>:10000/default;saslQop=auth;ssl=true;sslTrustStore=C://certs//squirrel//truststore.jks;trustStorePassword=<TRUST_STORE_PASSWORD>;",
