@@ -208,14 +208,35 @@ kubectl logs --- print logs of container in a pod
 
 =================================
 
+----------------------- Kubenetes Cluster -------------------
+
+ You can bootstrap a cluster as follows:
+
+ 1. Initializes cluster master node:
+
+ kubeadm init --apiserver-advertise-address $(hostname -i)
+
+
+ 2. Initialize cluster networking:
+
+ kubectl apply -n kube-system -f \
+    "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 |tr -d '\n')"
+
+It will install weave network plugin for networking b/w components
 
 
 
+  3. Join the worker nodes to the cluster -
+  
+ You can now join any number of machines by running the following on each node
+as root:
 
+  kubeadm join 192.168.0.23:6443 --token agzaoz.173lih2kuhqrpr6x 
+  --discovery-token-ca-cert-hash sha256:6db4857e68df5ae8cde614f6b4b5c78e3b02e301993eb25c231a7f3419dd8256
 
-
-
-
+ 4. First deployment
+ 
+  kubectl run kubebootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1  --port=8080
 
 
 
