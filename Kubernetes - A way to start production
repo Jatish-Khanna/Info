@@ -319,4 +319,32 @@ Details of the pod
  
   kubectl describe <pod_name>
   
+==================================
+ReplicaSet -
+  To balance the PODs to the required number of running instance at single point in time. Min=1
+  balance= Create new or Delete additional, scale in or out  
   
+  The labels are used to manage the pods by replication controller.
+ 
+apiVersion: v1
+kind: ReplicationController
+metadata: 
+  name: redis-replca-controller 
+spec:
+  replicas: 3
+  selector:
+    app: <labels_in_template_section>
+  
+  template:
+    ... # all the section same as the first manifest file
+    name: 
+    labels:
+      x: y
+ spec:
+   containers:
+     - name :
+       image: 
+       ports:
+       - containerPort: 6376
+ 
+ # labels and selectors are used to map Pods to replica set
