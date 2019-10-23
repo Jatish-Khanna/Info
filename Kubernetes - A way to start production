@@ -441,12 +441,66 @@ kubectl get po -o wide
 kubectl describe rs redis
 ================================
 
+Upgrades with Kubernetes---
 
+  Deployment: A controller like other controllers in the Kubernetes e.g. ReplicaSet
+    Default replicas with each deployment if not specified is One
+    Helps with different Upgrade strategies - 
+    Rollback strategy 
+    Scale In and Out
+    Pause and Resume the deployment process
+  
+Upgrades-
+  a) Recreate - Shutdown and Create fresh instance
+  b) Rolling update - Incremental upgrade, Add one and then remove (default)
+  c) Canary - Gradual shift of instances [ideal method]
+  d) Blue/Green - V1 and V2 are running - loadbalancer switched from V1 to V2
 
+Example manifest:
 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deploy
+  labels:
+    app: redis
+    tier: backend
+spec:
+  replicas: 3
+  selectors:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+       ....
 
+## Note labels are used to filter resources but name
 
+kubectl CREATE -f redis-deploy.yaml
+kubectl get po
+kubectl get po -l app=redis
+kubectl get rs -l app=redis
+kubectl describe deploy redis-deploy
+===============================================
 
+Sample Upgrade example:
+1) The container version is upgraded
+  kubectl set image deploy redis-deploy redis-container=redis:5.0.9 --record
 
-
-
+2) Configuration is manifest
+  kubectl edit deploy redis-deploy
+  
+  Make changes in the deployment, save and close it. As soon as it has been closed a new deployment will be rolled out  
+  kubectl rollout status deployment/redis-deploy
+  kubectl rollout history deployment/redis-deploy
+===========================  
+  Rollback the Upgrade on failure-
+  kubectl rollout undo deployment/redis-deploy
+  
+=====================
+Scale in and out instance:
+  kubectl scale deployment redis-deploy --replicas=5
