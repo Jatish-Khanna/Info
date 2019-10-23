@@ -408,3 +408,40 @@ Note:
       key: value
    The above sample is being used for newer resources such as ReplicaSet, Deployments, Job, Deamon Set
 
+=======================================
+
+Example using ReplicaSet:
+ 
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: redis
+spec:
+  replicas: 3 
+  selector:
+    matchLabels:
+      environment: prod
+    matchExpressions:
+      - {key: tier, operator: Notin, values:[frontend]}
+  template:
+    metadata:
+      name: 
+      labels:
+    spec:
+      containers:
+        - name:
+          image:
+          ports:
+            - containerPort:
+
+
+
+
+
+
+
+
+
+
+
+
