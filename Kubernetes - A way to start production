@@ -777,3 +777,59 @@ spec:
  kubectl get svc -l tier=backend
  kubectl get svc -l tier=frontend
 =================================
+
+Kubernetes Volumes
+  - emptyDir
+  - hostPath
+  - gcePersistentDisk
+  - awsElasticBlockStore
+  - secret
+  ...
+
+Pods are ephemeral and stateless, so volumes persist data for pods
+As pods can be attached to multiple containers , all the containers can have access to there volumes
+Kuberenetes Volumes are associated to Pods, the data is preserved when container is restarted in the pod
+  The reason to this is Kubernetes volumes are associated to Pods but containers
+  
+ Volume Types:
+  1) Ephemeral volumes: Until the lifecycle of the pod
+  2) Durable volumes: Until the Volume or disk is available
+
+=============================
+
+emptyDir Volume Kubernetes:
+  An empty directory is created once the volume is attached to pod
+  On deleting Pod the data is erased from the volume
+  Primary use is - temporary space, or sharing b/w nodes
+  
+hostPath Volume Kubernetes:
+  - A host directory is mounted on the directory inside the pod (same as docker volumes)
+  - It is durable, even after the Pod is removed
+  - Caveats -  In a cluster each node will have its own hostPath volume for the specific Pod i.e. the data is not shared
+  - NFS to be used instead of local directory, that to be mounted on all the nodes in a cluster
+  
+ gcePersistentDisk Kubernetes:
+   - Mounts GCE persistent disk on the pod
+   - Durable same as hostPath
+   - Read-write on any nodes in the cluster
+   - The nodes which are using GCE persistent disk should be GCE VMs
+   - Same zone and project of PV as of GCE VMs
+   
+   Note: GCE persistent disk must be available before use
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
