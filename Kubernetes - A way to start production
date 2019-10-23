@@ -576,11 +576,39 @@ kubectl get svc # Gives you NodePort Service IP and NodePort Service port
 kubectl get po -o wide  # Gives you External IP of Node
 kubectl descrive svc redis-svc-np  # Give you Service Port exposed to User
 
+====================================  
+
+Is NodePort Service Sufficient?
+  - Node Port and NodeIp service to be provided to EndUser but again the Ips are Ephemeral
   
+  Solution- User the LoadBalancer Service
+  Expose the App to Internet using the LoadBalancer
+  
+  Example manifest file:
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name:
+    labels:
+  spec:
+    replicas:
+    selectors: 
+      environment: prod
+    type: LoadBalancer
+    ports:
+      - nodePort:
+        port:
+        targetPort:
+    template:
 
+## above manifest as a part of command
+kubectl expose deploy redis-deploy --name=redis-service-lb --port=80 --target-port=80 --type=LoadBalancer
 
-
-
+kubectl CREATE -f redis-svc-lb.yaml  # NodePort service to be created
+kubectl get po -o wide  # Gives you POD Ip : Pod Port
+kubectl get svc # Gives you NodePort Service IP and NodePort Service port
+kubectl get po -o wide  # Gives you External IP of Node
+kubectl descrive svc redis-svc-np  # Give you Loadbalancer IP
 
 
 
