@@ -642,8 +642,134 @@ spec:
             memory: 100Mi
         ports:
           - containerPort: 6379
+  --------------------------------------
   
-
+  Manifest Redis clients:
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: redis-slave
+    labels:
+      app: redis-slave
+      type: server
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: redis-slave
+        type: server
+        tier: backend
+    template:
+      metadata:
+        labels:
+          app: redis-slave
+          type: server
+          tier: backend
+      spec:
+        containers:
+          - name: redis-slave
+            image: gb-redisslave:v1
+            resources:
+              requests:
+                cpu:
+                memory:
+            ports:
+              - containerPort: 6379
+        
+---------------------------------------
+  Manifest Frontend application:
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: frontend-app
+    labels:
+      app: frontend-app
+      type: application
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: frontend-app
+        type: application
+        tier: frontend
+    template:
+      metadata:
+        labels:
+          app: frontend-app
+          type: application
+          tier: frontend
+      spec:
+        containers:
+          - name: frontend-app
+            image: gcr.io/google-sample/db-frontend:v4
+            resources:
+              requests:
+                cpu:
+                memory:
+            ports:
+              - containerPort: 80
+ 
+---------------------------------------
+  Manifest ClusterIP Service for connection b/w master, frontend and slaves:
+  
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: redis-master-svc
+    labels:
+      app: redis-master
+      type: server
+  spec:
+    type: ClusterIP
+    selector:
+      app: redis-master
+      type: server
+    ports:
+      - port: 6379
+        targetPort: 6379
+  
+  ---------------------------------------
+  Manifest ClusterIP Service for connection b/w frontend and slaves:
+  
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: redis-slave-svc
+    labels:
+      app: redis-slave
+      type: server
+      tier: backend
+  spec:
+    type: ClusterIP
+    selector:
+      app: redis-slave
+      type: server
+      tier: backend
+    ports:
+      - port: 6379
+        targetPort: 6379
+ 
+---------------------------------------
+  Manifest LoadBalancer Service for connection b/w frontend and Users:
+  
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: redis-lb-svc
+    labels:
+      app: frontend-app
+      type: application
+      tier: frontend
+  spec:
+    type: LoadBalancer
+    selector:
+      app: frontend-app
+      type: application
+      tier: frontend
+    ports:
+      - port: 80
+ 
+=================================
 
 
 
