@@ -531,3 +531,29 @@ Services in Kubernetes:
   
   3) Load balancer 
     To identify the Pod to serve the request.
+
+=========================================
+
+Expose the Deployment to Outside world - Node Port Service
+  A node has a pod running with IP address but 
+  a) POD IP is dynamic or Ephemeral IP
+  b) No connectivity b/w External world and the Pod
+  
+  User (access - Nodeip:node port) ----(Node IP: Node Port)----> NodePort Service --(Pod IP: Pod Port)--------> Pod ---(App port)----> Application
+
+**Limitation: Manual defination of port in NodePort service only allows port range from [30000 to 32767]
+  Or Let Kubernetes allocate the port dynamically
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
