@@ -434,7 +434,12 @@ spec:
           ports:
             - containerPort:
 
-
+kubectl create -f redis-rs.yaml
+kubectl get po
+kubectl get po -l 'environment notin (dev,qa)'
+kubectl get po -o wide
+kubectl describe rs redis
+================================
 
 
 
