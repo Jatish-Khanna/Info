@@ -543,10 +543,40 @@ Expose the Deployment to Outside world - Node Port Service
 
 **Limitation: Manual defination of port in NodePort service only allows port range from [30000 to 32767]
   Or Let Kubernetes allocate the port dynamically
-  
-  
+  One service per port
+  Node or VM IP changes it has to be explicitly managed
 
+Note: This service is not directly used for Production grade applications
 
+Example manifest file:
+apiVersion: v1
+kind: Service
+metadata:
+  name:
+  labels:
+spec:
+  replicas:
+  selectors:
+    app: redis
+    environment: production
+  type: NodePort
+  ports:
+    - nodePort: 30000
+      port: 80
+      targetPort: 80
+  template:
+
+nodePort is Optional, port defines the Service to Pod port mapping and targetPort is the actual port where application is listening
+  targetPort is same as containerPort
+  
+kubectl CREATE -f redis-deploy.yaml
+kubectl CREATE -f redis-svc-np.yaml  # NodePort service to be created
+kubectl get po -o wide  # Gives you POD Ip : Pod Port
+kubectl get svc # Gives you NodePort Service IP and NodePort Service port
+kubectl get po -o wide  # Gives you External IP of Node
+kubectl descrive svc redis-svc-np  # Give you Service Port exposed to User
+
+  
 
 
 
