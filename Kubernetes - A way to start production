@@ -610,6 +610,51 @@ kubectl get svc # Gives you NodePort Service IP and NodePort Service port
 kubectl get po -o wide  # Gives you External IP of Node
 kubectl descrive svc redis-svc-np  # Give you Loadbalancer IP
 
+=====================================
+
+ClusterIp Service:
+  Example: To restrict the BackEnd pods to be connected from outside world but front end Pods
+  This is the default service of Kubernetes.
+  
+Manifest file for Redis master:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-master
+  labels:
+    app: redis-master
+    type: server
+spec:
+  replicas: 1
+  selector:
+  template:
+    metadata:
+      labels:
+        app: redis-master
+        tier: backend
+        type: server
+    spec:
+      containers:
+        image: redis:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+          - containerPort: 6379
+  
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
