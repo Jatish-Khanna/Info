@@ -354,7 +354,57 @@ spec:
 Scale in and Out app instance:
   kubectl scale rc <name_of the_rc_controller> --replicas=5
 
+==========================
+
+Replica Set: specifies the required number of pods running at samepoint in time.
+ and is a next generation of Replication Controller [+ Set based Selectors - Equiality based selectors]
+
+What are Selectors?
+  Controllers and services manage pods using selectors. These are the pod labels
+  
+  Define Selectors:
+  a) Equality based selectors
+    Operators:
+    =        - same as ==
+    ==       - same as -
+    !=       -
+    
+    Example:
+      environment != production
+      tier == backend
+  
+  kubectl get po -l environment != production
+  
+  OR in manifest file
+  
+  selector:
+    environment: production
+  
+  b) Set based selectors
+     in
+     notin
+     exists
+  
+    Example:
+      environment in (dev, qa)
+      tier notin (frontend)
+      
+    kubectl get po -l 'environment notin (dev, qa)'
+  
+  OR in manifest file
+
+  selector:
+    matchExpressions:
+      - {key: environment, operator: notin, values: [dev, qa]}
 
 
-
+Note:
+  selector:
+    key: value 
+    The above sample is being used for older resources such as ReplicationController, Services
+    
+  selector:
+    matchLabels:
+      key: value
+   The above sample is being used for newer resources such as ReplicaSet, Deployments, Job, Deamon Set
 
