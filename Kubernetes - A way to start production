@@ -504,3 +504,30 @@ Sample Upgrade example:
 =====================
 Scale in and out instance:
   kubectl scale deployment redis-deploy --replicas=5
+  kubectl get deploy
+=========================
+
+Services in Kubernetes:
+  possible to have to static IP for the pods?
+  How do different pods communicate with each other?
+  How to expose application to real world?
+  
+  Services? Way of grouping of Pods running on the cluster. 
+    Load balancing,
+    Service discovery b/w apps
+    Zerodowntime app deployments
+    
+    User |||  <-----Frontend Service------>        Front End Pods <--------BackEnd Service ---->      |||| Back end Pods
+  
+  Labels and Selectors help to identify the pods to create connection b/w them.
+  
+  Type of Service:
+  1) Cluster Ip - 
+    Service reachable only within the cluster.
+    E.g. Connection Backend to Frontend pods.
+    
+  2) NodePort -
+    Expose webapp to outside world
+  
+  3) Load balancer 
+    To identify the Pod to serve the request.
