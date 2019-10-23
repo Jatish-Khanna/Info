@@ -769,20 +769,11 @@ spec:
     ports:
       - port: 80
  
+ 
+ Verify:
+ 
+ kubectl get po -l tier=backend
+ kubectl get po -l tier=frontend
+ kubectl get svc -l tier=backend
+ kubectl get svc -l tier=frontend
 =================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
