@@ -877,5 +877,6 @@ kubectl exec hostPath-vol df /opt
 kubectl describe pod hostPath-vol
 kubectl delete -f test-pod.yaml
 
+======================================
 
 
