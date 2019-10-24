@@ -910,3 +910,36 @@ kubectl delete -f test-pod.yaml
  kubectl get po -o wide
  kubectl describe po gce-pv
  ==============================================
+
+Persistent Volumes and Volume claims:
+  To store the actual data, we may need to use Block, NAS, Object storage, GCE PV, AWS disk or others ...
+  A consistent way to deal with all the storage types:
+  Storage infras supported by K8s?
+  GCEPersistentDisk, AWSElasticBlockStorage, AzureDisk, Cinder, FC, RBD, Flocker, iSCSI, Glusterfs
+  HostPath, AzureFile, FlexVolume, ... , NFS, ...
+  
+  Each storage types has different APIs to mount and manager disks
+  All these storage managemenet systems can be contolled by Persistent Volume that abstract details.
+  
+  1) Persistent Volume: A pre-provisioned storage, that will be utilized by K8s cluster
+  2) Persistent Volume claims: A storage request by User with access request. 
+ 
+ Lifecycle: 
+ a) Provisioning - To create a type of storage space by the Admin
+   - Static provisioning
+   - Dynamic provisioning
+ b) Binding:  A storage request is attached to Storage. This is PVC (Persistent volume claim)
+ c) Pod can use the Peristent volume
+ d) Reclaim the storage: PVC should be deleted.
+
+
+
+
+
+
+
+
+
+
+
+
