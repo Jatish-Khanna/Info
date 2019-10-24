@@ -848,12 +848,34 @@ kubectl delete -f test-pod.yaml
 Note: it is useful for storing the temporary data
 =================================
 
+hostPath - Volumes [kubernetes]
+  mounts a directory of worker node as a Volume inside the POd
+  - similar to the docker volume [the data is durable even when the Pod is terminated]
+  Cautions: when using the cluster, else each node will have an individual volumes
+    The above can be taken care of NFS or external mount path on host
+    
+ Example manifest file:
+apiVersion: v1
+kind: pod
+metadata:
+  name: hostPath-vol
+spec:
+  conntainers:
+    - name: hostPath-container
+      image: gcr.io/redis/redis
+      volumeMounts:
+        - name: hostPath-pod-vol
+          mountPath: /opt
+  volumes:
+    - name: hostPath-pod-vol
+      hostPath:
+        path: /data/app
 
-
-
-
-
-
+kubectl CREATE -f test-pod.yaml
+kubectl get po
+kubectl exec hostPath-vol df /opt
+kubectl describe pod hostPath-vol
+kubectl delete -f test-pod.yaml
 
 
 
