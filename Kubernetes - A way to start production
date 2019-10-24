@@ -817,12 +817,36 @@ hostPath Volume Kubernetes:
    
    Note: GCE persistent disk must be available before use
    
+=============================================
 
+Volume Type - emptyDir ?
+  Initially Empty, and ephemeral tied to Pod lifecycle. With Pod deletion the data volume will be purged or cleaned
+  
+ExampleManifest File:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptyDir-vol
+spec:
+  containers:
+    image: gcr.io/test-redis/redis
+    name: emptyDir-container
+    volumeMounts:
+      - name: emptyDir-vol-pod
+        mountPath: /opt
+    
+  volumes:
+    - name: emptyDir-vol-pod
+      emptyDir: {}
 
+kubectl CREATE -f test-pod.yaml
+kubectl get po
+kubectl exec emptyDir-vol df /opt
+kubectl describe pod emptyDir-vol
+kubectl delete -f test-pod.yaml
 
-
-
-
+Note: it is useful for storing the temporary data
+=================================
 
 
 
