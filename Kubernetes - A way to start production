@@ -926,20 +926,76 @@ Persistent Volumes and Volume claims:
  
  Lifecycle: 
  a) Provisioning - To create a type of storage space by the Admin
-   - Static provisioning
-   - Dynamic provisioning
+   - Static provisioning - A pre provisioned Volume
+   - Dynamic provisioning - With PVC a new PV has been created
  b) Binding:  A storage request is attached to Storage. This is PVC (Persistent volume claim)
  c) Pod can use the Peristent volume
  d) Reclaim the storage: PVC should be deleted.
 
+================================
 
+Static Volume provisioning?
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: static-pv-gce
+spec:
+  capacity:
+    storage: 15Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: CustomTagForStorageDefinedInPV
+  gcePersistentDisk|awsElasticBlockStore|...:
+    pdName: pd-data-disk
+    fsType: ext4
+    
+ kubectl create -f pv-static.yaml
+ kubectl get pv 
+ kubectl describe pv static-pv-gce
+ 
+---------------------------------------
 
+Claim the Static Persistent Volume created
+Sample Manifest for PVC:
 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gce-static-pvc
+spec:
+  resources:
+    requests:
+     storage: 15Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: CustomTagForStorageDefinedInPV
+ 
+ kubectl create -f pvc-static.yaml
+ kubectl get pvc
+ kubectl get pv # check if claim is found for the disk
+ kubectl describe pvc static-pv-gce
 
-
-
-
-
-
-
-
+-----------------------------------------
+Claim the Volume in the Pod
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: pod-test-pv-pvc
+spec:
+  containers:
+    - name: pod-test-container
+      image: redis
+      volumeMounts:
+        - name: my-volume-pv-pvc
+          mountPath: /opt
+  volumes:
+    - name: my-volume-pv-pvc
+      persistentVolumeClaim:
+        claimName: gce-static-pvc
+ 
+ kubectl create -f pod-static.yaml
+ kubectl get pvc
+ kubectl get pv # check if claim is found for the disk
+ kubectl get po -o wide 
+ kubectl describe pvc static-pv-gce
+        
