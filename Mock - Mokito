@@ -1,0 +1,12 @@
+
+If an object has the following characteristic it can be substituted with mock objects
+
+Objects that are difficult to implement
+
+Objects that are connecting to different network (e.g. Database, mailing etc…)
+
+Objects provides non-deterministic result
+
+Objects that are still need to be developed
+
+Objects have to include methods and attributes for testing purpose
