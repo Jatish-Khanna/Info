@@ -879,4 +879,34 @@ kubectl delete -f test-pod.yaml
 
 ======================================
 
-
+ GCE persistent Dis Kubernetes----
+   Persistent mount point across the nodes in the cluster. 
+   A persistent disk on the Google compute engine. This has similar features to  cloud storage disks.
+   Note: It can be mounted read-write only by single Pod and Read-only on other pods
+   GC Persistent Volumes can only be used on GCE VMs
+   
+ Example:
+   gcloud compute disks create --size=1GB --zone=<> <name_of_gce_disk>
+ 
+ manifest file:
+ apiVersion: v1
+ kind: Pod
+ metadata:
+   name: gce-pv
+ spec: 
+   containers:
+   - name: gce-pv-container
+     image: redis
+     volumeMounts:
+     - mountPath: /opt
+       name: gce-pv-name
+   volumes:
+   - name: gce-pv-name
+     gcePersistentDisk:
+       pdName: <name_of_gce_disk>
+       fsType: ext4
+ 
+ kubectl create -f gce-pv-mf.yaml
+ kubectl get po -o wide
+ kubectl describe po gce-pv
+ ==============================================
