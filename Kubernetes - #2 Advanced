@@ -1,0 +1,106 @@
+
+Custom application configration for containerized images:
+  ConfigMap:
+    A k8s Object to seprate configuration from Pods
+    It stores the configuration data in Key/value pairs within ETCD database
+    Configuration Files
+    Command Line Arguments
+    Environment Variables
+    
+    But the sensitive data, will be managed using Secrets.
+    ConfigMap should be created before referencing in the Pod spec 
+    
+kubectl create configmap <map-name> <data-source>
+
+<data-source>|-
+  -from-file directory or file name 
+  --from-literal Key/value pair
+  
+kubectl get configmaps <map-name> -o wide|yaml
+kubectl describe configmap <map-name>
+  
+Example - manifest:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+spec:
+  containers:
+    - name: redis-container
+      image: redis/redis:latest
+      volumeMounts:
+        - name: config
+          mountPath: /redis-master
+  volumes:
+    - name: config
+      configMap:
+        name: my-config-map
+        items:
+         - key: redis-config  # file name from the config-map
+           path: redis.conf
+
+kubectl create -f redis-pod.yaml
+kubectl exec redis cat /redis-master/redis.conf
+
+========================================================
+
+ConfigMap for Literal Values:
+  kubectl create configmap literal-map --from-literal=my.key=value
+  kubectl get configmap literal-map
+  
+  Reference the literal Key/values
+  
+  apiVersion: v1
+  kind: pod
+  metadata:
+    name: map-pod
+  spec:
+    containers:
+      - name: busy-box-test
+        image: busybox
+        command: ["/bin/sh", "-c", "env"]
+        env:
+          - name: CUSTOM_KEY
+            valueFrom:
+              configMapKeyRef:
+                name: literal-map
+                key: my.key
+    restartPolicy: never  # never restart the pod
+    
+  kubectl create -f my-busy-pod.yaml
+  kubectl logs map-pod
+  
+  ==========================================
+  
+  
+  
+  
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
