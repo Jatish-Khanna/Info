@@ -214,3 +214,45 @@ spec:
 kubectl create -f my-app.yaml
 kubectl get po
 =============================================
+
+Kubernetes Scheduling Jobs?
+  A controller to setup the Pods for scheduling and completion
+  
+  1) Run to completion (batch-processing) -
+    It waits for task to be completed and waits for exit=0 from the Pod.
+    Once received the signal Pod will be moved from Running to Shutdown state
+    K8s won't delete these Pods, and these has to be manually deleted, to review the logs, warning...
+    Pods in shutdown won't consume any resources
+    On intermittent failures, a new pod will be started but application has to handle the restart appropriatly
+      i.e. The K8s master will take care of Pod to be running
+   
+  2) Scheduled (CronJob) -
+    To schedule a job for specific time as same as Linux schedule
+    
+    
+Example Manifest for Run to completion Job:
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: app-rtc-job
+spec:
+  template:
+    metadata:
+      name: pod-rtc-job 
+    spec:
+      containers:
+        - name: app-container
+          image: centos:7
+          command:
+            - "bin/sh"
+            - "-c"
+            - "for element in 1 123 34 5 2 21 1 32 1 13 21; do echo $element; done;"
+       restartPolicy: Never   
+
+kubectl create -f sample-pod.yaml
+kubectl get jobs -o yaml|wide
+kubectl get po
+kubectl logs app-rtc-job-scda
+kubectl describe jobs app-rtc-job
+kubectl delete job app-rtc-job
+====================================================
