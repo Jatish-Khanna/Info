@@ -110,3 +110,107 @@ kubectl get ds
 kubectl describe ds custom-ds
 ubectl delete ds custom-ds   # make sure to delete the daemonset not pods
 ===============================================
+
+Manage Secrets in the K8s: A sensitive store
+    Prevent accidential disclosure of accidential data
+    The secrets doesn't depend on the Pod but used by Pod
+    ETCD a Key/Value data store has been used to persist the secrets
+  Limits: 1MB max. per secret
+  Secrets are only sent to nodes in a cluster where it is required.
+  Secret is stored in /tmp-fs volume, 
+  
+  Inject Secrets inPods:
+  1) Volumes
+  2) Environment variables
+  
+1) Using Kubectl command line tool to create Secrets [preferred]
+kubectl create secret [TYPE] [name] [data]
+   Type:
+    a) Genecric:
+      . File  - --from-file
+      . Directory - --from-file
+      . Literal Value - --from-literal
+      
+    b) docker-registry
+    c) tls
+  
+Example:
+  kubectl create secret generic app-secret --from-file=./my-app-secrets.conf [--from-file=...]
+  kubectl get secrets
+  kubectl describe secrets app-secret   # Actual values are not displayed in the output
+
+---------------------------
+2) Create Secrets Manually -
+  step1: convert to base64 format
+  spte2:
+  
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: app-secret-mf
+  type: Opaque     #   
+  data:            # map of key value pairs
+    u-password: 1fdnjkaf       
+    a-password: ear12jEf
+
+kubectl create -f my-secret.yaml
+
+----------------------------------------------
+
+Decode the Secrets:
+  kubeclt get secrets app-secret-mf -o yaml
+  echo "value" | base64 --decode
+
+------------------------------------
+
+Consuming Secrets?
+  1) Volumes:
+    
+apiVersion: v1
+kind: pod
+metadata:
+  name: c-pod
+spec:
+  containers:
+    - name: c-pod
+      image: redis
+      volumeMounts:
+        - name: my-secret-mount
+          mountPath: /app/secret.config
+          readOnly: true
+   volumes:
+     - name: my-secret-mount
+       secret:
+         secretName: app-secret-mf
+         
+kubectl create -f my-app.yaml
+kubectl get po -o wide
+
+-------------------------------------------
+
+2) Consuming Secrets using Volumes:
+  
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-secrets-env
+spec:
+  containers:
+    - name: r-container
+      image: redis
+      env:
+        - name: SECRET_PASS
+          valueFrom:
+            secretKeyRef:
+              name: app-secret-mf
+              key: a-password
+        - name: SECRET_U_PASS
+          valueFrom:
+            secretKeyRef:
+              name: app-secret-mf
+              key: u-password
+  restartPolicy: never
+
+kubectl create -f my-app.yaml
+kubectl get po
+=============================================
