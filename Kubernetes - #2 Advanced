@@ -73,34 +73,40 @@ ConfigMap for Literal Values:
   
   ==========================================
   
+  K8s - DeamonSet
+    To control that all or some nodes of the cluster runs a copy of the Pod
+    Example: An application instance per instance on all the nodes in the cluster or subset of nodes, even when the cluster is scaling
+    Subsets - can be applied with the help of node labels. 
+    Typical UseCases?
+      Storage Deamons: ceph
+      Log collection Daemon: fluentd
+      Node monitoring deamon: collectd
+      
+Example manifest file:
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: custom-ds
+  labels:
+    tier: daemons
+spec:
+  template:
+    metadata:
+      labels:
+        app: fluentd   # to be used in the selector section
+    spec:
+      containers:
+        image:
+          - name: fluent-container
+            image: gcr.io/google-containers/fluentd-elasticsearch
+  selector:
+    matchLabels:
+      app: fluentd
   
-  
-  
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-  
+kubectl create -f custom-daemon-set.yaml
+kubectl get po -o wide
+kubectl get ds
+kubectl describe ds custom-ds
+ubectl delete ds custom-ds   # make sure to delete the daemonset not pods
+===============================================
