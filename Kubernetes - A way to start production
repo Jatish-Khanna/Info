@@ -999,3 +999,62 @@ spec:
  kubectl get po -o wide 
  kubectl describe pvc static-pv-gce
         
+===============================================
+
+Dynamic Persistent Volument provisioning-
+  The persistent volument is create when PVC are created.
+  
+  1. Create the Storage class
+  
+  apiVersion: storage.k8s.io/v1
+  kind: StorageClass
+  metadata:
+    name: type-ssd                    # Used in PVC to identify the storage tag
+  provisioner: kubernetes.io/gce-pd   # aws-eb for AWS
+  parameters:
+    type: pd-ssd                      # Default
+    
+ kubectl create -f storage-class.yaml
+ kubectl get storageclass       # stadarnd is the default created by System
+ kubectl describe storageclass type-ssd
+ 
+----------------------------------------
+
+Creating a PVC for the StorageClass
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-pvc
+spec:
+  resources:
+    requests:
+      storage: 30Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: type-ssd   # standard as the default
+  
+kubectl create -f app-pvc.yaml
+kubectl get pvc 
+kubectl describe pvc app-pvc
+
+---------------------------------------------
+
+Using the PersistentVolumeClaim in pod
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod-dynamic-pvc
+spec:
+  containers:
+    - name: app-container
+      image: redis
+      volumeMounts:
+        - name:app-volume
+          mountPath: /mnt/app-volume
+  volumes:
+  - name:app-volume
+    persistentVolumeClaim:
+      claimName: app-pvc
+
+======================================================
