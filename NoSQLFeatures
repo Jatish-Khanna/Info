@@ -3,6 +3,12 @@ to SQL -
   Sharding the database has issues
   OLTP (Transaction and consistency have huge benefit)
   
+  Why NoSQL?
+    Massive amount of data
+    Super low latency
+    High non-relational data
+    Schema less data
+    Rapid ingest of data
  
  NoSQL -
  Scaling is easier without impacting the servicing system (Elastic scalability)
