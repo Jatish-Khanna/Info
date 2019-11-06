@@ -16,3 +16,7 @@ spring:
          # Spring Cloud Kubernetes will lookup a ConfigMap named c3 in namespace n3
          - namespace: n3
            name: c3
+
+
+In the example above, it spring.cloud.kubernetes.config.namespace had not been set, 
+then the ConfigMap named c1 would be looked up in the namespace that the application runs
