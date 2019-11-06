@@ -20,3 +20,9 @@ spring:
 
 In the example above, it spring.cloud.kubernetes.config.namespace had not been set, 
 then the ConfigMap named c1 would be looked up in the namespace that the application runs
+
+Any matching ConfigMap that is found, will be processed as follows:
+
+apply individual configuration properties.
+apply as yaml the content of any property named application.yaml
+apply as properties file the content of any property named application.properties
