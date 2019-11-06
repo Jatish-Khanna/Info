@@ -26,3 +26,6 @@ Any matching ConfigMap that is found, will be processed as follows:
 apply individual configuration properties.
 apply as yaml the content of any property named application.yaml
 apply as properties file the content of any property named application.properties
+
+
+If both profiles are active, the property which appears last within the configmap will overwrite preceding values.
