@@ -1,0 +1,25 @@
+Garbage?
+  What are the idle object being not reference by anyone
+  
+1) Reference Counting Algorithm
+  - Increment the count when another reference of the object is created
+  - Decrement the count when reference is updated to null
+  
+  Suppose? A object has reference to Object B and B has reference to A 
+  When A, B reference count is 0
+    The objects become inaccessible althought a reference exists b/w the two Objects using instance varibles
+    Accounting that, these Object will never become a candidate for GC hence a memory leak.
+ 
+2) Reachability Analysis Algorithm
+  From GC root nodes down to the Objects logging all the reachable references.
+  Any objects, never reached throught reference chain will be considered as unavailable and a candidate for GC
+  
+GC roots?
+  1) Objects referenced in the stack, i.e. the local variable table in the stack frame
+  2) Objects referenced by class static attributes in the method area
+  3) Objects referenced by constants in the method area
+  4) Objects referenced by JNI (the Native method) in the native method stack
+  
+Run time areas?
+  [Shared by threads]: Heap[Shared by threads], Method Area, 
+  [Data area isolated from Threads]: Stack, Native method stack, Program counter register
