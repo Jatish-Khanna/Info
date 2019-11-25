@@ -12,3 +12,8 @@ A sample query -
   }
   
   Instead of sending multiple request from UI, client can be flexible enough to request what is required from the backend
+
+Important tools:
+  Apollo - 
+  GraphQL server - A backend server that handles the GraphQL request
+  GraphiQL - A dummy frontend application that allows to test and make request to backend like Postman
