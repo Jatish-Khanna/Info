@@ -1,0 +1,14 @@
+A sample query -
+  {
+    book {
+      title
+      author {
+        name
+        books {
+          title
+        }
+      }
+    }
+  }
+  
+  Instead of sending multiple request from UI, client can be flexible enough to request what is required from the backend
