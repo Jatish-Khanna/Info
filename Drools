@@ -1,0 +1,82 @@
+
+1) 
+activation-group:
+The activation-group will cause that only one rule get executed and 
+  *) the one with higher salience will be executed if it is activated. 
+There can be a single rule or multiple rules that can belong to a particular activation-group. 
+Rules that belong to activation-group fire in similar fashion to 
+  "if..else if..else" block in java. 
+In an activation group only one rule can fire at a time  
+
+Example:
+rule "R1"
+salience 1
+activation-group "ag-1"
+	when 
+		...
+	then
+		...
+	end
+  
+rule "R2"
+salience 2
+activation-group "ag-1"
+	when 
+		..
+	then
+		...
+	end
+
+Here, with the activation group R2 will be fired, as it has higher sailence then of R1
+
+
+2)  
+agenda-group:This is an optional keyword. 
+  It can be assigned for all rules. If not assigned to any agenda group, the rule by default belongs to ‘main’ agenda.
+  In this, only set of surels get fired which belongs to specific activation-group that's in focus.
+  
+  At any one time, only one group has a focus that gives that group of rules priority for execution 
+  before rules in other agenda groups. You determine the focus with a setFocus() call for the agenda group
+
+Agenda agenda = ksession.getAgenda();
+agenda.getAgendaGroup( "ag-1" ).setFocus();
+agenda.getAgendaGroup( "ag-2" ).setFocus();
+ksession.fireAllRules();
+
+3)
+ruleflow-group: This behaves exactly similar to agenda-group, 
+  except that it is generally used for rules used from jBPM process flows.
+  
+  Eg. When building workflow or Business process asset this is linked to a Service task, which activates set of rules
+  
+  
+4) lock-on-active
+ A boolean value applicable to rules with ruleflow-group or agenda-group
+ This option, the next time the ruleflow group for the rule becomes active 
+             or the agenda group for the rule receives a focus,
+             
+       the rule cannot be activated
+    To reactivate the rule, ruleflow-group must be inactive or particular ageda-group must loose the focus
+    
+** This is stronger version of no-loop attribute, the activation of a matching rule is discarded regardless of the origin of the update
+[[ Ideal use- You have number of rules that modify a fact and don't want to re-execute the rule again on updates ]]
+
+Example: lock-on-active true
+
+5) date-effective
+Rule will be activated only after current date and time is after the parameters given with the option
+Example: date-effective "01-Jan-2020"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
