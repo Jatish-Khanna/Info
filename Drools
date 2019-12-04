@@ -89,15 +89,20 @@ Defaults to - "JAVA"
 
 Example: dialect "JAVA"
 
+10) salience
+An integer value that defines the priority of the rule, higher the value higher the priority
+Example: salience 100
+Example: salience 10 is smaller than Example: salience 100 which means, rule with sailence 100 will executed first and ...
 
+11) enabled
+A boolean value, to define if the rule is enabled or not. Defaults true
 
+Example: enabled true
 
+12) timer
+A string, specifies the cron or int timer refers to schedule when the rule will be active
+Example: timer ( cron:*/2 * * * * ? ) (every 2 seconds)
 
-
-
-
-
-
-
-
-
+13) calendar
+similar to timer but a quartz scheduler
+Example: calendars "* * 0-7,18-23 ? * *"
