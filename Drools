@@ -68,6 +68,27 @@ Rule will be activated only after current date and time is after the parameters 
 Example: date-effective "01-Jan-2020"
 
 
+6) date-expires
+The rule won't be activated once the current date and time is after the parameters given with the option
+Example: date-expires "01-Jan-2020"
+
+
+7) no-loop
+A boolean value, a rule can't be activated as a result of met condition once facts has been updated
+Example: no-loop true
+
+
+8) duration
+A long value, e duration of time in milliseconds after which the rule can be activated even the conditions are met
+Example: duration 10000   // The value is in milliseconds
+
+9) dialect
+A string identifying either JAVA or MVEL as the language to be used for code.
+This is rule level option, to update the option other than package
+Defaults to - "JAVA"
+
+Example: dialect "JAVA"
+
 
 
 
