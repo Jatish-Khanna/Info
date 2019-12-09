@@ -106,3 +106,11 @@ Example: timer ( cron:*/2 * * * * ? ) (every 2 seconds)
 13) calendar
 similar to timer but a quartz scheduler
 Example: calendars "* * 0-7,18-23 ? * *"
+
+
+
+
+Kie Server Scaling -
+
+Controller in turn will have three server templates - HR, Finance and IT. Each server template is then defined with identifier 
+which is used by KIE Server instances via system property called org.kie.server.id.
