@@ -92,3 +92,12 @@ public class BarConsumerService {
 Spring Boot uses Micrometer, an application metrics facade to integrate actuator metrics with external monitoring systems.
 Micrometer can be integrated with several monitoring systems like 
   Netflix Atlas, AWS Cloudwatch, Datadog, InfluxData, SignalFx, Graphite, Wavefront, Prometheus etc.
+
+
+------------------------------------
+
+Enable H2 console -
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.h2.console.settings.trace=false
+spring.h2.console.settings.web-allow-others=false
