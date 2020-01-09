@@ -1,0 +1,8 @@
+
+
+Difference between Synchronized and ReentrantLock
+
+1) Synchronized is implicit whereas Locks are explicit
+2) Locks allow locking/unlocing in any place and in any order
+3) Locks provide the ability to tryLock and tryLock with timeout
+
