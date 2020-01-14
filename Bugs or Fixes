@@ -281,7 +281,20 @@ Putty using SSH
   5) Login to server using the PUTTY and the private key
 
 
+=============================================
 
+
+org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: io.graphql.start.graphqlstart.entity.AuthorEntity.books, could not initialize proxy - no Session
+	at org.hibernate.collection.internal.AbstractPersistentCollection.throwLazyInitializationException(AbstractPersistentCollection.java:606) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.collection.internal.AbstractPersistentCollection.withTemporarySessionIfNeeded(AbstractPersistentCollection.java:218) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.collection.internal.AbstractPersistentCollection.initialize(AbstractPersistentCollection.java:585) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.collection.internal.AbstractPersistentCollection.read(AbstractPersistentCollection.java:149) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at org.hibernate.collection.internal.PersistentSet.toString(PersistentSet.java:327) ~[hibernate-core-5.4.8.Final.jar:5.4.8.Final]
+	at java.base/java.lang.String.valueOf(String.java:2788) ~[na:na]
+	
+	
+Solution:
+  @OneToMany(fetch = FetchType.EAGER,
 
 
 
