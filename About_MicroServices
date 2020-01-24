@@ -1,3 +1,11 @@
+Guideline to Microservice?
+ 1. Independent life cycle
+ 2. Communication
+ 3. Local storage
+ 4. Stable releases
+ 5. Robust and fault tolerant
+ 6. Independent scalability
+
 Why Microservices?
 
   . Simple
