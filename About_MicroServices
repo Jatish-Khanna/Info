@@ -1,6 +1,8 @@
 Guideline to Microservice?
  1. Independent life cycle
  2. Communication
+    highlight two popular approaches:
+    Let your microservices talk REST with each other or use messages put on a message or event bus
  3. Local storage
  4. Stable releases
  5. Robust and fault tolerant
