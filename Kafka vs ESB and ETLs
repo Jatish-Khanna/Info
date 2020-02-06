@@ -46,8 +46,21 @@ Kafka?
   It handles backpressure well as conumers can consume the way they want, at there speed
   It acts as a integration layers, as events can be consumer by individual consumer or consumer groups maintaining there own offsets
   
-  Endore to build applications in streaming way considering always on and running
+  Endorse to build applications in streaming way considering always on and running
   
+  Messaging, Storage and processing.
+  Supports realtime stream processing
+  It also supports fire and forget, EOS, pub/sub, batch based mechanism
+  Extreme scale and throughput
+  Built for reliability and zero downtime (built for failure)
+  High availability
+  Rolling upgrades and dynamic configuration changes
+  Backward compatibility - A client and server are independent of each other
+  
+  Decoupling of clients
+    Dumb pipes and smart end points with the back pressure
+    It is pull based mechanism
+    
   
   
   
