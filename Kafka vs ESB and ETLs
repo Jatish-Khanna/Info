@@ -57,11 +57,19 @@ Kafka?
   Rolling upgrades and dynamic configuration changes
   Backward compatibility - A client and server are independent of each other
   
+  Coding, scripting, console and REST options are availble to interact with Kafka
+  
   Decoupling of clients
     Dumb pipes and smart end points with the back pressure
     It is pull based mechanism
     
   
+  Kafka and ESB?
+    Kafka has source and sink connetors to connet with existing middle ware infrastructure
+    Kafka doesn't work well with legacy systems like Cobol projects and others
+    Just a P2P messaging infrastructure with active/passive HA 
+    Visual coding for integration components
+    
   
   
   
