@@ -6,5 +6,8 @@ Issue with the existing systems?
   3 Active passive clustering for the existing systems
   4 No backward compatibility with the existing messages and schema
   5 Downtime for maintenance, failures and system upgrades
+  6 No backward compability or minimal with the servers and the clients
+  7 Tight coupling via synchnoronous communication REST
+  8 No handling of backpressure or unavailable consumers
   
   
