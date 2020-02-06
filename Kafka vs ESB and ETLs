@@ -1,0 +1,10 @@
+
+
+Issue with the existing systems?
+  1 Limited scalability and availability, where as Kafka is built to scale and be available for the distributed systems
+  2 Broker per scenario whereas Kafka provides topics and partitions to handle different sources and distributed systems
+  3 Active passive clustering for the existing systems
+  4 No backward compatibility with the existing messages and schema
+  5 Downtime for maintenance, failures and system upgrades
+  
+  
