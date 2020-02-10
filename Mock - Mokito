@@ -10,3 +10,23 @@ Objects provides non-deterministic result
 Objects that are still need to be developed
 
 Objects have to include methods and attributes for testing purpose
+
+
+Mockito
+Mockito facilitates creating mock objects seamlessly. 
+It uses Java Reflection in order to create mock objects for a given interface. 
+Mock objects are nothing but proxy for actual implementations.
+
+Consider a case of Stock Service which returns the price details of a stock.
+During development, the actual stock service cannot be used to get real-time data. 
+So we need a dummy implementation of the stock service. Mockito can do the same very easily, as its name suggests.
+
+Benefits of Mockito
+No Handwriting − No need to write mock objects on your own.
+
+Refactoring Safe − Renaming interface method names or 
+  reordering parameters will not break the test code as Mocks are created at runtime.
+Return value support − Supports return values.
+Exception support − Supports exceptions.
+Order check support − Supports check on order of method calls.
+Annotation support − Supports creating mocks using annotation.
