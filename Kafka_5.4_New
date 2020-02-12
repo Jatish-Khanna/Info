@@ -1,0 +1,60 @@
+Whats new in Kafka 5.4.0?
+  Role based access to GA
+  Structured audit logs
+  
+  Multi-region cluster
+  Schema validation
+  
+  kSQL DB
+  Replication monitoring using Control center
+  
+  
+Enterprise based security?
+  ACL over the topics, to secure the apache kafka environment
+  Role based access control 
+   - Roles, User/Group , Resource scoping
+   - RBAC autherization (GUI, CLI, API) - can be assigned
+   - Can be enforced across all the Confluent platform components REST, control center, schema registry, MQTT proxy, KSQL
+   
+ Audit?
+   - Who has taken any actions on the Kafka platform, the Kafka audit for the regulatory
+   - Structured autdit logs, all the changes e.g. Authorization logs, configuration, Creation topics, Produce, Fetch consumer or LeaderAndIsr others
+   - These are stored on the Kafka topics in the same or different Kafka cluster
+   - 
+   
+Global availability with Multi-region cluster
+  - Low latency experience for Customers
+  - Replication in multi-region clusters
+  - Observer replicas: Multi-region cluster will take care of replication
+  - Remote consumers can read data from local brokers
+  
+Schema validation? data compatability
+  - Decouple the schema from the event itself
+  - 
+
+Control center?
+  - Multi-region cluster to place observer replicas
+  - role based access management
+  - schema validation: when creating or editing the topics
+
+Replication itegrator?
+  - As a part of confluent Control center to ease the adminitstration
+
+Dynamic performance and Elacticity?
+  The Kafka is considered as the Single source of truth, that stores the large amount of data for longer time periods
+  - Tiered storage
+   infinite retention (for older data to be moved)
+   reduced storage cost
+
+Confluent server?
+  - Optional package (Apache Kafka or Confluent server)
+  - Confluent server enables all the above mentioned features
+
+
+KSQL stream processing?
+  -   
+  
+  
+  
+  
+  
