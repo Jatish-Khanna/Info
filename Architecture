@@ -1,0 +1,36 @@
+
+
+Different application integration styles?
+ 1. Shared database
+ 2. RPC, SOAP or REST call to the other service
+ 3. Middleware between to services
+ 4. Data feeds with ETL, Extracting the data from one system, transforming and loading into the other system
+ 
+Issues?
+ 1. Shared database?
+   a) Hit with performance bottlenecks and scalability issue esp. with SQL databases
+   b) SPoF for all the services if database goes down
+   c) Upgrades or Adjustments to the system for one application will have side effects on the other systems
+   d) Tight copuling and back compatability, i.e. all systems must upgrade at sametime if not compatible
+   e) Concurrency and timing issues in the shared system
+   
+ 2) RPC calls between the systems?
+   a) JSON or XML data exchange between different services
+   b) Require software loadbalancer, registration and lookup service like Eureka
+   c) Can independently scale different components
+   d) require circuit breaker and fallback patterns 
+   e) more concerns of the cascading failures in the system
+ 
+ 3) Messaging middleware between componenets?
+   a) Aysnc over synchronous communication
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
