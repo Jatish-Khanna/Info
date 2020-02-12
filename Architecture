@@ -23,6 +23,18 @@ Issues?
  
  3) Messaging middleware between componenets?
    a) Aysnc over synchronous communication
+   b) ESB or buffer or Pub/sub pattern between the services
+   c) failover mechanism for unavailable serviecs
+   d) Maintain order in the systems
+   e) Distributed transactions are difficult like Saga pattern to achieve
+   f) No flow control over the system, require orchestration and state storage mechanism like Camunda
+   
+  4) ETL batch transfer?
+    a) Separate databases for all the components
+    b) Business transformation logic can be applied over the data by loading as feed in ETL
+    c) Duplicate data in different format available
+    d) Not suitable for realtime systems
+    e) Complex to change as per the business requirements
    
    
    
