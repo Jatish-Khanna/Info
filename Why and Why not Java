@@ -1,0 +1,15 @@
+
+. Have you heard the term “composition should be favored over inheritance“? If yes, what do you understand by this phrase?
+A4. Inheritance is a polymorphic tool and is not a code reuse tool. Some developers tend to use inheritance for code 
+reuse when there is no polymorphic relationship. 
+The guide is that inheritance should be only used when a subclass ‘is a’ super class.
+
+Don’t use inheritance just to get code reuse. 
+If there is no ‘is a’ relationship then use composition for code reuse. 
+Overuse of implementation inheritance (uses the “extends” key word) can break all the subclasses,
+if the super class is modified. This is due to tight coupling occurring 
+between the parent and the child classes happening at compile time.
+Do not use inheritance just to get polymorphism. 
+If there is no ‘is a’ relationship and all you want is 
+polymorphism then use interface inheritance with composition, 
+which gives you code reuse and runtime flexibility.
