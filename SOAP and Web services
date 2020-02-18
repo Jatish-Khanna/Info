@@ -64,3 +64,10 @@ SOA - when SOAP is present in service tier. This is system level architectural s
 WOA (Web oriented architecture) - When REST WS are used in service tier. This is interface level architectural style 
 
 
+
+Test the SOAP or REST services? Postman - REST and SoapUI - SOAP services
+
+SOA is software design architectural pattern to implement loosly coupled, resuable and course grainded services
+  These can be implemented using different protocols - HTTP, HTTPS, JMS, SMTP, RPC
+  
+Webservices is one of the ways to implement SOA. Other technologies include CORBA, RMI, JMS, EJB
