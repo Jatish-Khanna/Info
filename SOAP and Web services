@@ -1,3 +1,18 @@
+Which one to favor? SOAP or REST?
+   REST based services are preferred due to simplicity, performance, scalibility and support for multiple data formats
+   SOAP is favored over rest for comprehensive support of security and transactional reliability of distributed is required.
+   
+   REST is better for exposing data 
+   SOAP is better for exposing business functionalities
+   
+   Do we need a standard contract of communication b/w consumer and server? SOAP with WSDL
+   Do we need to support multiple data formats for Accept: header in the HTTP? REST is preferred
+   AJAX calls? better alignment with REST
+   Level of secutiry required b/w the communication? 
+   Limited n/w bandwidth?
+   And the resources to develop using any of the above technology
+
+
 SOAP: Simple Object Access Protocol
  It uses XML message to communicate between service provider and client
  - Web Service Description Language(WSDL) - an XML format defines interface syntactically 
@@ -42,3 +57,10 @@ SOAP has comprehensive support for both ACID based transaction for shortlived
 SOAP supports compensation mechanism for the long lived transactions
 It also supports two phase commits across distributed resources
 SOAP has succes and retry built in logic to have enhanced end-to-end reliability
+
+
+
+SOA - when SOAP is present in service tier. This is system level architectural style to expose services to be used by consumers
+WOA (Web oriented architecture) - When REST WS are used in service tier. This is interface level architectural style 
+
+
