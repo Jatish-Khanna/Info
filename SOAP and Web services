@@ -9,6 +9,36 @@ SOAP: Simple Object Access Protocol
  ** The WSDL must be parsed to read, so it is slow
  ** The XML is heavy when compared to other structures for DTO like JSON
  
- REST:
-   
+REST:
+ REST is an architectural style by which data can be transmitted over transport protocol such as HTTP(S).
+ Each unique URL is a some representation of a resource (i.e Object like Account, Customer, etc),
+   and you can get the contents of the resources (i.e Objects) via HTTP verb “GET” and to modify via “DELETE”,”POST”, or “PUT”.
  
+ REST is about exposing a public API over the internet to handle CRUD (Create, Read, Update, and Delete) operations on data.
+ REST is focused on accessing named resources through a single consistent interface.
+ REST permits many different data formats like XML, JSON data, text, HTML, atom, RSS, etc. 
+   JSON is less verbose than XML and is a better fit for data and parses much faster.
+ Supports only point-to-point SSL security.
+   SSL security focuses on-
+     End to end encryption of transport channel i.e. source to destination
+REST supports transaction but not ACID compliant not two phase commit across distributed systems
+REST expects a stateless mechanism where each request is handled independently and to deal with retry failures 
+ 
+SOAP?
+
+SOAP (Simple Object Access Protocol) is a
+standard communication protocol on top of transport protocols such as HTTP, SMTP, Messaging, TCP, UDP, etc.
+
+SOAP is focused on accessing named operations, which implement some business logic through different interfaces.
+SOAP only permits XML data formats.
+Supports both SSL security and WS-security,
+  which adds some enterprise security features. Supports identity through intermediaries, not just point to point SSL.
+  WS-Security focuses on:
+    encryption from the point of message origin
+    secure parts of the message that needs to be secured
+    Different parts of message can be secured using different encyrption algorithms
+    
+SOAP has comprehensive support for both ACID based transaction for shortlived
+SOAP supports compensation mechanism for the long lived transactions
+It also supports two phase commits across distributed resources
+SOAP has succes and retry built in logic to have enhanced end-to-end reliability
