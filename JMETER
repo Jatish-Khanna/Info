@@ -1,0 +1,8 @@
+
+
+1) Start JMeter
+2) Create a Test plan
+3) Create Thread group users
+4) Add Sampler HTTP request
+5) Add Listner under the Sampler
+6) Start and stop the test
