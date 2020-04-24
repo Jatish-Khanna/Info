@@ -1,0 +1,11 @@
+###################
+Select all the id from table1 and table2 where the intersection portion (same ids present are missing)
+###################
+
+select employeeid from t1
+union all 
+select employeeid from t2
+except
+select t1.employeeid from t1,t2 where t1.employeeid = t2.employeeid
+
+Note: The Union ALL and Intersect should have the same number of columns selected to make it succeful
