@@ -1,0 +1,21 @@
+
+
+====================================
+
+2020-06-16 15:54:23.016 ERROR 94524 --- [nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : 
+Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception 
+[Request processing failed; nested exception is java.lang.IllegalStateException: No transaction is in process; 
+possible solutions: run the template operation within the scope of a template.executeInTransaction() operation, 
+start a transaction with @Transactional before invoking the template method, run in a transaction started by a listener container when consuming a record] with root cause
+
+java.lang.IllegalStateException: No transaction is in process; possible solutions: 
+run the template operation within the scope of a template.executeInTransaction() operation, start a transaction with 
+@Transactional before invoking the template method, run in a transaction started by a listener container when consuming a record
+	at org.springframework.util.Assert.state(Assert.java:73) ~[spring-core-5.2.4.RELEASE.jar:5.2.4.RELEASE]
+	at org.springframework.kafka.core.KafkaTemplate.doSend(KafkaTemplate.java:394) ~[spring-kafka-2.3.6.RELEASE.jar:2.3.6.RELEASE]
+	at org.springframework.kafka.core.KafkaTemplate.send(KafkaTemplate.java:222) ~[spring-kafka-2.3.6.RELEASE.jar:2.3.6.RELEASE]
+  
+  =======
+  Solution
+  =======
+     kafkaTemplate.executeInTransaction(kt -> kt.send("topic-to-ssend", message.getId(), message));
