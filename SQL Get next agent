@@ -1,0 +1,18 @@
+
+// IN this query 
+  -- LEFT OUTER JOIN gives all the email_ID of agents from user table
+  ** Important 
+    we are joining on
+      - email_id and assignee_id
+      - and STATUS = 'ASSIGNED'
+      Which gives all the NULL and ASSIGNED users
+============================================================
+
+SELECT email_id, status, count(status) as count
+FROM user
+LEFT JOIN assignment_details
+ON email_id=assignee_id AND status = 'ASSIGNED'
+Group BY email_id, status
+Order by role_order, count
+
+============================================================
