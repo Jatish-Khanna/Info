@@ -1,0 +1,17 @@
+===================
+
+Solution to merge two JSON object===
+
+	@GetMapping("/update") 
+	public ResponseEntity<?> getUpdatedJSON() throws JsonMappingException, JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		Sample<Object> message = new Sample<>("",mapper.readValue(SampleJSON.FILE, Object.class));
+		try {
+			LinkedHashMap<String, Object> result = mapper.readValue(SampleJSON.JSON, new TypeReference<LinkedHashMap<String, Object>>(){});
+			result.put("updateObject", message.getData());
+			message.setData(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return ResponseEntity.ok().body(message);
+	}
