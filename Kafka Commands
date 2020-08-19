@@ -1,0 +1,18 @@
+
+
+=============Read - write Avro format-==============
+
+Produce messages with Avro format
+-----------------------------
+./bin/kafka-avro-console-producer --broker-list localhost:9092 --topic topic
+--property value.schema='{"type":"record","name":"myrecord"
+,"fields":[{"name":"f1","type":"string"}]}'
+
+
+===========Data====
+{"f1" : "valu1" }
+
+
+== Consume avro messages
+---------------------------------
+./bin/kafka-avro-console-consumer --topic topic --bootstrap-server localhost:9092 --from-beginning
