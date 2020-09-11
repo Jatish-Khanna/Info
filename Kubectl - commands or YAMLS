@@ -1,0 +1,12 @@
+
+
+==== Namespace ===
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name : test-ns
+  
+kubctl apply -f test-ns.yml
+
+====== END ====
