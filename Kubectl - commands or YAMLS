@@ -10,3 +10,22 @@ metadata:
 kubctl apply -f test-ns.yml
 
 ====== END ====
+
+
+=== Create sample POD ===
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-first-pod
+  namespace: dev-ns
+  
+spec:
+  containers:
+    - name: redis-container
+      image: redis:latest
+      ports:
+        - containerPort: 80
+        
+     kubectl apply -f redis-container.yml
+     
+     ==== END ====
