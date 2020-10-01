@@ -1,0 +1,26 @@
+ Limit Pod resources
+ ====================
+ containers:
+  - name: sise
+    image: image:tag
+    ports:
+    - containerPort: port
+    resources:
+      limits:
+        memory: "64Mi"
+        cpu: "50m"
+        
+======
+Debug the pod
+
+kubectl describe po pod_name
+kubectl get events
+
+=========
+
+Diff the declarative Objects -
+
+ kubectl diff -f kube_object
+ ==========
+ 
+ Pod States - Pending, Running, Succeeded, Failed, Unkown
