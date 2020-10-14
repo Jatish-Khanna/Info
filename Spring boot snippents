@@ -1,0 +1,11 @@
+
+
+/// Download a file from the url via spring boot
+
+File file = rest.execute("https://people.sc.fsu.edu/~jburkardt/data/csv/addresses.csv", HttpMethod.GET, null, clientHttpResponse -> {
+      File ret = File.createTempFile("download", "tmp");
+      StreamUtils.copy(clientHttpResponse.getBody(), new FileOutputStream(ret));
+      return ret;
+  });
+  
+  // It will create a temporary file in the working directory
