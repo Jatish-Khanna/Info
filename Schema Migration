@@ -1,0 +1,15 @@
+A quick and dirty way:
+
+1) rename default schema:
+
+alter schema public rename to public_save;
+2) create new schema as default schema:
+
+create schema public;
+3) restore data
+
+pg_restore -f pub.backup db_temp [and whatever other options]
+4) rename schemas according to need:
+
+alter schema public rename to temp_schema;
+alter schema public_save rename to public;
