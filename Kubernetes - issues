@@ -1,0 +1,10 @@
+
+
+
+Secrets have new line at the end 
+===============
+
+echo "password" | tr -d \\n | base64 -w 0
+
+===============
+Fixes the issues
