@@ -8,3 +8,16 @@ echo "password" | tr -d \\n | base64 -w 0
 
 ===============
 Fixes the issues
+
+********* Sample shell ********
+#!/bin/sh
+
+echo " ***encoded...$1"
+echo "$1" | tr -d \\n | base64 -w 0
+
+echo "\n\n===================="
+
+echo "\n\n===================="
+echo "\ndecoded..."
+echo "$1" | base64 -d
+echo ""
