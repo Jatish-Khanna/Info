@@ -15,11 +15,8 @@ Fixes the issues
 
 echo "Input : $1"
 echo " ****** Encoded ******"
-echo "$1" | tr -d \\n | base64 -w 0
-
-echo "\n\n===================="
-
-echo "\n\n===================="
+echo -n "$1" |  base64
+echo "\n===================="
 echo " ****** Decoded ******"
 echo "$1" | base64 -d
 echo ""
