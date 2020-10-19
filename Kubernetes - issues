@@ -12,12 +12,14 @@ Fixes the issues
 ********* Sample shell ********
 #!/bin/sh
 
-echo " ***encoded...$1"
+
+echo "Input : $1"
+echo " ****** Encoded ******"
 echo "$1" | tr -d \\n | base64 -w 0
 
 echo "\n\n===================="
 
 echo "\n\n===================="
-echo "\ndecoded..."
+echo " ****** Decoded ******"
 echo "$1" | base64 -d
 echo ""
