@@ -16,3 +16,12 @@ Produce messages with Avro format
 == Consume avro messages
 ---------------------------------
 ./bin/kafka-avro-console-consumer --topic topic --bootstrap-server localhost:9092 --from-beginning
+
+
+====================
+
+Kafka console start--
+
+sudo nohup ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties &
+sudo nohup ./bin/kafka-server-start ./etc/kafka/server.properties &
+sudo nohup ./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties &
