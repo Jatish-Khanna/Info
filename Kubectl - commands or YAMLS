@@ -34,3 +34,8 @@ ETCD keys/ and information
 
 ETCDCTL_API=3 etcdctl --endpoints https://127.0.0.1:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/server.key --cert /etc/kubernetes/pki/etcd/server.crt get "" --prefix=true -w json > key.json
 for k in $(cat key.json | jq '.kvs[].key' | cut -d '"' -f2); do echo $k | base64 --decode; echo; done
+
+
+
+
+kubectl rollout restart <Deployment> -n <namespace>
