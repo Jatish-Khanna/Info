@@ -62,3 +62,10 @@ confluent-5.3.1
      
      
      
+=============================
+Also make sure plugin.path is correct and defined in the properties
+
+./bin/connect-standalone etc/kafka/connect-standalone.properties ~/plugins/confluentinc-kafka-connect-elasticsearch/etc/my.properties
+
+
+plugin.path=share/java/kafka-connect-elasticsearch,share/java
