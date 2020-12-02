@@ -31,3 +31,4 @@ Kibana > Management > Index Pattern > Scripted fields [You can convert Instant o
 
     doc['long_timestamp'].value
 
+  Dashboard > Filter > timestamp  is now-1h
