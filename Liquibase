@@ -1,0 +1,14 @@
+spring:
+  liquibase:
+    contexts: dev, data
+    
+    
+ dev - the context of liquibase dev or prod
+ data - if to load data from XML to setup liquibase
+ 
+         <loadData
+            file="config/liquibase/data/mydata.csv"
+            separator=";"
+            tableName="mydata">
+            <column name="id" type="numeric">
+         </loadData>
