@@ -24,3 +24,19 @@ Diff the declarative Objects -
  ==========
  
  Pod States - Pending, Running, Succeeded, Failed, Unkown
+
+
+=======================
+ts lifecycle guarantees, such as finalizers, will be honored.
+
+For example:
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-with-ttl
+spec:
+  # evicts the job after completion in seconds
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
