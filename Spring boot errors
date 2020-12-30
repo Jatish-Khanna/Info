@@ -1,0 +1,4 @@
+
+
+While starting a spring boot application -
+  Use sudo in case start application below port 1024 else, will throw error
