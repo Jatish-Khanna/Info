@@ -2,3 +2,9 @@
 
 While starting a spring boot application -
   Use sudo in case start application below port 1024 else, will throw error
+
+
+
+
+SSL certificates using certbot
+sudo certbot --nginx -d domain,.com -d www.domain.com 
