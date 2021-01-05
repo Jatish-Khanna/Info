@@ -1,0 +1,14 @@
+
+
+Overall, Google Docs does a pretty fantastic job of translating text to HTML. Here are some of the takeaways/inconsistencies that I noticed:
+
+Headings are true: H1, H2, H3 translate well
+“Title” in Docs creates an H1 heading in WordPress
+“Subtitle” in Docs creates an H2 heading in WordPress
+Bold, underline, italics, and strikethrough are translated perfectly from Docs to WordPress
+Ordered and unordered lists translate true from Docs to WordPress
+Text color, font type, and indentation do not translate from Docs to WordPress
+Links from a document work fine in WordPress
+There is no blockquote in Docs
+
+https://www.cision.com/2017/05/how-to-use-google-docs-with-wordpress-and-why-its-awesome/
