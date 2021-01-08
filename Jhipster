@@ -1,0 +1,13 @@
+Lombok with mapstruct - Mapper
+
+  Set properties
+<org.lombok-mapstruct-binding.version>0.2.0</org.lombok-mapstruct-binding.version>
+<org.lombok.version>1.18.12</org.lombok.version>
+    
+    Add dependency
+    
+    <dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
