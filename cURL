@@ -7,3 +7,8 @@
   -d 'scope=profile' $MYKEYCLOAK_URL | jq -r '.access_token')"
 
 echo $KTOKEN
+
+
+To get OAuth token using command line
+
+curl -d "client_id=<>" -d "username=<>" -d "password=<>" -d "grant_type=password"  "https://<>/auth/realms/<>/protocol/openid-connect/token"
