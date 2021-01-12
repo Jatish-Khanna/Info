@@ -1,0 +1,5 @@
+
+
+A custom query to find the document via the document ID
+
+{ $and: [ {'id': ObjectId('?0')} ] }
