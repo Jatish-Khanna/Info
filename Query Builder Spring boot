@@ -1,0 +1,27 @@
+
+
+  private Query queryBuilder(MyCustomEntityDTO myCustomEntity) {
+    Query filterQuery = new Query();
+
+    
+    // @formatter:off
+    filterQuery.addCriteria(Criteria.where(null).andOperator(Criteria
+                        .byExample(getExampleMatcher(myCustomEntity)),
+                        loggedInUserCriteria()));
+    // @formatter:on
+    return filterQuery;
+  }
+  
+  
+    protected Example<MyCustomEntity> getExampleMatcher(MyCustomEntityDTO myCustomEntityDTO) {
+    // @formatter:off
+    ExampleMatcher myCustomEntityMatcher = ExampleMatcher.matchingAny()
+                                                          .withIgnoreNullValues()
+                                                          .withIgnorePaths("created_date", "last_modified_date")
+                                                          .withIgnoreCase()
+                                                          .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+    // @formatter:on
+
+    return Example.of(myCustomEntityMapper.toEntity(myCustomEntityDTO), myCustomEntityMatcher);
+
+  }
