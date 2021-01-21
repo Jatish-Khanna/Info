@@ -8,3 +8,10 @@ While starting a spring boot application -
 
 SSL certificates using certbot
 sudo certbot --nginx -d domain,.com -d www.domain.com 
+
+
+Default open API path settings in the application.yml
+
+springdoc:
+  api-docs:
+    path: /api/v3/api-docs
