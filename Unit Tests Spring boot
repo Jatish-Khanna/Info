@@ -1,0 +1,9 @@
+
+https://jqno.nl/equalsverifier/
+
+    @Test
+    public void equalsContract() {
+        simple().forClass(Clazzz.class)
+                .withIgnoredFields("createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate")
+                .verify();
+    }
