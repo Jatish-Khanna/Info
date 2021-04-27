@@ -1,0 +1,10 @@
+Dump Elastic search :
+
+elasticdump \
+  --input=http://localhost:9200/index_name \
+  --output=/home/back_directory/my_index_mapping.json \
+  --type=mapping
+elasticdump \
+  --input=http://localhost:9200/dwp_user_information_index \
+  --output=/home/back_directory/my_index.json \
+  --type=data
